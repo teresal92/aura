@@ -10,30 +10,48 @@ Aura uses **ESLint** for code quality and **Prettier** for formatting. They serv
 
 ### ESLint
 
-Next.js ships with ESLint pre-configured. Aura extends it with a few additional rules.
+Next.js ships with ESLint pre-configured. Aura uses the **flat config** format in `eslint.config.mjs` and extends it with a few additional rules.
 
 **Install:**
+
 ```bash
 npm install -D eslint eslint-config-next @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
 
-**`.eslintrc.json`:**
-```json
-{
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "rules": {
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "warn",
-    "prefer-const": "error",
-    "no-console": "warn"
-  }
-}
+**`eslint.config.mjs`:**
+
+```js
+import { defineConfig, globalIgnores } from 'eslint/config'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import nextTs from 'eslint-config-next/typescript'
+import tsParser from '@typescript-eslint/parser'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
+import prettier from 'eslint-config-prettier'
+
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: { sourceType: 'module' },
+    },
+    plugins: { '@typescript-eslint': tsPlugin },
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'prefer-const': 'error',
+      'no-console': 'warn',
+    },
+  },
+  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
+  prettier,
+])
 ```
 
 **Run manually:**
+
 ```bash
 npm run lint
 ```
@@ -43,6 +61,7 @@ npm run lint
 ### Prettier
 
 **Install:**
+
 ```bash
 npm install -D prettier eslint-config-prettier
 ```
@@ -50,6 +69,7 @@ npm install -D prettier eslint-config-prettier
 > `eslint-config-prettier` disables any ESLint rules that would conflict with Prettier — always include it.
 
 **`.prettierrc`:**
+
 ```json
 {
   "semi": false,
@@ -61,6 +81,7 @@ npm install -D prettier eslint-config-prettier
 ```
 
 **`.prettierignore`:**
+
 ```
 .next
 node_modules
@@ -68,6 +89,7 @@ public
 ```
 
 **Run manually:**
+
 ```bash
 # Check for formatting issues
 npx prettier --check .
@@ -77,14 +99,10 @@ npx prettier --write .
 ```
 
 Add Prettier to your ESLint config to avoid conflicts:
-```json
-{
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ]
-}
+
+```js
+// eslint.config.mjs (already included in this repo)
+import prettier from 'eslint-config-prettier'
 ```
 
 ---
@@ -96,6 +114,7 @@ Aura uses **Husky** and **lint-staged** to enforce linting and formatting automa
 ### Setup
 
 **Install:**
+
 ```bash
 npm install -D husky lint-staged
 npx husky init
@@ -104,21 +123,18 @@ npx husky init
 This creates a `.husky/` directory with a `pre-commit` hook file.
 
 **Configure the pre-commit hook** (`.husky/pre-commit`):
+
 ```bash
 npx lint-staged
 ```
 
 **Configure lint-staged** in `package.json`:
+
 ```json
 {
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
-    ]
+    "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,css,md}": ["prettier --write"]
   }
 }
 ```
@@ -135,11 +151,11 @@ If ESLint finds an error it can't auto-fix, the commit will be blocked until you
 
 Aura uses three complementary testing tools:
 
-| Tool | Purpose |
-|---|---|
-| **Vitest** | Unit tests for utilities, hooks, and pure functions |
-| **React Testing Library** | Component behaviour tests |
-| **Playwright** | End-to-end tests simulating real user flows |
+| Tool                      | Purpose                                             |
+| ------------------------- | --------------------------------------------------- |
+| **Vitest**                | Unit tests for utilities, hooks, and pure functions |
+| **React Testing Library** | Component behaviour tests                           |
+| **Playwright**            | End-to-end tests simulating real user flows         |
 
 ---
 
@@ -148,11 +164,13 @@ Aura uses three complementary testing tools:
 Vitest is a Vite-native test runner that's fast, Jest-compatible, and works naturally in a Next.js TypeScript project.
 
 **Install:**
+
 ```bash
 npm install -D vitest @vitejs/plugin-react jsdom
 ```
 
 **`vitest.config.ts`:**
+
 ```ts
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
@@ -168,11 +186,13 @@ export default defineConfig({
 ```
 
 **`tests/setup.ts`:**
+
 ```ts
 import '@testing-library/jest-dom'
 ```
 
 **Add to `package.json`:**
+
 ```json
 {
   "scripts": {
@@ -184,6 +204,7 @@ import '@testing-library/jest-dom'
 ```
 
 **Example — testing a utility function:**
+
 ```ts
 // lib/utils.test.ts
 import { describe, it, expect } from 'vitest'
@@ -207,11 +228,13 @@ describe('formatDuration', () => {
 React Testing Library (RTL) tests components from the user's perspective — it encourages you to query by what the user sees, not by implementation details like class names or component state.
 
 **Install:**
+
 ```bash
 npm install -D @testing-library/react @testing-library/user-event @testing-library/jest-dom
 ```
 
 **Example — testing a task card:**
+
 ```tsx
 // components/TaskCard.test.tsx
 import { render, screen } from '@testing-library/react'
@@ -235,6 +258,7 @@ describe('TaskCard', () => {
 ```
 
 **Testing philosophy for Aura:**
+
 - Test behaviour, not implementation — query by text, role, and label, not by CSS class or component internals
 - Every interactive component should have at least a render test and an interaction test
 - Don't test the AI output directly — mock the API response and test how the UI handles it
@@ -246,6 +270,7 @@ describe('TaskCard', () => {
 Playwright tests the full application in a real browser — from typing into the input to seeing tasks appear on screen. These are slower than unit tests but give the highest confidence that the app works as a whole.
 
 **Install:**
+
 ```bash
 npm init playwright@latest
 ```
@@ -253,6 +278,7 @@ npm init playwright@latest
 This scaffolds a `playwright.config.ts` and an `e2e/` directory.
 
 **`playwright.config.ts`:**
+
 ```ts
 import { defineConfig } from '@playwright/test'
 
@@ -271,6 +297,7 @@ export default defineConfig({
 ```
 
 **Example — testing the core input → task flow:**
+
 ```ts
 // e2e/task-parsing.spec.ts
 import { test, expect } from '@playwright/test'
@@ -278,9 +305,9 @@ import { test, expect } from '@playwright/test'
 test('parses free-form input into task cards', async ({ page }) => {
   await page.goto('/')
 
-  await page.getByPlaceholder("What's on your mind?").fill(
-    'I need to do laundry today and reply to Sarah urgently'
-  )
+  await page
+    .getByPlaceholder("What's on your mind?")
+    .fill('I need to do laundry today and reply to Sarah urgently')
   await page.keyboard.press('Enter')
 
   await expect(page.getByText('Do laundry')).toBeVisible()
@@ -294,6 +321,7 @@ test('completes a task and shows completion feedback', async ({ page }) => {
 ```
 
 **Run e2e tests:**
+
 ```bash
 # Run all e2e tests
 npx playwright test
@@ -354,4 +382,4 @@ Co-locating unit and component tests next to the files they test makes them easi
 
 ---
 
-*When in doubt, write the test that would have caught the bug you just fixed.* 🐛
+_When in doubt, write the test that would have caught the bug you just fixed._ 🐛
