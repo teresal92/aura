@@ -44,4 +44,3 @@ Click **Deploy**. Vercel will build and publish your app. Every subsequent push 
 **5. Set your Supabase redirect URL**
 
 Once deployed, copy your production URL (e.g. `https://aura.vercel.app`) and add it to your Supabase project under **Authentication → URL Configuration → Redirect URLs** — this is required for magic link auth to work in production.
-
