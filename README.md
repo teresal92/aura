@@ -466,7 +466,7 @@ Moved to [DEPLOYMENT.md](./DEPLOYMENT.md).
 ### v1.0 — MVP
 
 - [ ] Free-form text input
-- [ ] AI task parsing via Anthropic API
+- [ ] AI task parsing via AI Provider API
 - [ ] Task card UI with priority, duration, category
 - [ ] Mark tasks complete with animation
 - [ ] In-memory state (Zustand, no persistence)
