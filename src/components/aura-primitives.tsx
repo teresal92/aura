@@ -174,3 +174,25 @@ export function CompletionCheckbox({
     </button>
   )
 }
+
+export function SectionHeader({
+  children,
+  count,
+  className,
+}: {
+  children: React.ReactNode
+  count?: number
+  className?: string
+}) {
+  return (
+    <h2
+      className={cn(
+        'text-xs font-medium uppercase tracking-wider text-muted-foreground',
+        className
+      )}
+    >
+      {children}
+      {count !== undefined ? <span className="ml-1.5 tabular-nums">{count}</span> : null}
+    </h2>
+  )
+}
