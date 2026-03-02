@@ -44,12 +44,13 @@ export const useTaskStore = create<TaskState>((set) => ({
 
   addTasks: (newTasks) =>
     set((state) => {
+      const createdAt = new Date().toISOString()
       const tasksWithMeta: Task[] = newTasks.map((task) => ({
         ...task,
         id: generateId(),
         completed: false,
         completedAt: null,
-        createdAt: new Date().toISOString(),
+        createdAt,
       }))
       return { tasks: sortTasks([...state.tasks, ...tasksWithMeta]) }
     }),
