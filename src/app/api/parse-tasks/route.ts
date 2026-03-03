@@ -1,8 +1,14 @@
 import { parseTasks } from '@/lib/ai'
+import { auth } from '@clerk/nextjs/server'
 import type { ParsedTaskResponse } from '@/types/task'
 
 export async function POST(request: Request) {
   try {
+    const { userId } = await auth()
+    if (!userId) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const body = (await request.json()) as { input?: string }
     const input = body.input?.trim()
     if (!input) {

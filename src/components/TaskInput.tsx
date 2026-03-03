@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useAuth, useClerk } from '@clerk/nextjs'
 import { useTaskStore } from '@/store/tasks'
 import { cn } from '@/lib/utils'
 
@@ -16,6 +17,8 @@ export function TaskInput() {
   const [placeholderIndex, setPlaceholderIndex] = useState(0)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { addTasks, isInputLoading, setInputLoading } = useTaskStore()
+  const { isLoaded, isSignedIn } = useAuth()
+  const clerk = useClerk()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,6 +37,11 @@ export function TaskInput() {
   async function handleSubmit() {
     const trimmed = input.trim()
     if (!trimmed || isInputLoading) return
+    if (!isLoaded) return
+    if (!isSignedIn) {
+      clerk.openSignIn({})
+      return
+    }
 
     setInputLoading(true)
     try {
