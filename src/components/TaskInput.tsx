@@ -74,7 +74,8 @@ export function TaskInput() {
       <div
         className={cn(
           'aura-card relative overflow-hidden',
-          'focus-within:border-primary/40',
+          'transition-colors focus-within:border-primary/40',
+          !isInputLoading && 'hover:border-primary/30',
           isInputLoading && 'opacity-80'
         )}
       >
@@ -95,7 +96,7 @@ export function TaskInput() {
           className={cn(
             'w-full resize-none bg-transparent px-4 py-3 text-base leading-relaxed',
             'placeholder:text-muted-foreground/40 placeholder:leading-relaxed',
-            'focus:outline-none disabled:cursor-not-allowed',
+            'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground',
             'text-foreground'
           )}
           aria-label="Type your thoughts, tasks, or brain dump here"
@@ -108,7 +109,10 @@ export function TaskInput() {
           <button
             onClick={handleSubmit}
             disabled={!input.trim() || isInputLoading}
-            className="aura-btn-primary"
+            className={cn(
+              'aura-btn-primary',
+              'disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:shadow-none'
+            )}
             aria-label="Organize tasks"
           >
             {isInputLoading ? 'Organizing...' : 'Organize'}
