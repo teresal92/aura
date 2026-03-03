@@ -172,7 +172,7 @@
   }
 
   .aura-btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground;
+    @apply inline-flex items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
     box-shadow: var(--aura-shadow-xs);
     transition:
       background-color var(--aura-duration-fast) var(--aura-ease-out),
@@ -180,7 +180,18 @@
   }
 
   .aura-btn-primary:hover {
+    @apply bg-primary/90;
     box-shadow: var(--aura-shadow-sm);
+  }
+
+  .aura-btn-primary:disabled {
+    @apply cursor-not-allowed opacity-50;
+    box-shadow: none;
+  }
+
+  .aura-btn-primary:disabled:hover {
+    @apply bg-primary;
+    box-shadow: none;
   }
 
   .aura-btn-subtle {
