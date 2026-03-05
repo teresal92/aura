@@ -20,6 +20,9 @@ export function TaskInput() {
   const { isLoaded, isSignedIn } = useAuth()
   const clerk = useClerk()
 
+  const pendingInputKey = 'aura:pending-input'
+  const pendingSubmitKey = 'aura:pending-submit'
+
   useEffect(() => {
     const interval = setInterval(() => {
       setPlaceholderIndex((index) => (index + 1) % PLACEHOLDER_EXAMPLES.length)
@@ -34,11 +37,27 @@ export function TaskInput() {
     textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`
   }, [input])
 
-  async function handleSubmit() {
-    const trimmed = input.trim()
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return
+    if (typeof window === 'undefined') return
+    const shouldSubmit = window.sessionStorage.getItem(pendingSubmitKey) === '1'
+    const pendingInput = shouldSubmit ? window.sessionStorage.getItem(pendingInputKey) : null
+    if (!pendingInput) return
+    window.sessionStorage.removeItem(pendingSubmitKey)
+    window.sessionStorage.removeItem(pendingInputKey)
+    setInput(pendingInput)
+    handleSubmit(pendingInput)
+  }, [isLoaded, isSignedIn])
+
+  async function handleSubmit(forcedInput?: string) {
+    const trimmed = (forcedInput ?? input).trim()
     if (!trimmed || isInputLoading) return
     if (!isLoaded) return
     if (!isSignedIn) {
+      if (typeof window !== 'undefined') {
+        window.sessionStorage.setItem(pendingInputKey, trimmed)
+        window.sessionStorage.setItem(pendingSubmitKey, '1')
+      }
       clerk.openSignIn({})
       return
     }
