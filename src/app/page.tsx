@@ -4,6 +4,7 @@ import { AuraLogo } from '@/components/aura-primitives'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
 import { useTaskStore } from '@/store/tasks'
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export default function Home() {
   const { tasks } = useTaskStore()
@@ -15,14 +16,35 @@ export default function Home() {
       <header className="sticky top-0 z-30 border-b border-border/50 bg-background/80 backdrop-blur-lg">
         <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-4">
           <AuraLogo />
-          {tasks.length > 0 ? (
-            <div className="flex items-center gap-3 text-xs text-muted-foreground tabular-nums">
-              {activeTasks.length > 0 ? <span>{activeTasks.length} active</span> : null}
-              {completedTasks.length > 0 ? (
-                <span className="text-aura-success">{completedTasks.length} done</span>
+          <div className="flex items-center gap-4">
+            <SignedIn>
+              {tasks.length > 0 ? (
+                <div className="flex items-center gap-3 text-xs text-muted-foreground tabular-nums">
+                  {activeTasks.length > 0 ? <span>{activeTasks.length} active</span> : null}
+                  {completedTasks.length > 0 ? (
+                    <span className="text-aura-success">{completedTasks.length} done</span>
+                  ) : null}
+                </div>
               ) : null}
+            </SignedIn>
+            <div className="flex items-center gap-2">
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="aura-btn-subtle" type="button">
+                    Sign in
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="aura-btn-primary" type="button">
+                    Sign up
+                  </button>
+                </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton appearance={{ elements: { avatarBox: 'h-8 w-8' } }} />
+              </SignedIn>
             </div>
-          ) : null}
+          </div>
         </div>
       </header>
 
@@ -43,7 +65,9 @@ export default function Home() {
           <TaskInput />
         </div>
 
-        <TaskList />
+        <SignedIn>
+          <TaskList />
+        </SignedIn>
       </div>
     </main>
   )
