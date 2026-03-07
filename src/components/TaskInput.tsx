@@ -134,7 +134,7 @@ export function TaskInput() {
             Press Enter to organize · Shift+Enter for new line
           </p>
           <button
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
             disabled={!input.trim() || isInputLoading}
             className={cn(
               'aura-btn-primary',
