@@ -45,19 +45,17 @@ These experiences are especially common in people with **ADD/ADHD and other atte
 
 ## Design Philosophy
 
-Every design decision in Aura is guided by these principles:
+No onboarding, no tutorial, no manual. If you can type a sentence, you can use it.
 
-**Minimal cognitive load** — If it's not necessary right now, it's not on screen right now. No sidebar menus, no settings panels bleeding into your workspace, no notification badges demanding attention.
+**Simplicity** — Every feature has to earn its place. If it adds complexity without clear value, it doesn't ship.
 
-**Progressive disclosure** — Task cards show only the essentials. Tap to reveal subtasks, notes, or metadata. You choose how deep to go.
+**Low friction** — One input, accepts anything. When something is vague, Aura asks a short follow-up rather than guessing. You decide when it's right.
 
-**Forgiving input** — There's one input. It accepts anything. Typos, half-formed thoughts, overly casual language — all fine. The AI figures it out.
+**Less on screen** — Only what's needed, when it's needed. Details are one tap away. Nothing is designed to pull your attention.
 
-**Dopamine-friendly feedback** — Completing a task feels good. Not obnoxiously animated, not underwhelming — just enough to make your brain say _yes, more of that_.
+**Feels good to use** — Completing a task is rewarding. Urgency is clear without being anxiety-inducing.
 
-**Clear visual hierarchy** — The most urgent thing looks most urgent. Not through red warning labels that spike anxiety, but through thoughtful use of typography, weight, and color.
-
-**Distraction-resistant** — Aura does not have dark patterns, infinite scroll, engagement metrics, or anything designed to keep you _in_ the app longer than you need to be.
+**Gets better over time** — Aura quietly learns your patterns and adjusts. No settings to configure.
 
 ---
 
@@ -69,21 +67,15 @@ A single, inviting text area at the top of the app. Type your day, your week, a 
 
 ### 🧠 AI Task Parsing
 
-Behind the scenes, the AI extracts structured task objects from your input. Each task gets:
+Behind the scenes, the AI extracts structured tasks from your input — each one gets a title, priority, time estimate, due date (if mentioned), category, and subtasks where relevant. You don't fill any of that in. It's inferred from what you typed.
 
-| Field               | Description                                           |
-| ------------------- | ----------------------------------------------------- |
-| `title`             | Clean, concise task name                              |
-| `priority`          | `low` / `medium` / `high` / `urgent`                  |
-| `estimatedDuration` | Time estimate in minutes                              |
-| `dueDate`           | Parsed from natural language if mentioned             |
-| `category`          | Auto-tagged (Home, Work, Health, Communication, etc.) |
-| `subtasks`          | Array of smaller steps for complex tasks              |
-| `notes`             | Any relevant context extracted from input             |
+### 🗂️ Task View
+
+The default view is a clean, uncluttered list. Most urgent at the top, nothing competing for attention. You can sort, filter, or dismiss tasks without it feeling like operating a control panel.
 
 ### 🃏 Smart Task Cards
 
-Tasks are rendered as clean, minimal cards. The default view shows only the title, priority badge, and estimated time. Everything else is a tap away. No walls of text, no overwhelming detail.
+Tasks are rendered as minimal cards. The default view shows only the title, priority, and estimated time. Everything else is a tap away. No walls of text, no overwhelming detail.
 
 ### 🎯 Focus Mode
 
@@ -91,11 +83,31 @@ One task. Full screen. Nothing else. Focus Mode strips away the task list entire
 
 ### 🔔 Gentle Nudges
 
-Optional, non-intrusive reminders. No aggressive push notifications, no red badges, no anxiety-inducing "YOU HAVE 14 OVERDUE TASKS" banners. Just a soft prompt: _"Hey, you had laundry on your list — still need to do that?"_
+Optional, non-intrusive reminders. No aggressive notifications, no overdue task counts, no guilt. Just a soft prompt asking if something on your list still needs doing.
 
 ### 🎉 Quick Wins
 
-Completing a task triggers a small, delightful animation — confetti, a satisfying checkmark, a warm color flash. Calibrated to be rewarding without being distracting. Your brain gets its hit; your workflow continues.
+Completing a task feels good — a small animation, a satisfying checkmark. Rewarding enough to motivate, subtle enough not to distract.
+
+### 🤔 Clarifying Intelligence
+
+When your input is vague or describes a project rather than a discrete task — "plan Yosemite trip", "sort out taxes" — Aura doesn't guess. It asks a short follow-up question inline, suggests a set of concrete tasks, and lets you confirm, adjust, or keep refining until it feels right. No back-and-forth chat interface — just a lightweight clarification card beneath the input that stays out of your way.
+
+```
+You typed: "Get taxes sorted"
+
+Aura: This might involve a few steps. Want to break it down?
+  ☑ Gather documents
+  ☑ Review deductions
+  ☐ Schedule accountant
+  ☑ File return
+
+          [ Looks good → ]  [ Refine further → ]
+```
+
+### 🧬 Personalization
+
+Aura learns how you work over time. It picks up on patterns in your input — the categories you use most, how you tend to estimate time, the type of language that signals urgency for you — and quietly adjusts its defaults to match. No settings to configure. It just gets better the more you use it.
 
 ---
 
@@ -135,17 +147,26 @@ We evaluated CRA, Vite, Next.js, and Remix — Next.js won for its API routes, V
 │                                                  │
 │  1. Validate & sanitize input                    │
 │  2. Build prompt with system instructions        │
-│  3. Call Anthropic API                           │
+│  3. Call AI provider                             │
 │  4. Parse & validate JSON response               │
-│  5. Return structured task array                 │
-└─────────────────┬───────────────────────────────┘
-                  │
-        ┌─────────▼──────────┐
-        │   Anthropic API    │
-        │  (claude-3-5-      │
-        │   sonnet)          │
-        └─────────┬──────────┘
-                  │ Structured JSON
+│  5. Detect ambiguity — needs clarification?      │
+└──────────┬──────────────────────┬────────────────┘
+           │ No                   │ Yes
+           │              ┌───────▼────────────────┐
+           │              │  POST /api/clarify      │
+           │              │                         │
+           │              │  Returns suggested      │
+           │              │  tasks + prompt         │
+           │              └───────┬────────────────┘
+           │                      │ User confirms inline
+           │              ┌───────▼────────────────┐
+           │              │  Browser: Clarification │
+           │              │  card shown beneath     │
+           │              │  input — one round max  │
+           │              └───────┬────────────────┘
+           │                      │ Confirmed
+           └──────────────────────┘
+                  │ Structured tasks
 ┌─────────────────▼───────────────────────────────┐
 │             Next.js API Route                    │
 │                                                  │
@@ -179,22 +200,33 @@ Set your preferred provider via environment variables — see [Getting Started](
 ### System Prompt
 
 ```
-You are a task extraction assistant for a todo app designed for people who struggle with
-task planning and prioritization.
+You are a task extraction and clarification assistant for a todo app designed for people
+who struggle with task planning and prioritization.
 
-Your job is to take a user's free-form, stream-of-consciousness input and extract a
-structured list of tasks from it.
+You have two responsibilities:
+1. Extract structured tasks from free-form, stream-of-consciousness input
+2. Detect when input is ambiguous or project-level and flag it for clarification
 
-Rules:
+Rules — task extraction:
 - Extract every distinct task or obligation mentioned, no matter how casually
 - Use simple, action-oriented titles (verb + object: "Call Mom", "Do laundry")
 - Be generous with priority assignment — if something sounds time-sensitive or causes
   the user stress, bump it up
 - Estimate duration conservatively and realistically
-- If a task is complex (more than ~30 mins), suggest 2-4 subtasks
+- If a task implies multiple distinct steps, suggest 2-4 subtasks
 - Infer categories from context: Home, Work, Health, Communication, Finance, Personal
 - If no due date is mentioned, omit the field — don't invent dates
-- Return ONLY valid JSON. No preamble, no explanation.
+
+Rules — ambiguity detection:
+- Mark a task as ambiguous if it describes a project rather than a discrete action
+  (e.g. "plan Yosemite trip", "sort out taxes", "deal with the kitchen")
+- Mark a task as ambiguous if critical information is missing and would meaningfully
+  change how the task is structured (e.g. "dentist appointment" with no date or context)
+- If ambiguous, provide a clarificationPrompt — a single, short question for the user
+- If personalization context is provided, use it to improve category inference,
+  duration estimates, and priority signals before returning tasks
+
+Return ONLY valid JSON. No preamble, no explanation.
 
 Response format:
 {
@@ -206,13 +238,17 @@ Response format:
       "dueDate": "ISO 8601 string" | null,
       "category": "string",
       "subtasks": ["string"] | [],
-      "notes": "string" | null
+      "userContext": "string" | null,
+      "aiNotes": "string" | null,
+      "ambiguous": boolean,
+      "clarificationPrompt": "string" | null,
+      "source": "direct" | "clarified"
     }
   ]
 }
 ```
 
-### Example
+### Example — direct extraction
 
 **User input:**
 
@@ -233,7 +269,11 @@ this week and i keep forgetting to reply to sarah's email which is actually kind
       "dueDate": "2025-01-15T23:59:00Z",
       "category": "Home",
       "subtasks": ["Sort clothes", "Run wash cycle", "Transfer to dryer", "Fold and put away"],
-      "notes": null
+      "userContext": null,
+      "aiNotes": null,
+      "ambiguous": false,
+      "clarificationPrompt": null,
+      "source": "direct"
     },
     {
       "title": "Dentist appointment",
@@ -242,7 +282,11 @@ this week and i keep forgetting to reply to sarah's email which is actually kind
       "dueDate": null,
       "category": "Health",
       "subtasks": [],
-      "notes": "User mentioned 'this week' — may need to check and confirm actual appointment time"
+      "userContext": "User mentioned 'this week'",
+      "aiNotes": "Date unconfirmed — may need to verify actual appointment time",
+      "ambiguous": true,
+      "clarificationPrompt": "Do you know which day your dentist appointment is?",
+      "source": "direct"
     },
     {
       "title": "Reply to Sarah's email",
@@ -251,7 +295,62 @@ this week and i keep forgetting to reply to sarah's email which is actually kind
       "dueDate": null,
       "category": "Communication",
       "subtasks": [],
-      "notes": "User flagged as urgent"
+      "userContext": "User flagged as urgent",
+      "aiNotes": null,
+      "ambiguous": false,
+      "clarificationPrompt": null,
+      "source": "direct"
+    }
+  ]
+}
+```
+
+### Example — after clarification round
+
+**Clarification history passed as context:**
+
+```json
+{
+  "originalInput": "Get taxes sorted",
+  "clarificationHistory": [
+    {
+      "prompt": "This looks like it might involve a few steps — want me to break it down?",
+      "userResponse": "yes, and I also need to find an accountant"
+    }
+  ]
+}
+```
+
+**AI output:**
+
+```json
+{
+  "tasks": [
+    {
+      "title": "Gather tax documents",
+      "priority": "high",
+      "estimatedDuration": 30,
+      "dueDate": null,
+      "category": "Finance",
+      "subtasks": ["Locate W-2s", "Find receipts", "Download bank statements"],
+      "userContext": "Part of 'get taxes sorted'",
+      "aiNotes": null,
+      "ambiguous": false,
+      "clarificationPrompt": null,
+      "source": "clarified"
+    },
+    {
+      "title": "Find an accountant",
+      "priority": "high",
+      "estimatedDuration": 20,
+      "dueDate": null,
+      "category": "Finance",
+      "subtasks": ["Ask for referrals", "Compare reviews", "Book a consultation"],
+      "userContext": "User added this during clarification",
+      "aiNotes": null,
+      "ambiguous": false,
+      "clarificationPrompt": null,
+      "source": "clarified"
     }
   ]
 }
@@ -267,6 +366,8 @@ aura/
 │   ├── api/
 │   │   ├── parse-tasks/
 │   │   │   └── route.ts          # AI task parsing endpoint
+│   │   ├── clarify/
+│   │   │   └── route.ts          # Clarifying intelligence endpoint
 │   │   └── tasks/
 │   │       └── route.ts          # CRUD for persisted tasks
 │   ├── (auth)/
@@ -284,6 +385,7 @@ aura/
 │   ├── TaskInput.tsx             # The main free-form text input
 │   ├── TaskCard.tsx              # Individual task card component
 │   ├── TaskList.tsx              # Task list container with sorting
+│   ├── ClarificationCard.tsx     # Inline clarification prompt component
 │   ├── FocusView.tsx             # Full-screen focus mode component
 │   ├── CompletionAnimation.tsx   # Quick win celebration animation
 │   └── NudgeBanner.tsx           # Gentle nudge notification component
@@ -292,6 +394,7 @@ aura/
 │   ├── ai.ts                     # AI provider client (OpenAI or Anthropic)
 │   ├── supabase.ts               # Supabase client setup
 │   ├── prompts.ts                # AI system prompt definitions
+│   ├── personalization.ts        # User pattern learning utilities
 │   └── utils.ts                  # Shared utilities
 │
 ├── store/
@@ -302,110 +405,13 @@ aura/
 │
 ├── hooks/
 │   ├── useTasks.ts               # Task CRUD hook
+│   ├── useClarification.ts       # Clarification flow state hook
 │   └── useFocusMode.ts           # Focus mode state hook
 │
 ├── .env.local.example
 ├── next.config.ts
 ├── tailwind.config.ts
 └── package.json
-```
-
----
-
-## Server/Client Boundaries (Next.js App Router)
-
-The App Router defaults to Server Components. We keep the boundary explicit with clear folders and `server-only` enforcement.
-
-### Separation Rules
-
-- Server Components are the default in `app/`. Only add `"use client"` where interactivity is needed.
-- Server-only modules live in `lib/server/*` and must import `server-only`.
-- Client-only modules live in `lib/client/*` and must never import server-only code.
-- Shared modules live in `lib/shared/*` and must be pure (no `window`, no `process.env`, no DB).
-
-### Example Structure
-
-```
-app/
-  todos/
-    page.tsx           # Server Component (data fetching)
-    TodoList.tsx       # Server Component
-    TodoClient.tsx     # Client Component ("use client")
-  actions/
-    todos.ts           # Server Actions ("use server")
-  api/
-    todos/route.ts     # API route (server)
-lib/
-  server/
-    db.ts              # DB client (server-only)
-    ai.ts              # AI provider calls (server-only)
-  client/
-    toast.tsx          # Client utilities
-  shared/
-    types.ts           # Shared types
-```
-
-### Enforce Server-Only Imports
-
-```ts
-// lib/server/db.ts
-import 'server-only'
-import { PrismaClient } from '@prisma/client'
-
-export const db = new PrismaClient()
-```
-
-### Example Flow (Server → Client → Server)
-
-1. Server Component loads initial data.
-2. Client Component handles interaction.
-3. Client calls a Server Action to persist.
-
-```tsx
-// app/todos/page.tsx (server)
-import { db } from '@/lib/server/db'
-import TodoClient from './TodoClient'
-
-export default async function TodosPage() {
-  const todos = await db.todo.findMany()
-  return <TodoClient initialTodos={todos} />
-}
-```
-
-```tsx
-// app/todos/TodoClient.tsx (client)
-'use client'
-import { useState } from 'react'
-import { addTodo } from '@/app/actions/todos'
-import type { Todo } from '@/lib/shared/types'
-
-export default function TodoClient({ initialTodos }: { initialTodos: Todo[] }) {
-  const [todos, setTodos] = useState(initialTodos)
-
-  async function onAdd(title: string) {
-    const created = await addTodo(title)
-    setTodos((prev) => [created, ...prev])
-  }
-
-  return (
-    <div>
-      <button onClick={() => onAdd('New task')}>Add</button>
-      {todos.map((t) => (
-        <div key={t.id}>{t.title}</div>
-      ))}
-    </div>
-  )
-}
-```
-
-```ts
-// app/actions/todos.ts (server action)
-'use server'
-import { db } from '@/lib/server/db'
-
-export async function addTodo(title: string) {
-  return db.todo.create({ data: { title } })
-}
 ```
 
 ---
@@ -453,11 +459,54 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) and start typing.
 
+For linting, formatting, pre-commit hooks, and testing setup, see [DEVELOPMENT.md](./DEVELOPMENT.md).
+
 ---
 
 ## Deployment
 
-Moved to [DEPLOYMENT.md](./DEPLOYMENT.md).
+Aura is built to deploy on [Vercel](https://vercel.com) with zero additional configuration — Next.js and Vercel are made by the same team, so everything just works.
+
+### Steps
+
+**1. Push your project to GitHub**
+
+```bash
+git init
+git add .
+git commit -m "init"
+git remote add origin https://github.com/your-username/aura.git
+git push -u origin main
+```
+
+**2. Import your repo on Vercel**
+
+- Go to [vercel.com/new](https://vercel.com/new)
+- Click **Add New Project** and import your GitHub repo
+- Vercel will auto-detect Next.js — no build configuration needed
+
+**3. Add your environment variables**
+
+In the Vercel project dashboard, go to **Settings → Environment Variables** and add:
+
+```env
+AI_PROVIDER
+OPENAI_API_KEY
+ANTHROPIC_API_KEY
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+```
+
+> ⚠️ Never commit `.env.local` to Git. Your API keys should only ever live in Vercel's environment variable settings.
+
+**4. Deploy**
+
+Click **Deploy**. Vercel will build and publish your app. Every subsequent push to `main` triggers an automatic redeployment.
+
+**5. Set your Supabase redirect URL**
+
+Once deployed, copy your production URL (e.g. `https://aura.vercel.app`) and add it to your Supabase project under **Authentication → URL Configuration → Redirect URLs** — this is required for magic link auth to work in production.
 
 ---
 
@@ -466,8 +515,9 @@ Moved to [DEPLOYMENT.md](./DEPLOYMENT.md).
 ### v1.0 — MVP
 
 - [ ] Free-form text input
-- [ ] AI task parsing via AI Provider API
+- [ ] AI task parsing via AI provider
 - [ ] Task card UI with priority, duration, category
+- [ ] Task View — clean, uncluttered default list sorted by urgency
 - [ ] Mark tasks complete with animation
 - [ ] In-memory state (Zustand, no persistence)
 
@@ -478,27 +528,40 @@ Moved to [DEPLOYMENT.md](./DEPLOYMENT.md).
 - [ ] Manual task editing
 - [ ] Task reordering via drag-and-drop
 
+### v1.2 — Clarifying Intelligence
+
+- [ ] Ambiguity detection in parsed input (`ambiguous` flag in data model)
+- [ ] Inline clarification card UI beneath input
+- [ ] `/api/clarify` endpoint
+- [ ] Suggested task selection and confirmation flow
+- [ ] User-controlled clarification — refine as many times as needed
+- [ ] `clarificationHistory` passed as context for multi-round refinement
+- [ ] `source` field tracked on all tasks (direct vs. clarified)
+
 ### v2.0 — Accounts & Cloud
 
-- [ ] Supabase auth (magic link login)
+- [ ] User authentication (magic link or social login — low friction, no passwords)
 - [ ] Cloud task persistence
 - [ ] Cross-device sync
 - [ ] Gentle browser/email reminders
 
-### v2.1 — Power Features
+### v2.1 — Personalization
+
+- [ ] User pattern learning (categories, time estimates, urgency signals)
+- [ ] User pattern context passed into AI system prompt at parse time
+- [ ] Task history and completion stats
+
+### v2.2 — Integrations
 
 - [ ] Recurring tasks
-- [ ] Google Calendar integration
-- [ ] Task history and completion stats
-- [ ] Subtask progress tracking
+- [ ] Google Calendar sync
+- [ ] Task export
 
 ### Future Vision
 
 - 📱 Native mobile app (React Native)
 - 🎙️ Voice input (speak your brain dump)
 - 📊 Habit tracking and streak visualization
-- 🤝 Accountability buddy features
-- 🧘 "Brain dump" mode — just offload everything, sort later
 
 ---
 
