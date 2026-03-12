@@ -113,9 +113,7 @@ Aura learns how you work over time. It picks up on patterns in your input — th
 
 ## Tech Stack
 
-We evaluated CRA, Vite, Next.js, and Remix — Next.js won for its API routes, Vercel-native deployment, and ability to ship the frontend and backend proxy as a single unit. See [ARCHITECTURE.md](./ARCHITECTURE.md) for the full breakdown.
-
-### Recommended Stack
+We evaluated CRA, Vite, Next.js, and Remix — Next.js won for its API routes, Vercel-native deployment, and ability to ship the frontend and backend proxy as a single unit. See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full breakdown.
 
 | Layer                | Choice                                      | Rationale                                                                                                          |
 | -------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -125,62 +123,6 @@ We evaluated CRA, Vite, Next.js, and Remix — Next.js won for its API routes, V
 | **AI Integration**   | OpenAI or Anthropic (via Next.js API route) | Both support structured JSON output and are swappable behind the API route — see [AI Provider](#ai-provider)       |
 | **Database**         | Supabase                                    | Postgres-backed, real-time capable, built-in auth, generous free tier, great DX                                    |
 | **Auth**             | Supabase Auth                               | Comes with Supabase; supports magic links (lower friction than passwords — one less thing to forget)               |
-
----
-
-## System Architecture
-
-```
-┌─────────────────────────────────────────────────┐
-│                  Browser (React)                 │
-│                                                  │
-│  ┌──────────────────────────────────────────┐   │
-│  │  Free-form text input                    │   │
-│  │  "I need to do laundry and call my mom"  │   │
-│  └──────────────┬───────────────────────────┘   │
-│                 │ POST /api/parse-tasks           │
-└─────────────────┼───────────────────────────────┘
-                  │
-┌─────────────────▼───────────────────────────────┐
-│             Next.js API Route                    │
-│         (/app/api/parse-tasks/route.ts)          │
-│                                                  │
-│  1. Validate & sanitize input                    │
-│  2. Build prompt with system instructions        │
-│  3. Call AI provider                             │
-│  4. Parse & validate JSON response               │
-│  5. Detect ambiguity — needs clarification?      │
-└──────────┬──────────────────────┬────────────────┘
-           │ No                   │ Yes
-           │              ┌───────▼────────────────┐
-           │              │  POST /api/clarify      │
-           │              │                         │
-           │              │  Returns suggested      │
-           │              │  tasks + prompt         │
-           │              └───────┬────────────────┘
-           │                      │ User confirms inline
-           │              ┌───────▼────────────────┐
-           │              │  Browser: Clarification │
-           │              │  card shown beneath     │
-           │              │  input — one round max  │
-           │              └───────┬────────────────┘
-           │                      │ Confirmed
-           └──────────────────────┘
-                  │ Structured tasks
-┌─────────────────▼───────────────────────────────┐
-│             Next.js API Route                    │
-│                                                  │
-│  6. Persist tasks to Supabase                    │
-│  7. Return tasks to client                       │
-└─────────────────┬───────────────────────────────┘
-                  │
-┌─────────────────▼───────────────────────────────┐
-│                  Browser (React)                 │
-│                                                  │
-│  Zustand store updated → Task cards rendered     │
-│  User interacts: complete, focus, edit, delete   │
-└─────────────────────────────────────────────────┘
-```
 
 ---
 
@@ -459,54 +401,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) and start typing.
 
-For linting, formatting, pre-commit hooks, and testing setup, see [DEVELOPMENT.md](./DEVELOPMENT.md).
+For linting, formatting, pre-commit hooks, and testing setup, see [DEVELOPMENT.md](./docs/DEVELOPMENT.md).
 
 ---
 
 ## Deployment
 
-Aura is built to deploy on [Vercel](https://vercel.com) with zero additional configuration — Next.js and Vercel are made by the same team, so everything just works.
-
-### Steps
-
-**1. Push your project to GitHub**
-
-```bash
-git init
-git add .
-git commit -m "init"
-git remote add origin https://github.com/your-username/aura.git
-git push -u origin main
-```
-
-**2. Import your repo on Vercel**
-
-- Go to [vercel.com/new](https://vercel.com/new)
-- Click **Add New Project** and import your GitHub repo
-- Vercel will auto-detect Next.js — no build configuration needed
-
-**3. Add your environment variables**
-
-In the Vercel project dashboard, go to **Settings → Environment Variables** and add:
-
-```env
-AI_PROVIDER
-OPENAI_API_KEY
-ANTHROPIC_API_KEY
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY
-SUPABASE_SERVICE_ROLE_KEY
-```
-
-> ⚠️ Never commit `.env.local` to Git. Your API keys should only ever live in Vercel's environment variable settings.
-
-**4. Deploy**
-
-Click **Deploy**. Vercel will build and publish your app. Every subsequent push to `main` triggers an automatic redeployment.
-
-**5. Set your Supabase redirect URL**
-
-Once deployed, copy your production URL (e.g. `https://aura.vercel.app`) and add it to your Supabase project under **Authentication → URL Configuration → Redirect URLs** — this is required for magic link auth to work in production.
+For deployment instructipns, see [DEPLOYMENT.md](./docs/DEPLOYMENT.md)
 
 ---
 
