@@ -120,7 +120,7 @@ We evaluated CRA, Vite, Next.js, and Remix — Next.js won for its API routes, V
 | **Framework**        | Next.js (App Router)                        | API routes, Vercel-native, excellent DX                                                                            |
 | **Styling**          | Tailwind CSS                                | Utility-first makes it easy to enforce the clean, minimal aesthetic consistently; excellent for responsive design  |
 | **State Management** | Zustand                                     | Lightweight, minimal boilerplate, no provider hell — React Context would get messy fast; Redux Toolkit is overkill |
-| **AI Integration**   | OpenAI or Anthropic (via Next.js API route) | Both support structured JSON output and are swappable behind the API route — see [AI Provider](#ai-provider)       |
+| **AI Integration**   | OpenAI or Anthropic (via Next.js API route) | Both support structured JSON output and are swappable behind the API route                                         |
 | **Database**         | Supabase                                    | Postgres-backed, real-time capable, built-in auth, generous free tier, great DX                                    |
 | **Auth**             | Supabase Auth                               | Comes with Supabase; supports magic links (lower friction than passwords — one less thing to forget)               |
 
