@@ -113,74 +113,16 @@ Aura learns how you work over time. It picks up on patterns in your input — th
 
 ## Tech Stack
 
-We evaluated CRA, Vite, Next.js, and Remix — Next.js won for its API routes, Vercel-native deployment, and ability to ship the frontend and backend proxy as a single unit. See [ARCHITECTURE.md](./ARCHITECTURE.md) for the full breakdown.
-
-### Recommended Stack
+We evaluated CRA, Vite, Next.js, and Remix — Next.js won for its API routes, Vercel-native deployment, and ability to ship the frontend and backend proxy as a single unit. See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full breakdown.
 
 | Layer                | Choice                                      | Rationale                                                                                                          |
 | -------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | **Framework**        | Next.js (App Router)                        | API routes, Vercel-native, excellent DX                                                                            |
 | **Styling**          | Tailwind CSS                                | Utility-first makes it easy to enforce the clean, minimal aesthetic consistently; excellent for responsive design  |
 | **State Management** | Zustand                                     | Lightweight, minimal boilerplate, no provider hell — React Context would get messy fast; Redux Toolkit is overkill |
-| **AI Integration**   | OpenAI or Anthropic (via Next.js API route) | Both support structured JSON output and are swappable behind the API route — see [AI Provider](#ai-provider)       |
+| **AI Integration**   | OpenAI or Anthropic (via Next.js API route) | Both support structured JSON output and are swappable behind the API route                                         |
 | **Database**         | Supabase                                    | Postgres-backed, real-time capable, built-in auth, generous free tier, great DX                                    |
 | **Auth**             | Supabase Auth                               | Comes with Supabase; supports magic links (lower friction than passwords — one less thing to forget)               |
-
----
-
-## System Architecture
-
-```
-┌─────────────────────────────────────────────────┐
-│                  Browser (React)                 │
-│                                                  │
-│  ┌──────────────────────────────────────────┐   │
-│  │  Free-form text input                    │   │
-│  │  "I need to do laundry and call my mom"  │   │
-│  └──────────────┬───────────────────────────┘   │
-│                 │ POST /api/parse-tasks           │
-└─────────────────┼───────────────────────────────┘
-                  │
-┌─────────────────▼───────────────────────────────┐
-│             Next.js API Route                    │
-│         (/app/api/parse-tasks/route.ts)          │
-│                                                  │
-│  1. Validate & sanitize input                    │
-│  2. Build prompt with system instructions        │
-│  3. Call AI provider                             │
-│  4. Parse & validate JSON response               │
-│  5. Detect ambiguity — needs clarification?      │
-└──────────┬──────────────────────┬────────────────┘
-           │ No                   │ Yes
-           │              ┌───────▼────────────────┐
-           │              │  POST /api/clarify      │
-           │              │                         │
-           │              │  Returns suggested      │
-           │              │  tasks + prompt         │
-           │              └───────┬────────────────┘
-           │                      │ User confirms inline
-           │              ┌───────▼────────────────┐
-           │              │  Browser: Clarification │
-           │              │  card shown beneath     │
-           │              │  input — one round max  │
-           │              └───────┬────────────────┘
-           │                      │ Confirmed
-           └──────────────────────┘
-                  │ Structured tasks
-┌─────────────────▼───────────────────────────────┐
-│             Next.js API Route                    │
-│                                                  │
-│  6. Persist tasks to Supabase                    │
-│  7. Return tasks to client                       │
-└─────────────────┬───────────────────────────────┘
-                  │
-┌─────────────────▼───────────────────────────────┐
-│                  Browser (React)                 │
-│                                                  │
-│  Zustand store updated → Task cards rendered     │
-│  User interacts: complete, focus, edit, delete   │
-└─────────────────────────────────────────────────┘
-```
 
 ---
 
@@ -197,56 +139,9 @@ Set your preferred provider via environment variables — see [Getting Started](
 
 ## AI Prompt Design
 
-### System Prompt
+All prompts are defined as constants in `lib/prompts.ts` — that's the single source of truth. If you need to adjust extraction rules, ambiguity detection behaviour, or the clarification flow, that's the only file you need to touch.
 
-```
-You are a task extraction and clarification assistant for a todo app designed for people
-who struggle with task planning and prioritization.
-
-You have two responsibilities:
-1. Extract structured tasks from free-form, stream-of-consciousness input
-2. Detect when input is ambiguous or project-level and flag it for clarification
-
-Rules — task extraction:
-- Extract every distinct task or obligation mentioned, no matter how casually
-- Use simple, action-oriented titles (verb + object: "Call Mom", "Do laundry")
-- Be generous with priority assignment — if something sounds time-sensitive or causes
-  the user stress, bump it up
-- Estimate duration conservatively and realistically
-- If a task implies multiple distinct steps, suggest 2-4 subtasks
-- Infer categories from context: Home, Work, Health, Communication, Finance, Personal
-- If no due date is mentioned, omit the field — don't invent dates
-
-Rules — ambiguity detection:
-- Mark a task as ambiguous if it describes a project rather than a discrete action
-  (e.g. "plan Yosemite trip", "sort out taxes", "deal with the kitchen")
-- Mark a task as ambiguous if critical information is missing and would meaningfully
-  change how the task is structured (e.g. "dentist appointment" with no date or context)
-- If ambiguous, provide a clarificationPrompt — a single, short question for the user
-- If personalization context is provided, use it to improve category inference,
-  duration estimates, and priority signals before returning tasks
-
-Return ONLY valid JSON. No preamble, no explanation.
-
-Response format:
-{
-  "tasks": [
-    {
-      "title": "string",
-      "priority": "low" | "medium" | "high" | "urgent",
-      "estimatedDuration": number (minutes),
-      "dueDate": "ISO 8601 string" | null,
-      "category": "string",
-      "subtasks": ["string"] | [],
-      "userContext": "string" | null,
-      "aiNotes": "string" | null,
-      "ambiguous": boolean,
-      "clarificationPrompt": "string" | null,
-      "source": "direct" | "clarified"
-    }
-  ]
-}
-```
+The parsing prompt handles two responsibilities in a single pass: extracting structured tasks from free-form input, and flagging ambiguous or project-level input for the clarification flow. Personalization context is injected at call time when available.
 
 ### Example — direct extraction
 
@@ -459,54 +354,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) and start typing.
 
-For linting, formatting, pre-commit hooks, and testing setup, see [DEVELOPMENT.md](./DEVELOPMENT.md).
+For linting, formatting, pre-commit hooks, and testing setup, see [DEVELOPMENT.md](./docs/DEVELOPMENT.md).
 
 ---
 
 ## Deployment
 
-Aura is built to deploy on [Vercel](https://vercel.com) with zero additional configuration — Next.js and Vercel are made by the same team, so everything just works.
-
-### Steps
-
-**1. Push your project to GitHub**
-
-```bash
-git init
-git add .
-git commit -m "init"
-git remote add origin https://github.com/your-username/aura.git
-git push -u origin main
-```
-
-**2. Import your repo on Vercel**
-
-- Go to [vercel.com/new](https://vercel.com/new)
-- Click **Add New Project** and import your GitHub repo
-- Vercel will auto-detect Next.js — no build configuration needed
-
-**3. Add your environment variables**
-
-In the Vercel project dashboard, go to **Settings → Environment Variables** and add:
-
-```env
-AI_PROVIDER
-OPENAI_API_KEY
-ANTHROPIC_API_KEY
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY
-SUPABASE_SERVICE_ROLE_KEY
-```
-
-> ⚠️ Never commit `.env.local` to Git. Your API keys should only ever live in Vercel's environment variable settings.
-
-**4. Deploy**
-
-Click **Deploy**. Vercel will build and publish your app. Every subsequent push to `main` triggers an automatic redeployment.
-
-**5. Set your Supabase redirect URL**
-
-Once deployed, copy your production URL (e.g. `https://aura.vercel.app`) and add it to your Supabase project under **Authentication → URL Configuration → Redirect URLs** — this is required for magic link auth to work in production.
+For deployment instructipns, see [DEPLOYMENT.md](./docs/DEPLOYMENT.md)
 
 ---
 
