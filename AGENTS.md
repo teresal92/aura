@@ -44,3 +44,7 @@
 
 - Local env setup lives in `.env.local` (see `.env.example`).
 - Never commit secrets; prefer `NEXT_PUBLIC_*` only for non-sensitive values.
+
+# ExecPlans
+
+When writing complex features or significant refactors, use an ExecPlan (as described in .agent/PLANS.md) from design to implementation.
