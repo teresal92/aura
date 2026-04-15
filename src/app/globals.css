@@ -7,42 +7,45 @@
 /* ========================================================================== */
 :root {
   /* Core palette */
-  --background: oklch(0.98 0.004 80);
-  --foreground: oklch(0.22 0.02 50);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.02 50);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.02 50);
-  --primary: oklch(0.62 0.14 175);
-  --primary-foreground: oklch(0.99 0.005 175);
-  --secondary: oklch(0.955 0.01 80);
-  --secondary-foreground: oklch(0.35 0.02 50);
-  --muted: oklch(0.955 0.008 80);
-  --muted-foreground: oklch(0.52 0.02 50);
-  --accent: oklch(0.955 0.01 80);
-  --accent-foreground: oklch(0.35 0.02 50);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.915 0.01 80);
-  --input: oklch(0.915 0.01 80);
-  --ring: oklch(0.62 0.14 175);
-  --radius: 0.75rem;
+  --background: #f5efe5;
+  --foreground: #312923;
+  --card: #fbf6ef;
+  --card-foreground: #312923;
+  --popover: #fbf6ef;
+  --popover-foreground: #312923;
+  --primary: #312923;
+  --primary-foreground: #fbf7f0;
+  --secondary: #efe7dc;
+  --secondary-foreground: #312923;
+  --muted: #efe6da;
+  --muted-foreground: #5e5147;
+  --accent: #f3ece2;
+  --accent-foreground: #2a241f;
+  --destructive: #805145;
+  --destructive-foreground: #fbf7f0;
+  --border: #ddd1c1;
+  --input: #ddd1c1;
+  --ring: #cdbca8;
+  --radius: 1.25rem;
 
   /* Aura semantic colors */
-  --aura-urgent: oklch(0.62 0.2 25);
-  --aura-high: oklch(0.68 0.16 55);
-  --aura-medium: oklch(0.62 0.14 175);
-  --aura-low: oklch(0.58 0.06 250);
-  --aura-success: oklch(0.65 0.18 155);
-  --aura-surface-warm: oklch(0.97 0.008 70);
-  --aura-surface-elevated: oklch(1 0 0);
+  --aura-urgent: #5f433a;
+  --aura-high: #74584d;
+  --aura-medium: #8a6e61;
+  --aura-low: #a38a79;
+  --aura-success: #625548;
+  --aura-surface-warm: #fbf6ef;
+  --aura-surface-elevated: #fffaf4;
+  --aura-depth: #efe7dc;
+  --aura-divider: #e6ded2;
+  --aura-foreground-strong: #211c18;
 
   /* Elevation */
-  --aura-shadow-xs: 0 1px 2px oklch(0.22 0.02 50 / 0.04);
-  --aura-shadow-sm: 0 1px 3px oklch(0.22 0.02 50 / 0.06), 0 1px 2px oklch(0.22 0.02 50 / 0.04);
-  --aura-shadow-md: 0 4px 12px oklch(0.22 0.02 50 / 0.06), 0 2px 4px oklch(0.22 0.02 50 / 0.03);
-  --aura-shadow-lg: 0 8px 24px oklch(0.22 0.02 50 / 0.08), 0 4px 8px oklch(0.22 0.02 50 / 0.04);
-  --aura-shadow-focus: 0 0 0 3px oklch(0.62 0.14 175 / 0.15);
+  --aura-shadow-xs: 0 1px 2px rgba(49, 41, 35, 0.05);
+  --aura-shadow-sm: 0 10px 24px rgba(49, 41, 35, 0.06), 0 2px 6px rgba(49, 41, 35, 0.04);
+  --aura-shadow-md: 0 16px 38px rgba(49, 41, 35, 0.08), 0 4px 12px rgba(49, 41, 35, 0.05);
+  --aura-shadow-lg: 0 24px 52px rgba(49, 41, 35, 0.11), 0 8px 18px rgba(49, 41, 35, 0.07);
+  --aura-shadow-focus: 0 0 0 2px rgba(94, 81, 71, 0.12);
 
   /* Motion */
   --aura-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -54,43 +57,47 @@
 }
 
 .dark {
-  --background: oklch(0.15 0.012 50);
-  --foreground: oklch(0.93 0.008 80);
-  --card: oklch(0.19 0.012 50);
-  --card-foreground: oklch(0.93 0.008 80);
-  --popover: oklch(0.19 0.012 50);
-  --popover-foreground: oklch(0.93 0.008 80);
-  --primary: oklch(0.68 0.14 175);
-  --primary-foreground: oklch(0.13 0.03 175);
-  --secondary: oklch(0.23 0.012 50);
-  --secondary-foreground: oklch(0.93 0.008 80);
-  --muted: oklch(0.23 0.012 50);
-  --muted-foreground: oklch(0.62 0.012 50);
-  --accent: oklch(0.23 0.012 50);
-  --accent-foreground: oklch(0.93 0.008 80);
-  --destructive: oklch(0.45 0.18 25);
-  --destructive-foreground: oklch(0.65 0.2 25);
-  --border: oklch(0.27 0.012 50);
-  --input: oklch(0.27 0.012 50);
-  --ring: oklch(0.68 0.14 175);
+  --background: #1f1a17;
+  --foreground: #f4ede3;
+  --card: #28211d;
+  --card-foreground: #f4ede3;
+  --popover: #28211d;
+  --popover-foreground: #f4ede3;
+  --primary: #f4ede3;
+  --primary-foreground: #1f1a17;
+  --secondary: #302824;
+  --secondary-foreground: #f4ede3;
+  --muted: #302824;
+  --muted-foreground: #c2b5a6;
+  --accent: #362d28;
+  --accent-foreground: #f7f1e8;
+  --destructive: #a76c5f;
+  --destructive-foreground: #f7f1e8;
+  --border: #433830;
+  --input: #433830;
+  --ring: #5d5046;
 
-  --aura-urgent: oklch(0.68 0.2 25);
-  --aura-high: oklch(0.74 0.16 55);
-  --aura-medium: oklch(0.68 0.14 175);
-  --aura-low: oklch(0.62 0.06 250);
-  --aura-success: oklch(0.72 0.18 155);
-  --aura-surface-warm: oklch(0.2 0.012 50);
-  --aura-surface-elevated: oklch(0.22 0.012 50);
+  --aura-urgent: #d6b0a6;
+  --aura-high: #c8aa9c;
+  --aura-medium: #b9998b;
+  --aura-low: #a88779;
+  --aura-success: #c8bcae;
+  --aura-surface-warm: #28211d;
+  --aura-surface-elevated: #302824;
+  --aura-depth: #171311;
+  --aura-divider: #3b312b;
+  --aura-foreground-strong: #faf4ea;
 
-  --aura-shadow-xs: 0 1px 2px oklch(0 0 0 / 0.15);
-  --aura-shadow-sm: 0 1px 3px oklch(0 0 0 / 0.2), 0 1px 2px oklch(0 0 0 / 0.15);
-  --aura-shadow-md: 0 4px 12px oklch(0 0 0 / 0.2), 0 2px 4px oklch(0 0 0 / 0.12);
-  --aura-shadow-lg: 0 8px 24px oklch(0 0 0 / 0.25), 0 4px 8px oklch(0 0 0 / 0.15);
-  --aura-shadow-focus: 0 0 0 3px oklch(0.68 0.14 175 / 0.2);
+  --aura-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.16);
+  --aura-shadow-sm: 0 12px 24px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.12);
+  --aura-shadow-md: 0 16px 38px rgba(0, 0, 0, 0.25), 0 6px 16px rgba(0, 0, 0, 0.16);
+  --aura-shadow-lg: 0 24px 54px rgba(0, 0, 0, 0.28), 0 8px 20px rgba(0, 0, 0, 0.18);
+  --aura-shadow-focus: 0 0 0 2px rgba(244, 237, 227, 0.12);
 }
 
 @theme inline {
-  --font-sans: 'DM Sans', 'Geist', 'Geist Fallback';
+  --font-sans: var(--font-libre-baskerville), 'Libre Baskerville', serif;
+  --font-serif: var(--font-libre-baskerville), 'Libre Baskerville', serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
 
   --color-background: var(--background);
@@ -120,6 +127,9 @@
   --color-aura-success: var(--aura-success);
   --color-aura-surface-warm: var(--aura-surface-warm);
   --color-aura-surface-elevated: var(--aura-surface-elevated);
+  --color-aura-depth: var(--aura-depth);
+  --color-aura-divider: var(--aura-divider);
+  --color-aura-foreground-strong: var(--aura-foreground-strong);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -132,8 +142,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
-    @apply bg-background text-foreground font-sans;
+    min-height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-serif;
+    background-image: linear-gradient(180deg, #faf5ee 0%, #f5efe5 100%);
+    letter-spacing: 0.004em;
   }
 }
 
@@ -164,55 +180,80 @@
   }
 
   .aura-focus-ring {
-    @apply outline-none ring-0 focus-visible:ring-2 focus-visible:ring-primary/40;
+    outline: none;
+    transition:
+      box-shadow var(--aura-duration-fast) var(--aura-ease-out),
+      border-color var(--aura-duration-fast) var(--aura-ease-out),
+      color var(--aura-duration-fast) var(--aura-ease-out);
+  }
+
+  .aura-focus-ring:focus-visible {
+    box-shadow: var(--aura-shadow-focus);
+  }
+
+  .aura-card {
+    @apply rounded-[1.75rem] border border-aura-divider bg-card;
+    box-shadow: var(--aura-shadow-xs);
+    transition:
+      background-color var(--aura-duration-base) var(--aura-ease-out),
+      border-color var(--aura-duration-base) var(--aura-ease-out),
+      box-shadow var(--aura-duration-base) var(--aura-ease-out),
+      opacity var(--aura-duration-base) var(--aura-ease-out),
+      transform var(--aura-duration-base) var(--aura-ease-out);
   }
 
   .aura-badge {
-    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium;
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.72rem] font-medium;
+    letter-spacing: 0.04em;
   }
 
   .aura-btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-    box-shadow: var(--aura-shadow-xs);
+    @apply inline-flex items-center justify-center rounded-full px-1 py-1 text-sm font-bold text-aura-foreground-strong;
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
     transition:
-      background-color var(--aura-duration-fast) var(--aura-ease-out),
-      box-shadow var(--aura-duration-fast) var(--aura-ease-out);
+      color var(--aura-duration-fast) var(--aura-ease-out),
+      opacity var(--aura-duration-fast) var(--aura-ease-out),
+      text-decoration-color var(--aura-duration-fast) var(--aura-ease-out);
   }
 
   .aura-btn-primary:hover {
-    @apply bg-primary/90;
-    box-shadow: var(--aura-shadow-sm);
+    @apply text-aura-foreground-strong;
+    text-decoration-color: currentColor;
   }
 
   .aura-btn-primary:disabled {
     @apply cursor-not-allowed opacity-50;
-    box-shadow: none;
-  }
-
-  .aura-btn-primary:disabled:hover {
-    @apply bg-primary;
-    box-shadow: none;
+    text-decoration-color: transparent;
   }
 
   .aura-btn-subtle {
-    @apply inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground;
+    @apply inline-flex items-center justify-center rounded-full px-1 py-1 text-sm font-bold text-muted-foreground;
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
     transition:
-      background-color var(--aura-duration-fast) var(--aura-ease-out),
-      color var(--aura-duration-fast) var(--aura-ease-out);
+      color var(--aura-duration-fast) var(--aura-ease-out),
+      opacity var(--aura-duration-fast) var(--aura-ease-out),
+      text-decoration-color var(--aura-duration-fast) var(--aura-ease-out);
   }
 
   .aura-btn-subtle:hover {
-    @apply bg-secondary text-foreground;
+    @apply text-aura-foreground-strong;
+    text-decoration-color: currentColor;
   }
 
   .aura-icon-btn {
-    @apply inline-flex items-center justify-center rounded-lg text-muted-foreground;
+    @apply inline-flex items-center justify-center rounded-full text-muted-foreground;
     transition:
       background-color var(--aura-duration-fast) var(--aura-ease-out),
       color var(--aura-duration-fast) var(--aura-ease-out);
   }
 
   .aura-icon-btn:hover {
-    @apply bg-secondary text-foreground;
+    @apply bg-secondary/60 text-aura-foreground-strong;
   }
 }

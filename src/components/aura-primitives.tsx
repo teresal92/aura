@@ -19,9 +19,14 @@ export function AuraLogo({
 
   return (
     <div className={cn('flex items-center gap-2.5', className)}>
-      <div className={cn('flex items-center justify-center rounded-xl bg-primary/10', s.wrapper)}>
+      <div
+        className={cn(
+          'flex items-center justify-center rounded-full border border-aura-divider/80 bg-foreground/[0.04]',
+          s.wrapper
+        )}
+      >
         <svg
-          className={cn('text-primary', s.icon)}
+          className={cn('text-foreground/85', s.icon)}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -35,7 +40,9 @@ export function AuraLogo({
           <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
         </svg>
       </div>
-      <span className={cn('font-semibold tracking-tight text-foreground', s.text)}>aura</span>
+      <span className={cn('font-bold tracking-[0.08em] text-aura-foreground-strong', s.text)}>
+        aura
+      </span>
     </div>
   )
 }
@@ -54,9 +61,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     }
     const variantMap = {
       ghost: 'aura-icon-btn',
-      subtle: 'aura-icon-btn hover:bg-primary/10 hover:text-primary',
+      subtle: 'aura-icon-btn hover:bg-secondary/70 hover:text-aura-foreground-strong',
       danger: 'aura-icon-btn hover:bg-destructive/10 hover:text-destructive',
-      success: 'aura-icon-btn hover:bg-aura-success/15 hover:text-aura-success',
+      success: 'aura-icon-btn hover:bg-aura-success/10 hover:text-aura-success',
     }
 
     return (
@@ -76,25 +83,25 @@ const PRIORITY_CONFIG = {
   urgent: {
     label: 'Urgent',
     bg: 'bg-aura-urgent/10',
-    text: 'text-aura-urgent',
+    text: 'text-aura-foreground-strong',
     dot: 'bg-aura-urgent',
   },
   high: {
     label: 'High',
     bg: 'bg-aura-high/10',
-    text: 'text-aura-high',
+    text: 'text-foreground',
     dot: 'bg-aura-high',
   },
   medium: {
     label: 'Medium',
     bg: 'bg-aura-medium/10',
-    text: 'text-aura-medium',
+    text: 'text-muted-foreground',
     dot: 'bg-aura-medium',
   },
   low: {
     label: 'Low',
     bg: 'bg-aura-low/10',
-    text: 'text-aura-low',
+    text: 'text-muted-foreground',
     dot: 'bg-aura-low',
   },
 } as const
@@ -123,7 +130,7 @@ export function PriorityDot({ priority, className }: { priority: Priority; class
 
 export function CategoryBadge({ category, className }: { category: string; className?: string }) {
   return (
-    <span className={cn('aura-badge bg-secondary text-secondary-foreground', className)}>
+    <span className={cn('aura-badge bg-secondary/70 text-muted-foreground', className)}>
       {category}
     </span>
   )
@@ -159,11 +166,11 @@ export function CompletionCheckbox({
     <button
       onClick={onChange}
       className={cn(
-        'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 aura-focus-ring',
+        'aura-focus-ring flex h-6 w-6 shrink-0 items-center justify-center rounded-full border',
         'transition-all duration-200',
         checked
-          ? 'border-aura-success bg-aura-success text-card'
-          : 'border-border hover:border-primary/50 hover:bg-primary/5',
+          ? 'border-foreground bg-foreground text-background'
+          : 'border-border bg-background/50 hover:border-muted-foreground hover:bg-secondary/60',
         className
       )}
       aria-label={checked ? 'Mark as incomplete' : 'Mark as complete'}
@@ -185,14 +192,12 @@ export function SectionHeader({
   className?: string
 }) {
   return (
-    <h2
-      className={cn(
-        'text-xs font-medium uppercase tracking-wider text-muted-foreground',
-        className
-      )}
-    >
-      {children}
-      {count !== undefined ? <span className="ml-1.5 tabular-nums">{count}</span> : null}
-    </h2>
+    <div className={cn('flex items-center gap-4', className)}>
+      <h2 className="text-[0.72rem] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+        {children}
+        {count !== undefined ? <span className="ml-1.5 tabular-nums">{count}</span> : null}
+      </h2>
+      <span className="h-px flex-1 bg-aura-divider/80" aria-hidden="true" />
+    </div>
   )
 }

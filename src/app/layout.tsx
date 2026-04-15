@@ -1,17 +1,12 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
-import { DM_Sans, Geist, Geist_Mono } from 'next/font/google'
+import { Geist_Mono, Libre_Baskerville } from 'next/font/google'
 import './globals.css'
 
-const dmSans = DM_Sans({
-  variable: '--font-dm-sans',
+const libreBaskerville = Libre_Baskerville({
+  variable: '--font-libre-baskerville',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-})
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+  weight: ['400', '700'],
 })
 
 const geistMono = Geist_Mono({
@@ -33,7 +28,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className="h-full">
         <body
-          className={`${dmSans.variable} ${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
+          className={`${libreBaskerville.variable} ${geistMono.variable} min-h-screen antialiased`}
         >
           {children}
         </body>

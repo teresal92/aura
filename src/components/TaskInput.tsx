@@ -1,20 +1,25 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useEffectEvent, useRef, useState } from 'react'
 import { useAuth, useClerk } from '@clerk/nextjs'
-import { useTaskStore } from '@/store/tasks'
 import { cn } from '@/lib/utils'
+import { useTaskStore } from '@/store/tasks'
 
-const PLACEHOLDER_EXAMPLES = [
-  "ok so i really need to do laundry today, also i have that dentist thing this week and i keep forgetting to reply to sarah's email which is actually kind of urgent...",
-  "buy groceries, call the bank about that weird charge, finish the slides for monday's presentation...",
-  'i should probably exercise, also i need to renew my passport and the deadline is coming up fast...',
-  'clean the apartment before mom visits saturday, book a vet appointment for the cat, and oh yeah taxes...',
-]
+const HERO_PLACEHOLDER =
+  "what's been on your mind lately...\n\nerrands, plans, things left unfinished..."
 
-export function TaskInput() {
+const MIN_TEXTAREA_HEIGHT = 180
+const MAX_TEXTAREA_HEIGHT = 220
+
+export function TaskInput({
+  isWritingFocused = false,
+  onFocusChange,
+}: {
+  isWritingFocused?: boolean
+  onFocusChange?: (isFocused: boolean) => void
+}) {
   const [input, setInput] = useState('')
-  const [placeholderIndex, setPlaceholderIndex] = useState(0)
+  const [isFocused, setIsFocused] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { addTasks, isInputLoading, setInputLoading } = useTaskStore()
   const { isLoaded, isSignedIn } = useAuth()
@@ -22,37 +27,55 @@ export function TaskInput() {
 
   const pendingInputKey = 'aura:pending-input'
   const pendingSubmitKey = 'aura:pending-submit'
+  const submitPendingInput = useEffectEvent((pendingInput: string) => {
+    void handleSubmit(pendingInput)
+  })
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex((index) => (index + 1) % PLACEHOLDER_EXAMPLES.length)
-    }, 8000)
-    return () => clearInterval(interval)
+    const frame = window.requestAnimationFrame(() => {
+      textareaRef.current?.focus()
+    })
+
+    return () => window.cancelAnimationFrame(frame)
   }, [])
 
   useEffect(() => {
-    const textarea = textareaRef.current
-    if (!textarea) return
-    textarea.style.height = 'auto'
-    textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`
+    syncTextareaHeight()
   }, [input])
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return
     if (typeof window === 'undefined') return
+
     const shouldSubmit = window.sessionStorage.getItem(pendingSubmitKey) === '1'
     const pendingInput = shouldSubmit ? window.sessionStorage.getItem(pendingInputKey) : null
     if (!pendingInput) return
+
     window.sessionStorage.removeItem(pendingSubmitKey)
     window.sessionStorage.removeItem(pendingInputKey)
     setInput(pendingInput)
-    handleSubmit(pendingInput)
+    submitPendingInput(pendingInput)
   }, [isLoaded, isSignedIn])
+
+  function syncTextareaHeight() {
+    const textarea = textareaRef.current
+    if (!textarea) return
+
+    textarea.style.height = 'auto'
+    textarea.style.height = `${Math.min(textarea.scrollHeight, MAX_TEXTAREA_HEIGHT)}px`
+    textarea.style.overflowY = textarea.scrollHeight > MAX_TEXTAREA_HEIGHT ? 'auto' : 'hidden'
+  }
+
+  function updateFocusState(nextState: boolean) {
+    setIsFocused(nextState)
+    onFocusChange?.(nextState)
+  }
 
   async function handleSubmit(forcedInput?: string) {
     const trimmed = (forcedInput ?? input).trim()
     if (!trimmed || isInputLoading) return
     if (!isLoaded) return
+
     if (!isSignedIn) {
       if (typeof window !== 'undefined') {
         window.sessionStorage.setItem(pendingInputKey, trimmed)
@@ -63,6 +86,7 @@ export function TaskInput() {
     }
 
     setInputLoading(true)
+
     try {
       const response = await fetch('/api/parse-tasks', {
         method: 'POST',
@@ -75,15 +99,19 @@ export function TaskInput() {
       }
 
       const data = (await response.json()) as { tasks?: unknown }
-      if (Array.isArray(data.tasks)) {
-        addTasks(data.tasks as Parameters<typeof addTasks>[0])
-        setInput('')
-        if (textareaRef.current) textareaRef.current.style.height = 'auto'
-      } else {
+      if (!Array.isArray(data.tasks)) {
         throw new Error('Invalid response payload')
       }
-    } catch (error) {
-      console.error(error)
+
+      addTasks(data.tasks as Parameters<typeof addTasks>[0])
+      setInput('')
+
+      if (textareaRef.current) {
+        textareaRef.current.style.height = `${MIN_TEXTAREA_HEIGHT}px`
+        textareaRef.current.style.overflowY = 'hidden'
+        textareaRef.current.focus()
+      }
+    } catch {
     } finally {
       setInputLoading(false)
     }
@@ -96,54 +124,74 @@ export function TaskInput() {
     }
   }
 
+  function handleBlur(event: React.FocusEvent<HTMLDivElement>) {
+    const nextTarget = event.relatedTarget
+    if (nextTarget instanceof Node && event.currentTarget.contains(nextTarget)) {
+      return
+    }
+
+    updateFocusState(false)
+  }
+
   return (
     <div className="w-full">
       <div
-        className={cn(
-          'aura-card relative overflow-hidden',
-          'transition-colors focus-within:border-primary/40',
-          !isInputLoading && 'hover:border-primary/30',
-          isInputLoading && 'opacity-80'
-        )}
+        className="mx-auto max-w-176"
+        onFocusCapture={() => updateFocusState(true)}
+        onBlurCapture={handleBlur}
       >
-        <div className="flex items-center gap-2 px-4 pt-4 pb-1">
-          <span className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
-            Brain dump
-          </span>
-        </div>
-
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(event) => setInput(event.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={PLACEHOLDER_EXAMPLES[placeholderIndex]}
-          disabled={isInputLoading}
-          rows={3}
+        <div
           className={cn(
-            'w-full resize-none bg-transparent px-4 py-3 text-base leading-relaxed',
-            'placeholder:text-muted-foreground/40 placeholder:leading-relaxed',
-            'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground',
-            'text-foreground'
+            'aura-card relative overflow-hidden rounded-4xl px-6 pb-5 pt-6 sm:px-8 sm:pb-6 sm:pt-7',
+            'transition-all duration-300',
+            isInputLoading && 'opacity-85',
+            isFocused
+              ? 'border-[#D2C2AE] bg-[#F8F1E8] aura-shadow-lg'
+              : 'border-border bg-card aura-shadow-sm',
+            isWritingFocused && !isFocused && 'opacity-95'
           )}
-          aria-label="Type your thoughts, tasks, or brain dump here"
-        />
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(239,231,220,0.24)_100%)]" />
 
-        <div className="flex items-center justify-between px-4 pb-3">
-          <p className="text-xs text-muted-foreground/50">
-            Press Enter to organize · Shift+Enter for new line
-          </p>
-          <button
-            onClick={() => handleSubmit()}
-            disabled={!input.trim() || isInputLoading}
-            className={cn(
-              'aura-btn-primary',
-              'disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:shadow-none'
-            )}
-            aria-label="Organize tasks"
-          >
-            {isInputLoading ? 'Organizing...' : 'Organize'}
-          </button>
+          <div className="relative">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={HERO_PLACEHOLDER}
+              disabled={isInputLoading}
+              rows={6}
+              className={cn(
+                'min-h-[180px] w-full resize-none bg-transparent text-[1.18rem] leading-[1.72] tracking-[0.004em] font-normal',
+                'text-aura-foreground-strong placeholder:text-[#5E5147]/78',
+                'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground'
+              )}
+              style={{ height: `${MIN_TEXTAREA_HEIGHT}px` }}
+              aria-label="Type your thoughts, tasks, or brain dump here"
+            />
+
+            <div className="mt-4 flex items-end justify-between gap-4">
+              <p className="max-w-sm text-sm italic leading-relaxed text-muted-foreground/85">
+                messy is fine - we&apos;ll make sense of it
+              </p>
+
+              <button
+                onClick={() => handleSubmit()}
+                disabled={!input.trim() || isInputLoading}
+                className={cn(
+                  'shrink-0 rounded-full border border-[#2A241F] bg-[#312923] px-4 py-2 text-sm font-bold tracking-[0.01em] text-[#FBF6EF]',
+                  'shadow-[0_6px_18px_rgba(49,41,35,0.12)] transition-all duration-150',
+                  'hover:bg-[#211C18] hover:shadow-[0_10px_22px_rgba(49,41,35,0.16)]',
+                  'active:translate-y-px active:opacity-90',
+                  'disabled:cursor-not-allowed disabled:opacity-45 disabled:shadow-none'
+                )}
+                aria-label="Organize tasks"
+              >
+                {isInputLoading ? 'organizing...' : 'organize ->'}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
