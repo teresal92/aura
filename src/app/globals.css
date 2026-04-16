@@ -7,38 +7,38 @@
 /* ========================================================================== */
 :root {
   /* Core palette */
-  --background: #f5efe5;
-  --foreground: #312923;
-  --card: #fbf6ef;
-  --card-foreground: #312923;
-  --popover: #fbf6ef;
-  --popover-foreground: #312923;
-  --primary: #312923;
-  --primary-foreground: #fbf7f0;
-  --secondary: #efe7dc;
-  --secondary-foreground: #312923;
-  --muted: #efe6da;
-  --muted-foreground: #5e5147;
-  --accent: #f3ece2;
-  --accent-foreground: #2a241f;
-  --destructive: #805145;
-  --destructive-foreground: #fbf7f0;
-  --border: #ddd1c1;
-  --input: #ddd1c1;
-  --ring: #cdbca8;
+  --background: oklch(95.41% 0.0148 80.71);
+  --foreground: oklch(28.78% 0.016 58.95);
+  --card: oklch(97.51% 0.0107 76.6);
+  --card-foreground: oklch(28.78% 0.016 58.95);
+  --popover: oklch(97.51% 0.0107 76.6);
+  --popover-foreground: oklch(28.78% 0.016 58.95);
+  --primary: oklch(28.78% 0.016 58.95);
+  --primary-foreground: oklch(97.73% 0.0102 81.8);
+  --secondary: oklch(93.12% 0.0171 76.11);
+  --secondary-foreground: oklch(28.78% 0.016 58.95);
+  --muted: oklch(92.88% 0.0188 75.32);
+  --muted-foreground: oklch(44.48% 0.0236 59.7);
+  --accent: oklch(94.58% 0.0153 77.07);
+  --accent-foreground: oklch(26.53% 0.0128 62.04);
+  --destructive: oklch(48.46% 0.0666 35.02);
+  --destructive-foreground: oklch(97.73% 0.0102 81.8);
+  --border: oklch(86.6% 0.0255 75.25);
+  --input: oklch(86.6% 0.0255 75.25);
+  --ring: oklch(80.4% 0.0336 71.82);
   --radius: 1.25rem;
 
   /* Aura semantic colors */
-  --aura-urgent: #5f433a;
-  --aura-high: #74584d;
-  --aura-medium: #8a6e61;
-  --aura-low: #a38a79;
-  --aura-success: #625548;
-  --aura-surface-warm: #fbf6ef;
-  --aura-surface-elevated: #fffaf4;
-  --aura-depth: #efe7dc;
-  --aura-divider: #e6ded2;
-  --aura-foreground-strong: #211c18;
+  --aura-urgent: oklch(41.13% 0.0419 38.56);
+  --aura-high: oklch(48.62% 0.0411 42.45);
+  --aura-medium: oklch(56.19% 0.0408 46.21);
+  --aura-low: oklch(65.16% 0.0392 56.14);
+  --aura-success: oklch(45.84% 0.0267 67.08);
+  --aura-surface-warm: oklch(97.51% 0.0107 76.6);
+  --aura-surface-elevated: oklch(98.73% 0.0096 72.66);
+  --aura-depth: oklch(93.12% 0.0171 76.11);
+  --aura-divider: oklch(90.36% 0.0184 78.24);
+  --aura-foreground-strong: oklch(23.08% 0.0109 60.9);
 
   /* Elevation */
   --aura-shadow-xs: 0 1px 2px rgba(49, 41, 35, 0.05);
@@ -57,36 +57,36 @@
 }
 
 .dark {
-  --background: #1f1a17;
-  --foreground: #f4ede3;
-  --card: #28211d;
-  --card-foreground: #f4ede3;
-  --popover: #28211d;
-  --popover-foreground: #f4ede3;
-  --primary: #f4ede3;
-  --primary-foreground: #1f1a17;
-  --secondary: #302824;
-  --secondary-foreground: #f4ede3;
-  --muted: #302824;
-  --muted-foreground: #c2b5a6;
-  --accent: #362d28;
-  --accent-foreground: #f7f1e8;
-  --destructive: #a76c5f;
-  --destructive-foreground: #f7f1e8;
-  --border: #433830;
-  --input: #433830;
-  --ring: #5d5046;
+  --background: oklch(22.25% 0.0098 52.96);
+  --foreground: oklch(94.88% 0.0153 77.07);
+  --card: oklch(25.44% 0.0131 51.58);
+  --card-foreground: oklch(94.88% 0.0153 77.07);
+  --popover: oklch(25.44% 0.0131 51.58);
+  --popover-foreground: oklch(94.88% 0.0153 77.07);
+  --primary: oklch(94.88% 0.0153 77.07);
+  --primary-foreground: oklch(22.25% 0.0098 52.96);
+  --secondary: oklch(28.44% 0.014 48.21);
+  --secondary-foreground: oklch(94.88% 0.0153 77.07);
+  --muted: oklch(28.44% 0.014 48.21);
+  --muted-foreground: oklch(77.98% 0.0256 71.39);
+  --accent: oklch(30.54% 0.0159 50.84);
+  --accent-foreground: oklch(96.03% 0.0136 78.26);
+  --destructive: oklch(59.08% 0.0787 33.04);
+  --destructive-foreground: oklch(96.03% 0.0136 78.26);
+  --border: oklch(34.98% 0.0207 58.03);
+  --input: oklch(34.98% 0.0207 58.03);
+  --ring: oklch(44.12% 0.0236 59.69);
 
-  --aura-urgent: #d6b0a6;
-  --aura-high: #c8aa9c;
-  --aura-medium: #b9998b;
-  --aura-low: #a88779;
-  --aura-success: #c8bcae;
-  --aura-surface-warm: #28211d;
-  --aura-surface-elevated: #302824;
-  --aura-depth: #171311;
-  --aura-divider: #3b312b;
-  --aura-foreground-strong: #faf4ea;
+  --aura-urgent: oklch(78.82% 0.0467 35.15);
+  --aura-high: oklch(76.06% 0.0404 46.5);
+  --aura-medium: oklch(70.82% 0.0433 44.93);
+  --aura-low: oklch(65.05% 0.0455 44.18);
+  --aura-success: oklch(80.13% 0.0237 71.73);
+  --aura-surface-warm: oklch(25.44% 0.0131 51.58);
+  --aura-surface-elevated: oklch(28.44% 0.014 48.21);
+  --aura-depth: oklch(19.08% 0.0077 48.3);
+  --aura-divider: oklch(32.21% 0.0179 52.82);
+  --aura-foreground-strong: oklch(96.91% 0.0147 80.71);
 
   --aura-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.16);
   --aura-shadow-sm: 0 12px 24px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.12);
@@ -148,7 +148,11 @@
   }
   body {
     @apply bg-background text-foreground font-serif;
-    background-image: linear-gradient(180deg, #faf5ee 0%, #f5efe5 100%);
+    background-image: linear-gradient(
+      180deg,
+      oklch(97.21% 0.0107 76.6) 0%,
+      oklch(95.41% 0.0148 80.71) 100%
+    );
     letter-spacing: 0.004em;
   }
 }
