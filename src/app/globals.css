@@ -158,6 +158,7 @@
 }
 
 @layer components {
+  /* Hybrid rule: repeated treatments live here; one-off component styling should reference vars/tokens directly. */
   .aura-shadow-xs {
     box-shadow: var(--aura-shadow-xs);
   }
@@ -206,9 +207,58 @@
       transform var(--aura-duration-base) var(--aura-ease-out);
   }
 
+  .aura-writing-surface-active {
+    @apply border-input bg-secondary/35;
+    box-shadow: var(--aura-shadow-lg);
+  }
+
+  .aura-paper-overlay {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--aura-surface-elevated) 34%, transparent) 0%,
+      color-mix(in oklab, var(--aura-depth) 24%, transparent) 100%
+    );
+  }
+
   .aura-badge {
     @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.72rem] font-medium;
     letter-spacing: 0.04em;
+  }
+
+  .aura-btn-shell-primary {
+    @apply inline-flex items-center justify-center rounded-full border border-aura-foreground-strong bg-primary px-3.5 py-1.5 text-sm font-bold text-primary-foreground;
+    box-shadow: var(--aura-shadow-sm);
+    transition:
+      background-color var(--aura-duration-fast) var(--aura-ease-out),
+      box-shadow var(--aura-duration-fast) var(--aura-ease-out),
+      transform var(--aura-duration-fast) var(--aura-ease-out),
+      opacity var(--aura-duration-fast) var(--aura-ease-out);
+  }
+
+  .aura-btn-shell-primary:hover {
+    @apply bg-aura-foreground-strong;
+    box-shadow: var(--aura-shadow-md);
+  }
+
+  .aura-btn-shell-primary:active {
+    transform: translateY(1px);
+  }
+
+  .aura-btn-shell-primary:disabled {
+    @apply cursor-not-allowed opacity-45;
+    box-shadow: none;
+  }
+
+  .aura-btn-shell-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-aura-divider bg-background/70 px-3.5 py-1.5 text-sm font-bold text-muted-foreground;
+    transition:
+      background-color var(--aura-duration-fast) var(--aura-ease-out),
+      border-color var(--aura-duration-fast) var(--aura-ease-out),
+      color var(--aura-duration-fast) var(--aura-ease-out);
+  }
+
+  .aura-btn-shell-secondary:hover {
+    @apply border-ring bg-card text-aura-foreground-strong;
   }
 
   .aura-btn-primary {

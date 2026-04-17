@@ -145,13 +145,11 @@ export function TaskInput({
             'aura-card relative overflow-hidden rounded-4xl px-6 pb-5 pt-6 sm:px-8 sm:pb-6 sm:pt-7',
             'transition-all duration-300',
             isInputLoading && 'opacity-85',
-            isFocused
-              ? 'border-[#D2C2AE] bg-[#F8F1E8] aura-shadow-lg'
-              : 'border-border bg-card aura-shadow-sm',
+            isFocused ? 'aura-writing-surface-active' : 'border-border bg-card aura-shadow-sm',
             isWritingFocused && !isFocused && 'opacity-95'
           )}
         >
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(239,231,220,0.24)_100%)]" />
+          <div className="aura-paper-overlay pointer-events-none absolute inset-0" />
 
           <div className="relative">
             <textarea
@@ -164,7 +162,7 @@ export function TaskInput({
               rows={6}
               className={cn(
                 'min-h-[180px] w-full resize-none bg-transparent text-[1.18rem] leading-[1.72] tracking-[0.004em] font-normal',
-                'text-aura-foreground-strong placeholder:text-[#5E5147]/78',
+                'text-aura-foreground-strong placeholder:text-muted-foreground/78',
                 'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground'
               )}
               style={{ height: `${MIN_TEXTAREA_HEIGHT}px` }}
@@ -179,13 +177,7 @@ export function TaskInput({
               <button
                 onClick={() => handleSubmit()}
                 disabled={!input.trim() || isInputLoading}
-                className={cn(
-                  'shrink-0 rounded-full border border-[#2A241F] bg-[#312923] px-4 py-2 text-sm font-bold tracking-[0.01em] text-[#FBF6EF]',
-                  'shadow-[0_6px_18px_rgba(49,41,35,0.12)] transition-all duration-150',
-                  'hover:bg-[#211C18] hover:shadow-[0_10px_22px_rgba(49,41,35,0.16)]',
-                  'active:translate-y-px active:opacity-90',
-                  'disabled:cursor-not-allowed disabled:opacity-45 disabled:shadow-none'
-                )}
+                className={cn('aura-btn-shell-primary shrink-0 px-4 py-2 tracking-[0.01em]')}
                 aria-label="Organize tasks"
               >
                 {isInputLoading ? 'organizing...' : 'organize ->'}

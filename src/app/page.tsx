@@ -44,18 +44,12 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <SignedOut>
                   <SignInButton mode="modal">
-                    <button
-                      className="rounded-full border border-aura-divider bg-background/70 px-3.5 py-1.5 text-sm font-bold text-muted-foreground transition-all duration-150 hover:border-[#CDBCA8] hover:bg-card hover:text-aura-foreground-strong"
-                      type="button"
-                    >
+                    <button className="aura-btn-shell-secondary" type="button">
                       Sign in
                     </button>
                   </SignInButton>
                   <SignUpButton mode="modal">
-                    <button
-                      className="rounded-full border border-[#2A241F] bg-[#312923] px-3.5 py-1.5 text-sm font-bold text-[#FBF6EF] shadow-[0_6px_18px_rgba(49,41,35,0.12)] transition-all duration-150 hover:bg-[#211C18] hover:shadow-[0_10px_22px_rgba(49,41,35,0.16)] active:translate-y-px active:opacity-90"
-                      type="button"
-                    >
+                    <button className="aura-btn-shell-primary" type="button">
                       Sign up
                     </button>
                   </SignUpButton>
@@ -65,7 +59,7 @@ export default function Home() {
                   <UserButton
                     appearance={{
                       elements: {
-                        avatarBox: 'h-8 w-8 ring-1 ring-[#E2D8CA]',
+                        avatarBox: 'h-8 w-8 ring-1 ring-border',
                       },
                     }}
                   />

@@ -21,7 +21,7 @@ export function AuraLogo({
     <div className={cn('flex items-center gap-2.5', className)}>
       <div
         className={cn(
-          'flex items-center justify-center rounded-full border border-aura-divider/80 bg-foreground/[0.04]',
+          'flex items-center justify-center rounded-full border border-aura-divider/80 bg-foreground/4',
           s.wrapper
         )}
       >
