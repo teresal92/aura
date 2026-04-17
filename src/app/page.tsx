@@ -79,10 +79,11 @@ export default function Home() {
             {tasks.length === 0 ? (
               <>
                 <h1 className="text-[2rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.6rem] text-balance">
-                  Start with the messy version.
+                  What&apos;s swirling around in your head?
                 </h1>
                 <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground text-balance">
-                  Write it the way it arrives. Keep it rough, incomplete, and a little tangled.
+                  Just type it all out below. Messy is fine. Half-formed is fine. Aura will turn it
+                  into a plan.
                 </p>
               </>
             ) : (

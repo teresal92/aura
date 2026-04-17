@@ -171,7 +171,7 @@ export function TaskInput({
 
             <div className="mt-4 flex items-end justify-between gap-4">
               <p className="max-w-sm text-sm italic leading-relaxed text-muted-foreground/85">
-                messy is fine - we&apos;ll make sense of it
+                write it as it comes - structure can follow
               </p>
 
               <button
