@@ -32,14 +32,20 @@ export function TaskCard({ task }: { task: Task }) {
   const hasDetails = task.subtasks.length > 0 || task.notes
 
   return (
-    <div className={cn('aura-card p-4', task.completed && 'opacity-60')} role="article">
+    <div
+      className={cn(
+        'aura-card rounded-[1.6rem] border-aura-divider/80 bg-card/75 p-4 aura-shadow-xs',
+        task.completed && 'opacity-55'
+      )}
+      role="article"
+    >
       <div className="flex items-start gap-3">
         <CompletionCheckbox checked={task.completed} onChange={handleComplete} className="mt-0.5" />
 
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <h3
             className={cn(
-              'text-sm font-medium leading-snug text-foreground',
+              'text-[1.02rem] font-medium leading-normal text-foreground',
               task.completed && 'line-through text-muted-foreground'
             )}
           >
@@ -51,7 +57,7 @@ export function TaskCard({ task }: { task: Task }) {
             <MetaText>{formatDuration(task.estimatedDuration)}</MetaText>
             <CategoryBadge category={task.category} />
             {task.dueDate ? (
-              <span className="text-xs font-medium text-primary">
+              <span className="text-xs italic text-muted-foreground">
                 {formatDueDate(task.dueDate)}
               </span>
             ) : null}
@@ -62,7 +68,7 @@ export function TaskCard({ task }: { task: Task }) {
       {hasDetails ? (
         <div className="mt-3 ml-9 space-y-2">
           {task.subtasks.length > 0 ? (
-            <ul className="space-y-1.5 text-sm text-muted-foreground" role="list">
+            <ul className="space-y-1.5 text-sm leading-relaxed text-muted-foreground" role="list">
               {task.subtasks.map((subtask, index) => (
                 <li key={index}>
                   {index + 1}. {subtask}
@@ -71,7 +77,7 @@ export function TaskCard({ task }: { task: Task }) {
             </ul>
           ) : null}
           {task.notes ? (
-            <p className="text-xs text-muted-foreground/80 leading-relaxed italic">{task.notes}</p>
+            <p className="text-xs italic leading-relaxed text-muted-foreground/80">{task.notes}</p>
           ) : null}
         </div>
       ) : null}

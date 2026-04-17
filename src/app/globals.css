@@ -7,42 +7,45 @@
 /* ========================================================================== */
 :root {
   /* Core palette */
-  --background: oklch(0.98 0.004 80);
-  --foreground: oklch(0.22 0.02 50);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.02 50);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.02 50);
-  --primary: oklch(0.62 0.14 175);
-  --primary-foreground: oklch(0.99 0.005 175);
-  --secondary: oklch(0.955 0.01 80);
-  --secondary-foreground: oklch(0.35 0.02 50);
-  --muted: oklch(0.955 0.008 80);
-  --muted-foreground: oklch(0.52 0.02 50);
-  --accent: oklch(0.955 0.01 80);
-  --accent-foreground: oklch(0.35 0.02 50);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.915 0.01 80);
-  --input: oklch(0.915 0.01 80);
-  --ring: oklch(0.62 0.14 175);
-  --radius: 0.75rem;
+  --background: oklch(0.9541 0.0148 80.71);
+  --foreground: oklch(0.2878 0.016 58.95);
+  --card: oklch(0.9751 0.0107 76.6);
+  --card-foreground: oklch(0.2878 0.016 58.95);
+  --popover: oklch(0.9751 0.0107 76.6);
+  --popover-foreground: oklch(0.2878 0.016 58.95);
+  --primary: oklch(0.2878 0.016 58.95);
+  --primary-foreground: oklch(0.9773 0.0102 81.8);
+  --secondary: oklch(0.9312 0.0171 76.11);
+  --secondary-foreground: oklch(0.2878 0.016 58.95);
+  --muted: oklch(0.9288 0.0188 75.32);
+  --muted-foreground: oklch(0.4448 0.0236 59.7);
+  --accent: oklch(0.9458 0.0153 77.07);
+  --accent-foreground: oklch(0.2653 0.0128 62.04);
+  --destructive: oklch(0.4846 0.0666 35.02);
+  --destructive-foreground: oklch(0.9773 0.0102 81.8);
+  --border: oklch(0.866 0.0255 75.25);
+  --input: oklch(0.866 0.0255 75.25);
+  --ring: oklch(0.804 0.0336 71.82);
+  --radius: 1.25rem;
 
   /* Aura semantic colors */
-  --aura-urgent: oklch(0.62 0.2 25);
-  --aura-high: oklch(0.68 0.16 55);
-  --aura-medium: oklch(0.62 0.14 175);
-  --aura-low: oklch(0.58 0.06 250);
-  --aura-success: oklch(0.65 0.18 155);
-  --aura-surface-warm: oklch(0.97 0.008 70);
-  --aura-surface-elevated: oklch(1 0 0);
+  --aura-urgent: oklch(0.4113 0.0419 38.56);
+  --aura-high: oklch(0.4862 0.0411 42.45);
+  --aura-medium: oklch(0.5619 0.0408 46.21);
+  --aura-low: oklch(0.6516 0.0392 56.14);
+  --aura-success: oklch(0.4584 0.0267 67.08);
+  --aura-surface-warm: oklch(0.9751 0.0107 76.6);
+  --aura-surface-elevated: oklch(0.9873 0.0096 72.66);
+  --aura-depth: oklch(0.9312 0.0171 76.11);
+  --aura-divider: oklch(0.9036 0.0184 78.24);
+  --aura-foreground-strong: oklch(0.2308 0.0109 60.9);
 
   /* Elevation */
-  --aura-shadow-xs: 0 1px 2px oklch(0.22 0.02 50 / 0.04);
-  --aura-shadow-sm: 0 1px 3px oklch(0.22 0.02 50 / 0.06), 0 1px 2px oklch(0.22 0.02 50 / 0.04);
-  --aura-shadow-md: 0 4px 12px oklch(0.22 0.02 50 / 0.06), 0 2px 4px oklch(0.22 0.02 50 / 0.03);
-  --aura-shadow-lg: 0 8px 24px oklch(0.22 0.02 50 / 0.08), 0 4px 8px oklch(0.22 0.02 50 / 0.04);
-  --aura-shadow-focus: 0 0 0 3px oklch(0.62 0.14 175 / 0.15);
+  --aura-shadow-xs: 0 1px 2px rgba(49, 41, 35, 0.05);
+  --aura-shadow-sm: 0 10px 24px rgba(49, 41, 35, 0.06), 0 2px 6px rgba(49, 41, 35, 0.04);
+  --aura-shadow-md: 0 16px 38px rgba(49, 41, 35, 0.08), 0 4px 12px rgba(49, 41, 35, 0.05);
+  --aura-shadow-lg: 0 24px 52px rgba(49, 41, 35, 0.11), 0 8px 18px rgba(49, 41, 35, 0.07);
+  --aura-shadow-focus: 0 0 0 2px rgba(94, 81, 71, 0.12);
 
   /* Motion */
   --aura-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -54,43 +57,47 @@
 }
 
 .dark {
-  --background: oklch(0.15 0.012 50);
-  --foreground: oklch(0.93 0.008 80);
-  --card: oklch(0.19 0.012 50);
-  --card-foreground: oklch(0.93 0.008 80);
-  --popover: oklch(0.19 0.012 50);
-  --popover-foreground: oklch(0.93 0.008 80);
-  --primary: oklch(0.68 0.14 175);
-  --primary-foreground: oklch(0.13 0.03 175);
-  --secondary: oklch(0.23 0.012 50);
-  --secondary-foreground: oklch(0.93 0.008 80);
-  --muted: oklch(0.23 0.012 50);
-  --muted-foreground: oklch(0.62 0.012 50);
-  --accent: oklch(0.23 0.012 50);
-  --accent-foreground: oklch(0.93 0.008 80);
-  --destructive: oklch(0.45 0.18 25);
-  --destructive-foreground: oklch(0.65 0.2 25);
-  --border: oklch(0.27 0.012 50);
-  --input: oklch(0.27 0.012 50);
-  --ring: oklch(0.68 0.14 175);
+  --background: oklch(0.2225 0.0098 52.96);
+  --foreground: oklch(0.9488 0.0153 77.07);
+  --card: oklch(0.2544 0.0131 51.58);
+  --card-foreground: oklch(0.9488 0.0153 77.07);
+  --popover: oklch(0.2544 0.0131 51.58);
+  --popover-foreground: oklch(0.9488 0.0153 77.07);
+  --primary: oklch(0.9488 0.0153 77.07);
+  --primary-foreground: oklch(0.2225 0.0098 52.96);
+  --secondary: oklch(0.2844 0.014 48.21);
+  --secondary-foreground: oklch(0.9488 0.0153 77.07);
+  --muted: oklch(0.2844 0.014 48.21);
+  --muted-foreground: oklch(0.7798 0.0256 71.39);
+  --accent: oklch(0.3054 0.0159 50.84);
+  --accent-foreground: oklch(0.9603 0.0136 78.26);
+  --destructive: oklch(0.5908 0.0787 33.04);
+  --destructive-foreground: oklch(0.9603 0.0136 78.26);
+  --border: oklch(0.3498 0.0207 58.03);
+  --input: oklch(0.3498 0.0207 58.03);
+  --ring: oklch(0.4412 0.0236 59.69);
 
-  --aura-urgent: oklch(0.68 0.2 25);
-  --aura-high: oklch(0.74 0.16 55);
-  --aura-medium: oklch(0.68 0.14 175);
-  --aura-low: oklch(0.62 0.06 250);
-  --aura-success: oklch(0.72 0.18 155);
-  --aura-surface-warm: oklch(0.2 0.012 50);
-  --aura-surface-elevated: oklch(0.22 0.012 50);
+  --aura-urgent: oklch(0.7882 0.0467 35.15);
+  --aura-high: oklch(0.7606 0.0404 46.5);
+  --aura-medium: oklch(0.7082 0.0433 44.93);
+  --aura-low: oklch(0.6505 0.0455 44.18);
+  --aura-success: oklch(0.8013 0.0237 71.73);
+  --aura-surface-warm: oklch(0.2544 0.0131 51.58);
+  --aura-surface-elevated: oklch(0.2844 0.014 48.21);
+  --aura-depth: oklch(0.1908 0.0077 48.3);
+  --aura-divider: oklch(0.3221 0.0179 52.82);
+  --aura-foreground-strong: oklch(0.9691 0.0147 80.71);
 
-  --aura-shadow-xs: 0 1px 2px oklch(0 0 0 / 0.15);
-  --aura-shadow-sm: 0 1px 3px oklch(0 0 0 / 0.2), 0 1px 2px oklch(0 0 0 / 0.15);
-  --aura-shadow-md: 0 4px 12px oklch(0 0 0 / 0.2), 0 2px 4px oklch(0 0 0 / 0.12);
-  --aura-shadow-lg: 0 8px 24px oklch(0 0 0 / 0.25), 0 4px 8px oklch(0 0 0 / 0.15);
-  --aura-shadow-focus: 0 0 0 3px oklch(0.68 0.14 175 / 0.2);
+  --aura-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.16);
+  --aura-shadow-sm: 0 12px 24px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.12);
+  --aura-shadow-md: 0 16px 38px rgba(0, 0, 0, 0.25), 0 6px 16px rgba(0, 0, 0, 0.16);
+  --aura-shadow-lg: 0 24px 54px rgba(0, 0, 0, 0.28), 0 8px 20px rgba(0, 0, 0, 0.18);
+  --aura-shadow-focus: 0 0 0 2px rgba(244, 237, 227, 0.12);
 }
 
 @theme inline {
-  --font-sans: 'DM Sans', 'Geist', 'Geist Fallback';
+  --font-sans: var(--font-libre-baskerville), 'Libre Baskerville', serif;
+  --font-serif: var(--font-libre-baskerville), 'Libre Baskerville', serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
 
   --color-background: var(--background);
@@ -120,6 +127,9 @@
   --color-aura-success: var(--aura-success);
   --color-aura-surface-warm: var(--aura-surface-warm);
   --color-aura-surface-elevated: var(--aura-surface-elevated);
+  --color-aura-depth: var(--aura-depth);
+  --color-aura-divider: var(--aura-divider);
+  --color-aura-foreground-strong: var(--aura-foreground-strong);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -132,12 +142,23 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
-    @apply bg-background text-foreground font-sans;
+    min-height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-serif;
+    background-image: linear-gradient(
+      180deg,
+      oklch(0.9721 0.0107 76.6) 0%,
+      oklch(0.9541 0.0148 80.71) 100%
+    );
+    letter-spacing: 0.004em;
   }
 }
 
 @layer components {
+  /* Hybrid rule: repeated treatments live here; one-off component styling should reference vars/tokens directly. */
   .aura-shadow-xs {
     box-shadow: var(--aura-shadow-xs);
   }
@@ -164,55 +185,180 @@
   }
 
   .aura-focus-ring {
-    @apply outline-none ring-0 focus-visible:ring-2 focus-visible:ring-primary/40;
+    outline: none;
+    transition:
+      box-shadow var(--aura-duration-fast) var(--aura-ease-out),
+      border-color var(--aura-duration-fast) var(--aura-ease-out),
+      color var(--aura-duration-fast) var(--aura-ease-out);
+  }
+
+  .aura-focus-ring:focus-visible {
+    box-shadow: var(--aura-shadow-focus);
+  }
+
+  .aura-card {
+    @apply rounded-[1.75rem] border border-aura-divider bg-card;
+    box-shadow: var(--aura-shadow-xs);
+    transition:
+      background-color var(--aura-duration-base) var(--aura-ease-out),
+      border-color var(--aura-duration-base) var(--aura-ease-out),
+      box-shadow var(--aura-duration-base) var(--aura-ease-out),
+      opacity var(--aura-duration-base) var(--aura-ease-out),
+      transform var(--aura-duration-base) var(--aura-ease-out);
+  }
+
+  .aura-heading-hero {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .aura-heading-hero-compact {
+    font-size: 1.7rem;
+    line-height: 1.1;
+  }
+
+  .aura-text-writing {
+    font-size: 1.18rem;
+    line-height: 1.72;
+    letter-spacing: 0.004em;
+  }
+
+  .aura-text-task {
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+
+  .aura-text-logo {
+    letter-spacing: 0.08em;
+  }
+
+  .aura-text-label {
+    font-size: 0.72rem;
+    line-height: 1rem;
+  }
+
+  .aura-text-label-wide {
+    font-size: 0.72rem;
+    line-height: 1rem;
+    letter-spacing: 0.2em;
+  }
+
+  .aura-text-micro {
+    font-size: 0.625rem;
+    line-height: 0.875rem;
+  }
+
+  .aura-writing-surface-active {
+    @apply border-input bg-secondary/35;
+    box-shadow: var(--aura-shadow-lg);
+  }
+
+  .aura-paper-overlay {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--aura-surface-elevated) 34%, transparent) 0%,
+      color-mix(in oklab, var(--aura-depth) 24%, transparent) 100%
+    );
   }
 
   .aura-badge {
-    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium;
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium;
+    font-size: 0.72rem;
+    line-height: 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  .aura-btn-linklike,
+  .aura-btn-primary,
+  .aura-btn-subtle {
+    @apply inline-flex items-center justify-center rounded-full px-1 py-1 text-sm;
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition:
+      color var(--aura-duration-fast) var(--aura-ease-out),
+      opacity var(--aura-duration-fast) var(--aura-ease-out),
+      text-decoration-color var(--aura-duration-fast) var(--aura-ease-out);
+  }
+
+  .aura-btn-shell-primary {
+    @apply inline-flex items-center justify-center rounded-full border border-aura-foreground-strong bg-primary px-3.5 py-1.5 text-sm font-bold text-primary-foreground;
+    box-shadow: var(--aura-shadow-sm);
+    transition:
+      background-color var(--aura-duration-fast) var(--aura-ease-out),
+      box-shadow var(--aura-duration-fast) var(--aura-ease-out),
+      transform var(--aura-duration-fast) var(--aura-ease-out),
+      opacity var(--aura-duration-fast) var(--aura-ease-out);
+  }
+
+  .aura-btn-shell-primary:hover {
+    @apply bg-aura-foreground-strong;
+    box-shadow: var(--aura-shadow-md);
+  }
+
+  .aura-btn-shell-primary:active {
+    transform: translateY(1px);
+  }
+
+  .aura-btn-shell-primary:disabled {
+    @apply cursor-not-allowed opacity-45;
+    box-shadow: none;
+  }
+
+  .aura-btn-shell-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-aura-divider bg-background/70 px-3.5 py-1.5 text-sm font-bold text-muted-foreground;
+    transition:
+      background-color var(--aura-duration-fast) var(--aura-ease-out),
+      border-color var(--aura-duration-fast) var(--aura-ease-out),
+      color var(--aura-duration-fast) var(--aura-ease-out);
+  }
+
+  .aura-btn-shell-secondary:hover {
+    @apply border-ring bg-card text-aura-foreground-strong;
   }
 
   .aura-btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-    box-shadow: var(--aura-shadow-xs);
-    transition:
-      background-color var(--aura-duration-fast) var(--aura-ease-out),
-      box-shadow var(--aura-duration-fast) var(--aura-ease-out);
+    @apply font-bold text-aura-foreground-strong;
   }
 
   .aura-btn-primary:hover {
-    @apply bg-primary/90;
-    box-shadow: var(--aura-shadow-sm);
+    @apply text-aura-foreground-strong;
+    text-decoration-color: currentColor;
   }
 
   .aura-btn-primary:disabled {
     @apply cursor-not-allowed opacity-50;
-    box-shadow: none;
-  }
-
-  .aura-btn-primary:disabled:hover {
-    @apply bg-primary;
-    box-shadow: none;
+    text-decoration-color: transparent;
   }
 
   .aura-btn-subtle {
-    @apply inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground;
-    transition:
-      background-color var(--aura-duration-fast) var(--aura-ease-out),
-      color var(--aura-duration-fast) var(--aura-ease-out);
+    @apply font-bold text-muted-foreground;
   }
 
   .aura-btn-subtle:hover {
-    @apply bg-secondary text-foreground;
+    @apply text-aura-foreground-strong;
+    text-decoration-color: currentColor;
   }
 
   .aura-icon-btn {
-    @apply inline-flex items-center justify-center rounded-lg text-muted-foreground;
+    @apply inline-flex items-center justify-center rounded-full text-muted-foreground;
     transition:
       background-color var(--aura-duration-fast) var(--aura-ease-out),
       color var(--aura-duration-fast) var(--aura-ease-out);
   }
 
   .aura-icon-btn:hover {
-    @apply bg-secondary text-foreground;
+    @apply bg-secondary/60 text-aura-foreground-strong;
+  }
+}
+
+@media (min-width: 40rem) {
+  .aura-heading-hero {
+    font-size: 2.6rem;
+  }
+
+  .aura-heading-hero-compact {
+    font-size: 2.2rem;
   }
 }
