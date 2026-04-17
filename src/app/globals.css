@@ -207,6 +207,47 @@
       transform var(--aura-duration-base) var(--aura-ease-out);
   }
 
+  .aura-heading-hero {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .aura-heading-hero-compact {
+    font-size: 1.7rem;
+    line-height: 1.1;
+  }
+
+  .aura-text-writing {
+    font-size: 1.18rem;
+    line-height: 1.72;
+    letter-spacing: 0.004em;
+  }
+
+  .aura-text-task {
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+
+  .aura-text-logo {
+    letter-spacing: 0.08em;
+  }
+
+  .aura-text-label {
+    font-size: 0.72rem;
+    line-height: 1rem;
+  }
+
+  .aura-text-label-wide {
+    font-size: 0.72rem;
+    line-height: 1rem;
+    letter-spacing: 0.2em;
+  }
+
+  .aura-text-micro {
+    font-size: 0.625rem;
+    line-height: 0.875rem;
+  }
+
   .aura-writing-surface-active {
     @apply border-input bg-secondary/35;
     box-shadow: var(--aura-shadow-lg);
@@ -221,8 +262,24 @@
   }
 
   .aura-badge {
-    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.72rem] font-medium;
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium;
+    font-size: 0.72rem;
+    line-height: 1rem;
     letter-spacing: 0.04em;
+  }
+
+  .aura-btn-linklike,
+  .aura-btn-primary,
+  .aura-btn-subtle {
+    @apply inline-flex items-center justify-center rounded-full px-1 py-1 text-sm;
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition:
+      color var(--aura-duration-fast) var(--aura-ease-out),
+      opacity var(--aura-duration-fast) var(--aura-ease-out),
+      text-decoration-color var(--aura-duration-fast) var(--aura-ease-out);
   }
 
   .aura-btn-shell-primary {
@@ -262,15 +319,7 @@
   }
 
   .aura-btn-primary {
-    @apply inline-flex items-center justify-center rounded-full px-1 py-1 text-sm font-bold text-aura-foreground-strong;
-    text-decoration-line: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
-    transition:
-      color var(--aura-duration-fast) var(--aura-ease-out),
-      opacity var(--aura-duration-fast) var(--aura-ease-out),
-      text-decoration-color var(--aura-duration-fast) var(--aura-ease-out);
+    @apply font-bold text-aura-foreground-strong;
   }
 
   .aura-btn-primary:hover {
@@ -284,15 +333,7 @@
   }
 
   .aura-btn-subtle {
-    @apply inline-flex items-center justify-center rounded-full px-1 py-1 text-sm font-bold text-muted-foreground;
-    text-decoration-line: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
-    transition:
-      color var(--aura-duration-fast) var(--aura-ease-out),
-      opacity var(--aura-duration-fast) var(--aura-ease-out),
-      text-decoration-color var(--aura-duration-fast) var(--aura-ease-out);
+    @apply font-bold text-muted-foreground;
   }
 
   .aura-btn-subtle:hover {
@@ -309,5 +350,15 @@
 
   .aura-icon-btn:hover {
     @apply bg-secondary/60 text-aura-foreground-strong;
+  }
+}
+
+@media (min-width: 40rem) {
+  .aura-heading-hero {
+    font-size: 2.6rem;
+  }
+
+  .aura-heading-hero-compact {
+    font-size: 2.2rem;
   }
 }

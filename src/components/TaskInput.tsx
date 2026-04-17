@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { useTaskStore } from '@/store/tasks'
 
 const HERO_PLACEHOLDER =
-  "what's been on your mind lately...\n\nerrands, plans, things left unfinished..."
+  "what's been on your mind lately? errands, plans, things left unfinished..."
 
 const MIN_TEXTAREA_HEIGHT = 180
 const MAX_TEXTAREA_HEIGHT = 220
@@ -161,7 +161,7 @@ export function TaskInput({
               disabled={isInputLoading}
               rows={6}
               className={cn(
-                'min-h-[180px] w-full resize-none bg-transparent text-[1.18rem] leading-[1.72] tracking-[0.004em] font-normal',
+                'aura-text-writing min-h-[180px] w-full resize-none bg-transparent font-normal',
                 'text-aura-foreground-strong placeholder:text-muted-foreground/78',
                 'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground'
               )}
@@ -177,7 +177,7 @@ export function TaskInput({
               <button
                 onClick={() => handleSubmit()}
                 disabled={!input.trim() || isInputLoading}
-                className={cn('aura-btn-shell-primary shrink-0 px-4 py-2 tracking-[0.01em]')}
+                className={cn('aura-btn-shell-primary shrink-0 px-4 py-2')}
                 aria-label="Organize tasks"
               >
                 {isInputLoading ? 'organizing...' : 'organize ->'}

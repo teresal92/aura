@@ -40,7 +40,7 @@ export function AuraLogo({
           <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
         </svg>
       </div>
-      <span className={cn('font-bold tracking-[0.08em] text-aura-foreground-strong', s.text)}>
+      <span className={cn('aura-text-logo font-bold text-aura-foreground-strong', s.text)}>
         aura
       </span>
     </div>
@@ -177,7 +177,7 @@ export function CompletionCheckbox({
       role="checkbox"
       aria-checked={checked}
     >
-      {checked ? <span className="text-[10px] font-bold">✓</span> : null}
+      {checked ? <span className="aura-text-micro font-bold">✓</span> : null}
     </button>
   )
 }
@@ -193,7 +193,7 @@ export function SectionHeader({
 }) {
   return (
     <div className={cn('flex items-center gap-4', className)}>
-      <h2 className="text-[0.72rem] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+      <h2 className="aura-text-label-wide font-medium uppercase text-muted-foreground">
         {children}
         {count !== undefined ? <span className="ml-1.5 tabular-nums">{count}</span> : null}
       </h2>
