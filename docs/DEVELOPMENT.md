@@ -15,7 +15,7 @@ Next.js ships with ESLint pre-configured. Aura uses the **flat config** format i
 **Install:**
 
 ```bash
-npm install -D eslint eslint-config-next @typescript-eslint/eslint-plugin @typescript-eslint/parser
+pnpm add -D eslint eslint-config-next @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
 
 **`eslint.config.mjs`:**
@@ -53,7 +53,7 @@ export default defineConfig([
 **Run manually:**
 
 ```bash
-npm run lint
+pnpm lint
 ```
 
 ---
@@ -63,7 +63,7 @@ npm run lint
 **Install:**
 
 ```bash
-npm install -D prettier eslint-config-prettier
+pnpm add -D prettier eslint-config-prettier
 ```
 
 > `eslint-config-prettier` disables any ESLint rules that would conflict with Prettier — always include it.
@@ -92,10 +92,10 @@ public
 
 ```bash
 # Check for formatting issues
-npx prettier --check .
+pnpm exec prettier --check .
 
 # Fix formatting issues
-npx prettier --write .
+pnpm exec prettier --write .
 ```
 
 Add Prettier to your ESLint config to avoid conflicts:
@@ -116,8 +116,8 @@ Aura uses **Husky** and **lint-staged** to enforce linting and formatting automa
 **Install:**
 
 ```bash
-npm install -D husky lint-staged
-npx husky init
+pnpm add -D husky lint-staged
+pnpm exec husky init
 ```
 
 This creates a `.husky/` directory with a `pre-commit` hook file.
@@ -125,7 +125,7 @@ This creates a `.husky/` directory with a `pre-commit` hook file.
 **Configure the pre-commit hook** (`.husky/pre-commit`):
 
 ```bash
-npx lint-staged
+pnpm exec lint-staged
 ```
 
 **Configure lint-staged** in `package.json`:
@@ -166,7 +166,7 @@ Vitest is a Vite-native test runner that's fast, Jest-compatible, and works natu
 **Install:**
 
 ```bash
-npm install -D vitest @vitejs/plugin-react jsdom
+pnpm add -D vitest @vitejs/plugin-react jsdom
 ```
 
 **`vitest.config.ts`:**
@@ -230,7 +230,7 @@ React Testing Library (RTL) tests components from the user's perspective — it 
 **Install:**
 
 ```bash
-npm install -D @testing-library/react @testing-library/user-event @testing-library/jest-dom
+pnpm add -D @testing-library/react @testing-library/user-event @testing-library/jest-dom
 ```
 
 **Example — testing a task card:**
@@ -272,7 +272,7 @@ Playwright tests the full application in a real browser — from typing into the
 **Install:**
 
 ```bash
-npm init playwright@latest
+pnpm create playwright@latest
 ```
 
 This scaffolds a `playwright.config.ts` and an `e2e/` directory.
@@ -289,7 +289,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'npm run dev',
+    command: 'pnpm dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },
@@ -324,13 +324,13 @@ test('completes a task and shows completion feedback', async ({ page }) => {
 
 ```bash
 # Run all e2e tests
-npx playwright test
+pnpm exec playwright test
 
 # Run with browser UI visible
-npx playwright test --headed
+pnpm exec playwright test --headed
 
 # Open Playwright's interactive UI
-npx playwright test --ui
+pnpm exec playwright test --ui
 ```
 
 > 💡 E2e tests that hit the real AI API will be slow and cost money. Use a mock server or environment flag to stub the `/api/parse-tasks` route during testing.

@@ -13,14 +13,14 @@
 
 ## Build, Test, and Development Commands
 
-- `npm run dev`: Start the Next.js dev server.
-- `npm run build`: Production build.
-- `npm run start`: Run the built app.
-- `npm run typecheck`: TypeScript type check only.
-- `npm run lint`: ESLint across the repo.
-- `npm test`: Run Vitest (unit + Storybook tests).
-- `npm run storybook`: Run Storybook locally.
-- `npm run format` / `npm run format:check`: Prettier write/check.
+- `pnpm dev`: Start the Next.js dev server.
+- `pnpm build`: Production build.
+- `pnpm start`: Run the built app.
+- `pnpm typecheck`: TypeScript type check only.
+- `pnpm lint`: ESLint across the repo.
+- `pnpm test`: Run Vitest (unit + Storybook tests).
+- `pnpm storybook`: Run Storybook locally.
+- `pnpm format` / `pnpm format:check`: Prettier write/check.
 
 ## Coding Style & Naming Conventions
 
@@ -33,7 +33,7 @@
 
 - Vitest is the primary runner; Storybook tests run via the Vitest Storybook addon (`vitest.config.ts`).
 - Use React Testing Library for component behavior (favor role/text queries).
-- Run `npm test` locally before opening a PR.
+- Run `pnpm test` locally before opening a PR.
 
 ## Commit & Pull Request Guidelines
 
