@@ -327,7 +327,7 @@ git clone https://github.com/your-org/aura.git
 cd aura
 
 # Install dependencies
-npm install
+pnpm install
 
 # Copy environment variables
 cp .env.local.example .env.local
@@ -349,7 +349,7 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 
 ```bash
 # Run the development server
-npm run dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) and start typing.
