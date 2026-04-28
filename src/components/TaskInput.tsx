@@ -32,14 +32,6 @@ export function TaskInput({
   })
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      textareaRef.current?.focus()
-    })
-
-    return () => window.cancelAnimationFrame(frame)
-  }, [])
-
-  useEffect(() => {
     syncTextareaHeight()
   }, [input])
 
@@ -76,6 +68,9 @@ export function TaskInput({
     if (!trimmed || isInputLoading) return
     if (!isLoaded) return
 
+    updateFocusState(false)
+    textareaRef.current?.blur()
+
     if (!isSignedIn) {
       if (typeof window !== 'undefined') {
         window.sessionStorage.setItem(pendingInputKey, trimmed)
@@ -109,7 +104,6 @@ export function TaskInput({
       if (textareaRef.current) {
         textareaRef.current.style.height = `${MIN_TEXTAREA_HEIGHT}px`
         textareaRef.current.style.overflowY = 'hidden'
-        textareaRef.current.focus()
       }
     } catch {
     } finally {
