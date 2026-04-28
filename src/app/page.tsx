@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { AuraLogo } from '@/components/aura-primitives'
+import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
 import { cn } from '@/lib/utils'
@@ -10,14 +11,14 @@ import { useTaskStore } from '@/store/tasks'
 
 export default function Home() {
   const [isWritingFocused, setIsWritingFocused] = useState(false)
-  const { tasks } = useTaskStore()
+  const { tasks, isInputLoading } = useTaskStore()
   const activeTasks = tasks.filter((task) => !task.completed)
   const completedTasks = tasks.filter((task) => task.completed)
 
   return (
     <main
       className={cn(
-        'min-h-screen bg-background transition-colors duration-300',
+        'relative min-h-screen bg-background transition-colors duration-300',
         isWritingFocused && 'bg-aura-depth'
       )}
     >
@@ -69,7 +70,7 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center pb-6 pt-10 sm:pt-12">
+        <div className="mx-auto my-auto flex w-full max-w-3xl flex-col py-10 sm:py-12">
           <div
             className={cn(
               'mb-8 text-center transition-all duration-300',
@@ -78,20 +79,20 @@ export default function Home() {
           >
             {tasks.length === 0 ? (
               <>
-                <h1 className="text-[2rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.6rem] text-balance">
+                <h1 className="text-[2rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.5rem] text-balance">
                   What&apos;s swirling around in your head?
                 </h1>
-                <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground text-balance">
-                  Just type it all out below. Messy is fine. Half-formed is fine. Aura will turn it
-                  into a plan.
+                <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground text-balance">
+                  Just type it all out below. Messy and half-formed is fine. Aura will turn it into
+                  a plan.
                 </p>
               </>
             ) : (
               <>
-                <h1 className="text-[1.7rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.2rem] text-balance">
+                <h1 className="text-[1.7rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.5rem] text-balance">
                   Keep laying it out.
                 </h1>
-                <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground text-balance">
+                <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground text-balance">
                   Add what is still circling. The page can hold it before the list does.
                 </p>
               </>
@@ -115,6 +116,24 @@ export default function Home() {
           </SignedIn>
         </div>
       </div>
+
+      <Overlay
+        isActive={isInputLoading}
+        contentClassName={cn(
+          'aura-card flex min-w-72 items-center gap-4 rounded-3xl px-5 py-4',
+          'border-aura-divider/80 bg-card/92 aura-shadow-lg'
+        )}
+      >
+        <div className="h-5 w-5 animate-spin rounded-full border-2 border-aura-divider border-t-primary" />
+        <div role="status" aria-live="polite" aria-busy={isInputLoading}>
+          <p className="text-sm font-semibold text-aura-foreground-strong">
+            Organizing your thoughts
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Turning your brain dump into a clearer plan.
+          </p>
+        </div>
+      </Overlay>
     </main>
   )
 }

@@ -180,7 +180,7 @@ export function TaskInput({
                 className={cn('aura-btn-shell-primary shrink-0 px-4 py-2')}
                 aria-label="Organize tasks"
               >
-                {isInputLoading ? 'organizing...' : 'organize ->'}
+                {isInputLoading ? 'organizing...' : 'organize'}
               </button>
             </div>
           </div>
