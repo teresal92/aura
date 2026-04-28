@@ -69,7 +69,7 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center pb-6 pt-10 sm:pt-12">
+        <div className="mx-auto my-auto flex w-full max-w-3xl flex-col py-10 sm:py-12">
           <div
             className={cn(
               'mb-8 text-center transition-all duration-300',
