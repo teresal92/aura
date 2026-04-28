@@ -134,7 +134,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
           )}
         >
           <div className="relative">
-            <div className="aura-manuscript-column px-4 sm:px-6">
+            <div className="px-4 sm:px-6">
               <textarea
                 ref={textareaRef}
                 value={input}
