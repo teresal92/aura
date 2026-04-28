@@ -51,11 +51,8 @@
 
   /* Motion */
   --aura-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --aura-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --aura-duration-fast: 150ms;
   --aura-duration-base: 250ms;
-  --aura-duration-slow: 400ms;
-  --aura-duration-emphasis: 600ms;
 }
 
 .dark {
@@ -164,26 +161,8 @@
   .aura-shadow-xs {
     box-shadow: var(--aura-shadow-xs);
   }
-  .aura-shadow-sm {
-    box-shadow: var(--aura-shadow-sm);
-  }
-  .aura-shadow-md {
-    box-shadow: var(--aura-shadow-md);
-  }
   .aura-shadow-lg {
     box-shadow: var(--aura-shadow-lg);
-  }
-  .aura-shadow-focus {
-    box-shadow: var(--aura-shadow-focus);
-  }
-
-  .aura-transition {
-    transition-timing-function: var(--aura-ease-out);
-    transition-duration: var(--aura-duration-base);
-  }
-  .aura-transition-fast {
-    transition-timing-function: var(--aura-ease-out);
-    transition-duration: var(--aura-duration-fast);
   }
 
   .aura-focus-ring {
@@ -209,34 +188,8 @@
       transform var(--aura-duration-base) var(--aura-ease-out);
   }
 
-  .aura-heading-hero {
-    font-size: 2rem;
-    line-height: 1.1;
-  }
-
-  .aura-heading-hero-compact {
-    font-size: 1.7rem;
-    line-height: 1.1;
-  }
-
-  .aura-text-writing {
-    font-size: 1.18rem;
-    line-height: 1.72;
-    letter-spacing: 0.004em;
-  }
-
-  .aura-text-task {
-    font-size: 1.02rem;
-    line-height: 1.5;
-  }
-
   .aura-text-logo {
     letter-spacing: 0.08em;
-  }
-
-  .aura-text-label {
-    font-size: 0.72rem;
-    line-height: 1rem;
   }
 
   .aura-text-label-wide {
@@ -281,12 +234,6 @@
     font-size: 0.95rem;
     line-height: 1.9;
     letter-spacing: 0.018em;
-  }
-
-  .aura-folio-label {
-    font-size: 0.68rem;
-    line-height: 1rem;
-    letter-spacing: 0.28em;
   }
 
   .aura-btn-editorial {
@@ -395,15 +342,5 @@
 
   .aura-icon-btn:hover {
     @apply bg-secondary/60 text-aura-foreground-strong;
-  }
-}
-
-@media (min-width: 40rem) {
-  .aura-heading-hero {
-    font-size: 2.6rem;
-  }
-
-  .aura-heading-hero-compact {
-    font-size: 2.2rem;
   }
 }
