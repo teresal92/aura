@@ -70,7 +70,7 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="mx-auto my-auto flex w-full max-w-[46rem] flex-col py-12 sm:py-16">
+        <div className="mx-auto my-auto flex w-full max-w-184 flex-col py-12 sm:py-16">
           <div
             className={cn(
               'mb-10 px-4 transition-all duration-300 sm:mb-12 sm:px-6',
@@ -79,19 +79,19 @@ export default function Home() {
           >
             {tasks.length === 0 ? (
               <>
-                <h1 className="max-w-[34rem] text-[2.15rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.95rem]">
+                <h1 className="max-w-136 text-[2.15rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.95rem]">
                   Begin anywhere.
                 </h1>
-                <p className="mt-4 max-w-[28rem] text-base leading-relaxed text-muted-foreground text-balance">
+                <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground text-balance">
                   Rough sentences first. Structure after.
                 </p>
               </>
             ) : (
               <>
-                <h1 className="max-w-[30rem] text-[2.05rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.8rem]">
+                <h1 className="max-w-120 text-[2.05rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.8rem]">
                   Keep going.
                 </h1>
-                <p className="mt-4 max-w-[26rem] text-base leading-relaxed text-muted-foreground text-balance">
+                <p className="mt-4 max-w-104 text-base leading-relaxed text-muted-foreground text-balance">
                   Add anything still circling.
                 </p>
               </>
@@ -107,7 +107,6 @@ export default function Home() {
                 isWritingFocused ? 'opacity-50' : 'opacity-100'
               )}
             >
-              <div className="mb-7 h-px w-full bg-aura-divider/75" />
               <TaskList />
             </div>
           </SignedIn>

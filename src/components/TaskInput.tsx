@@ -144,7 +144,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
                 disabled={isInputLoading}
                 rows={6}
                 className={cn(
-                  'aura-text-typewriter min-h-[216px] w-full resize-none bg-transparent pr-1 font-normal',
+                  'aura-text-typewriter min-h-54 w-full resize-none bg-transparent pr-1 font-normal',
                   'text-aura-foreground-strong placeholder:text-muted-foreground/76',
                   'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground'
                 )}

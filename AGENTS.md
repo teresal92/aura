@@ -28,6 +28,7 @@
 - Prettier enforces `tabWidth: 2`, `singleQuote: true`, `semi: false`, `printWidth: 100` (see `.prettierrc`).
 - ESLint uses Next.js + TypeScript + Storybook rules (`eslint.config.mjs`).
 - Tests follow `*.test.ts` / `*.test.tsx` naming and live next to the code.
+- Prefer canonical Tailwind utilities over arbitrary values when an exact token exists. Examples: use `max-w-184` instead of `max-w-[46rem]` and `min-h-54` instead of `min-h-[216px]`. Treat `suggestCanonicalClasses` warnings as cleanup to resolve before finishing.
 
 ## Testing Guidelines
 
