@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { AuraLogo } from '@/components/aura-primitives'
-import { OrganizingOverlay } from '@/components/OrganizingOverlay'
+import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
 import { cn } from '@/lib/utils'
@@ -117,7 +117,23 @@ export default function Home() {
         </div>
       </div>
 
-      <OrganizingOverlay isActive={isInputLoading} />
+      <Overlay
+        isActive={isInputLoading}
+        contentClassName={cn(
+          'aura-card flex min-w-72 items-center gap-4 rounded-3xl px-5 py-4',
+          'border-aura-divider/80 bg-card/92 aura-shadow-lg'
+        )}
+      >
+        <div className="h-5 w-5 animate-spin rounded-full border-2 border-aura-divider border-t-primary" />
+        <div role="status" aria-live="polite" aria-busy={isInputLoading}>
+          <p className="text-sm font-semibold text-aura-foreground-strong">
+            Organizing your thoughts
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Turning your brain dump into a clearer plan.
+          </p>
+        </div>
+      </Overlay>
     </main>
   )
 }
