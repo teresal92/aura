@@ -10,14 +10,14 @@ import { useTaskStore } from '@/store/tasks'
 
 export default function Home() {
   const [isWritingFocused, setIsWritingFocused] = useState(false)
-  const { tasks } = useTaskStore()
+  const { tasks, isInputLoading } = useTaskStore()
   const activeTasks = tasks.filter((task) => !task.completed)
   const completedTasks = tasks.filter((task) => task.completed)
 
   return (
     <main
       className={cn(
-        'min-h-screen bg-background transition-colors duration-300',
+        'relative min-h-screen bg-background transition-colors duration-300',
         isWritingFocused && 'bg-aura-depth'
       )}
     >
@@ -78,20 +78,20 @@ export default function Home() {
           >
             {tasks.length === 0 ? (
               <>
-                <h1 className="text-[2rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.6rem] text-balance">
+                <h1 className="text-[2rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.5rem] text-balance">
                   What&apos;s swirling around in your head?
                 </h1>
-                <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground text-balance">
-                  Just type it all out below. Messy is fine. Half-formed is fine. Aura will turn it
-                  into a plan.
+                <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground text-balance">
+                  Just type it all out below. Messy and half-formed is fine. Aura will turn it into
+                  a plan.
                 </p>
               </>
             ) : (
               <>
-                <h1 className="text-[1.7rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.2rem] text-balance">
+                <h1 className="text-[1.7rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.5rem] text-balance">
                   Keep laying it out.
                 </h1>
-                <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground text-balance">
+                <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground text-balance">
                   Add what is still circling. The page can hold it before the list does.
                 </p>
               </>
@@ -115,6 +115,30 @@ export default function Home() {
           </SignedIn>
         </div>
       </div>
+
+      {isInputLoading ? (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-background/55 backdrop-blur-md">
+          <div
+            className={cn(
+              'aura-card flex min-w-72 items-center gap-4 rounded-3xl px-5 py-4',
+              'border-aura-divider/80 bg-card/92 aura-shadow-lg'
+            )}
+            role="status"
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-aura-divider border-t-primary" />
+            <div>
+              <p className="text-sm font-semibold text-aura-foreground-strong">
+                Organizing your thoughts
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Turning your brain dump into a clearer plan.
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </main>
   )
 }
