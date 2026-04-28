@@ -148,8 +148,17 @@
   .aura-shadow-xs {
     box-shadow: var(--aura-shadow-xs);
   }
+  .aura-shadow-sm {
+    box-shadow: var(--aura-shadow-sm);
+  }
+  .aura-shadow-md {
+    box-shadow: var(--aura-shadow-md);
+  }
   .aura-shadow-lg {
     box-shadow: var(--aura-shadow-lg);
+  }
+  .aura-shadow-focus {
+    box-shadow: var(--aura-shadow-focus);
   }
 
   .aura-focus-ring {
@@ -177,6 +186,11 @@
 
   .aura-text-logo {
     letter-spacing: 0.08em;
+  }
+
+  .aura-test-label {
+    font-size: 0.72rem;
+    line-height: 1rem;
   }
 
   .aura-text-label-wide {
