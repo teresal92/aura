@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -11,39 +12,20 @@ export function AuraLogo({
   className?: string
 }) {
   const sizeMap = {
-    sm: { wrapper: 'h-7 w-7', icon: 'h-3.5 w-3.5', text: 'text-sm' },
-    md: { wrapper: 'h-8 w-8', icon: 'h-4 w-4', text: 'text-lg' },
-    lg: { wrapper: 'h-10 w-10', icon: 'h-5 w-5', text: 'text-xl' },
+    sm: 'h-8',
+    md: 'h-12',
+    lg: 'h-16',
   }
-  const s = sizeMap[size]
 
   return (
-    <div className={cn('flex items-center gap-2.5', className)}>
-      <div
-        className={cn(
-          'flex items-center justify-center rounded-full border border-aura-divider/80 bg-foreground/4',
-          s.wrapper
-        )}
-      >
-        <svg
-          className={cn('text-foreground/85', s.icon)}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9" />
-          <path d="M12 3c2.5 2.5 4 6 4 9" />
-          <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
-        </svg>
-      </div>
-      <span className={cn('aura-text-logo font-bold text-aura-foreground-strong', s.text)}>
-        aura
-      </span>
-    </div>
+    <Image
+      src="/aura-main-logo.png"
+      alt="Aura"
+      width={804}
+      height={244}
+      priority
+      className={cn(sizeMap[size], 'w-auto shrink-0', className)}
+    />
   )
 }
 
