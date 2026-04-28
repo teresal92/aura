@@ -5,21 +5,13 @@ import { useAuth, useClerk } from '@clerk/nextjs'
 import { cn } from '@/lib/utils'
 import { useTaskStore } from '@/store/tasks'
 
-const HERO_PLACEHOLDER =
-  "what's been on your mind lately? errands, plans, things left unfinished..."
+const HERO_PLACEHOLDER = 'fragments, errands, worries, names, half-formed plans...'
 
-const MIN_TEXTAREA_HEIGHT = 180
-const MAX_TEXTAREA_HEIGHT = 220
+const MIN_TEXTAREA_HEIGHT = 216
+const MAX_TEXTAREA_HEIGHT = 360
 
-export function TaskInput({
-  isWritingFocused = false,
-  onFocusChange,
-}: {
-  isWritingFocused?: boolean
-  onFocusChange?: (isFocused: boolean) => void
-}) {
+export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boolean) => void }) {
   const [input, setInput] = useState('')
-  const [isFocused, setIsFocused] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { addTasks, isInputLoading, setInputLoading } = useTaskStore()
   const { isLoaded, isSignedIn } = useAuth()
@@ -58,8 +50,7 @@ export function TaskInput({
     textarea.style.overflowY = textarea.scrollHeight > MAX_TEXTAREA_HEIGHT ? 'auto' : 'hidden'
   }
 
-  function updateFocusState(nextState: boolean) {
-    setIsFocused(nextState)
+  function reportFocusChange(nextState: boolean) {
     onFocusChange?.(nextState)
   }
 
@@ -68,7 +59,7 @@ export function TaskInput({
     if (!trimmed || isInputLoading) return
     if (!isLoaded) return
 
-    updateFocusState(false)
+    reportFocusChange(false)
     textareaRef.current?.blur()
 
     if (!isSignedIn) {
@@ -124,57 +115,56 @@ export function TaskInput({
       return
     }
 
-    updateFocusState(false)
+    reportFocusChange(false)
   }
 
   return (
     <div className="w-full">
       <div
-        className="mx-auto max-w-176"
-        onFocusCapture={() => updateFocusState(true)}
+        className="w-full"
+        onFocusCapture={() => reportFocusChange(true)}
         onBlurCapture={handleBlur}
       >
         <div
           className={cn(
-            'aura-card relative overflow-hidden rounded-4xl px-6 pb-5 pt-6 sm:px-8 sm:pb-6 sm:pt-7',
-            'transition-all duration-300',
+            'relative overflow-hidden py-3 sm:py-4',
+            'transition-all duration-300 ease-out',
             isInputLoading && 'opacity-85',
-            isFocused ? 'aura-writing-surface-active' : 'border-border bg-card aura-shadow-sm',
-            isWritingFocused && !isFocused && 'opacity-95'
+            'opacity-95'
           )}
         >
-          <div className="aura-paper-overlay pointer-events-none absolute inset-0" />
-
           <div className="relative">
-            <textarea
-              ref={textareaRef}
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder={HERO_PLACEHOLDER}
-              disabled={isInputLoading}
-              rows={6}
-              className={cn(
-                'aura-text-writing min-h-[180px] w-full resize-none bg-transparent font-normal',
-                'text-aura-foreground-strong placeholder:text-muted-foreground/78',
-                'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground'
-              )}
-              style={{ height: `${MIN_TEXTAREA_HEIGHT}px` }}
-              aria-label="Type your thoughts, tasks, or brain dump here"
-            />
+            <div className="px-4 sm:px-6">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={HERO_PLACEHOLDER}
+                disabled={isInputLoading}
+                rows={6}
+                className={cn(
+                  'aura-text-typewriter min-h-54 w-full resize-none bg-transparent pr-1 font-normal',
+                  'text-aura-foreground-strong placeholder:text-muted-foreground/76',
+                  'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground'
+                )}
+                style={{ height: `${MIN_TEXTAREA_HEIGHT}px` }}
+                aria-label="Type your thoughts, tasks, or brain dump here"
+              />
+            </div>
 
-            <div className="mt-4 flex items-end justify-between gap-4">
-              <p className="max-w-sm text-sm italic leading-relaxed text-muted-foreground/85">
-                write it as it comes - structure can follow
+            <div className="mt-4 flex flex-wrap items-end justify-between gap-4 px-4 pt-3 sm:mt-5 sm:px-6">
+              <p className="text-xs italic leading-relaxed text-muted-foreground/78">
+                Enter sends. Shift+Enter adds a line.
               </p>
 
               <button
                 onClick={() => handleSubmit()}
                 disabled={!input.trim() || isInputLoading}
-                className={cn('aura-btn-shell-primary shrink-0 px-4 py-2')}
+                className={cn('aura-btn-editorial shrink-0')}
                 aria-label="Organize tasks"
               >
-                {isInputLoading ? 'organizing...' : 'organize'}
+                {isInputLoading ? 'organizing' : 'organize'}
               </button>
             </div>
           </div>

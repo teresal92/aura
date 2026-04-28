@@ -18,15 +18,15 @@ export default function Home() {
   return (
     <main
       className={cn(
-        'relative min-h-screen bg-background transition-colors duration-300',
-        isWritingFocused && 'bg-aura-depth'
+        'relative min-h-screen overflow-hidden bg-background transition-colors duration-300',
+        isWritingFocused && 'bg-aura-depth/70'
       )}
     >
-      <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-5 pb-16 pt-6 sm:px-8 lg:px-12">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-5 pb-20 pt-6 sm:px-8 sm:pb-24 lg:px-12">
         <header
           className={cn(
-            'border-b border-aura-divider/90 pb-5 transition-opacity duration-300',
-            isWritingFocused ? 'opacity-65' : 'opacity-95'
+            'border-b border-aura-divider/75 pb-5 transition-all duration-300',
+            isWritingFocused ? 'opacity-55' : 'opacity-90'
           )}
         >
           <div className="flex items-center justify-between gap-4">
@@ -70,47 +70,43 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="mx-auto my-auto flex w-full max-w-3xl flex-col py-10 sm:py-12">
+        <div className="mx-auto my-auto flex w-full max-w-184 flex-col py-12 sm:py-16">
           <div
             className={cn(
-              'mb-8 text-center transition-all duration-300',
-              isWritingFocused ? 'translate-y-1 opacity-45' : 'opacity-80'
+              'mb-10 px-4 transition-all duration-300 sm:mb-12 sm:px-6',
+              isWritingFocused ? 'translate-y-1 opacity-38' : 'opacity-88'
             )}
           >
             {tasks.length === 0 ? (
               <>
-                <h1 className="text-[2rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.5rem] text-balance">
-                  What&apos;s swirling around in your head?
+                <h1 className="max-w-136 text-[2.15rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.95rem]">
+                  Begin anywhere.
                 </h1>
-                <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground text-balance">
-                  Just type it all out below. Messy and half-formed is fine. Aura will turn it into
-                  a plan.
+                <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground text-balance">
+                  Rough sentences first. Structure after.
                 </p>
               </>
             ) : (
               <>
-                <h1 className="text-[1.7rem] leading-tight font-bold text-aura-foreground-strong sm:text-[2.5rem] text-balance">
-                  Keep laying it out.
+                <h1 className="max-w-120 text-[2.05rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.8rem]">
+                  Keep going.
                 </h1>
-                <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground text-balance">
-                  Add what is still circling. The page can hold it before the list does.
+                <p className="mt-4 max-w-104 text-base leading-relaxed text-muted-foreground text-balance">
+                  Add anything still circling.
                 </p>
               </>
             )}
           </div>
 
-          <div className="mb-6 h-px w-full bg-aura-divider/90" />
-
-          <TaskInput isWritingFocused={isWritingFocused} onFocusChange={setIsWritingFocused} />
+          <TaskInput onFocusChange={setIsWritingFocused} />
 
           <SignedIn>
             <div
               className={cn(
-                'mt-10 transition-all duration-300',
-                isWritingFocused ? 'opacity-55' : 'opacity-100'
+                'mt-14 px-4 transition-all duration-300 sm:px-6',
+                isWritingFocused ? 'opacity-50' : 'opacity-100'
               )}
             >
-              <div className="mb-6 h-px w-full bg-aura-divider/90" />
               <TaskList />
             </div>
           </SignedIn>
