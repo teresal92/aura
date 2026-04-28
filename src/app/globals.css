@@ -34,13 +34,9 @@
   --aura-medium: oklch(0.5619 0.0408 46.21);
   --aura-low: oklch(0.6516 0.0392 56.14);
   --aura-success: oklch(0.4584 0.0267 67.08);
-  --aura-surface-warm: oklch(0.9751 0.0107 76.6);
-  --aura-surface-elevated: oklch(0.9873 0.0096 72.66);
   --aura-depth: oklch(0.9312 0.0171 76.11);
   --aura-divider: oklch(0.9036 0.0184 78.24);
   --aura-foreground-strong: oklch(0.2308 0.0109 60.9);
-  --aura-paper-speck: rgba(72, 58, 45, 0.045);
-  --aura-paper-highlight: rgba(255, 252, 246, 0.52);
 
   /* Elevation */
   --aura-shadow-xs: 0 1px 2px rgba(49, 41, 35, 0.05);
@@ -81,13 +77,9 @@
   --aura-medium: oklch(0.7082 0.0433 44.93);
   --aura-low: oklch(0.6505 0.0455 44.18);
   --aura-success: oklch(0.8013 0.0237 71.73);
-  --aura-surface-warm: oklch(0.2544 0.0131 51.58);
-  --aura-surface-elevated: oklch(0.2844 0.014 48.21);
   --aura-depth: oklch(0.1908 0.0077 48.3);
   --aura-divider: oklch(0.3221 0.0179 52.82);
   --aura-foreground-strong: oklch(0.9691 0.0147 80.71);
-  --aura-paper-speck: rgba(255, 245, 231, 0.03);
-  --aura-paper-highlight: rgba(255, 250, 238, 0.04);
 
   --aura-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.16);
   --aura-shadow-sm: 0 12px 24px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.12);
@@ -126,8 +118,6 @@
   --color-aura-medium: var(--aura-medium);
   --color-aura-low: var(--aura-low);
   --color-aura-success: var(--aura-success);
-  --color-aura-surface-warm: var(--aura-surface-warm);
-  --color-aura-surface-elevated: var(--aura-surface-elevated);
   --color-aura-depth: var(--aura-depth);
   --color-aura-divider: var(--aura-divider);
   --color-aura-foreground-strong: var(--aura-foreground-strong);
@@ -149,9 +139,6 @@
   }
   body {
     @apply bg-background text-foreground font-serif;
-    background-image:
-      radial-gradient(circle at top, rgba(255, 251, 244, 0.9) 0%, transparent 48%),
-      linear-gradient(180deg, oklch(0.9786 0.0094 79.65) 0%, oklch(0.9541 0.0148 80.71) 100%);
     letter-spacing: 0.004em;
   }
 }
@@ -201,32 +188,6 @@
   .aura-text-micro {
     font-size: 0.625rem;
     line-height: 0.875rem;
-  }
-
-  .aura-page-grain {
-    background-image:
-      radial-gradient(circle at 20% 18%, var(--aura-paper-highlight) 0, transparent 30%),
-      radial-gradient(circle at 82% 14%, rgba(255, 247, 234, 0.28) 0, transparent 24%),
-      radial-gradient(circle at 1px 1px, var(--aura-paper-speck) 0.8px, transparent 1px),
-      radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.24) 0.7px, transparent 1px);
-    background-size:
-      auto,
-      auto,
-      18px 18px,
-      13px 13px;
-    background-position:
-      center,
-      center,
-      0 0,
-      7px 9px;
-    opacity: 0.5;
-  }
-
-  .aura-manuscript-surface {
-    position: relative;
-    transition:
-      opacity var(--aura-duration-base) var(--aura-ease-out),
-      transform var(--aura-duration-base) var(--aura-ease-out);
   }
 
   .aura-text-typewriter {

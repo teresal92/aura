@@ -22,8 +22,6 @@ export default function Home() {
         isWritingFocused && 'bg-aura-depth/70'
       )}
     >
-      <div className="aura-page-grain pointer-events-none absolute inset-0" />
-
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-5 pb-20 pt-6 sm:px-8 sm:pb-24 lg:px-12">
         <header
           className={cn(

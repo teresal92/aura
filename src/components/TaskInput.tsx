@@ -127,7 +127,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
       >
         <div
           className={cn(
-            'aura-manuscript-surface relative overflow-hidden py-3 sm:py-4',
+            'relative overflow-hidden py-3 sm:py-4',
             'transition-all duration-300 ease-out',
             isInputLoading && 'opacity-85',
             'opacity-95'
