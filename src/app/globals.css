@@ -6,17 +6,24 @@
 /* Aura Design System — Token Layer                                            */
 /* ========================================================================== */
 :root {
+  /* Exploration palette */
+  --aura-base: oklch(0.9425 0.0205 81.78);
+  --aura-charcoal: oklch(0.2853 0.0039 84.58);
+  --aura-moss: oklch(0.5116 0.0341 132.88);
+  --aura-washed-navy: oklch(0.4629 0.0411 256.43);
+  --aura-cedar: oklch(0.4999 0.0515 57.49);
+
   /* Core palette */
-  --background: oklch(0.9541 0.0148 80.71);
-  --foreground: oklch(0.2878 0.016 58.95);
+  --background: var(--aura-base);
+  --foreground: var(--aura-charcoal);
   --card: oklch(0.9751 0.0107 76.6);
-  --card-foreground: oklch(0.2878 0.016 58.95);
+  --card-foreground: var(--aura-charcoal);
   --popover: oklch(0.9751 0.0107 76.6);
-  --popover-foreground: oklch(0.2878 0.016 58.95);
-  --primary: oklch(0.2878 0.016 58.95);
+  --popover-foreground: var(--aura-charcoal);
+  --primary: var(--aura-charcoal);
   --primary-foreground: oklch(0.9773 0.0102 81.8);
   --secondary: oklch(0.9312 0.0171 76.11);
-  --secondary-foreground: oklch(0.2878 0.016 58.95);
+  --secondary-foreground: var(--aura-charcoal);
   --muted: oklch(0.9288 0.0188 75.32);
   --muted-foreground: oklch(0.4448 0.0236 59.7);
   --accent: oklch(0.9458 0.0153 77.07);
@@ -38,7 +45,7 @@
   --aura-surface-elevated: oklch(0.9873 0.0096 72.66);
   --aura-depth: oklch(0.9312 0.0171 76.11);
   --aura-divider: oklch(0.9036 0.0184 78.24);
-  --aura-foreground-strong: oklch(0.2308 0.0109 60.9);
+  --aura-foreground-strong: var(--aura-charcoal);
 
   /* Elevation */
   --aura-shadow-xs: 0 1px 2px rgba(49, 41, 35, 0.05);
@@ -125,6 +132,11 @@
   --color-aura-medium: var(--aura-medium);
   --color-aura-low: var(--aura-low);
   --color-aura-success: var(--aura-success);
+  --color-aura-base: var(--aura-base);
+  --color-aura-charcoal: var(--aura-charcoal);
+  --color-aura-moss: var(--aura-moss);
+  --color-aura-washed-navy: var(--aura-washed-navy);
+  --color-aura-cedar: var(--aura-cedar);
   --color-aura-surface-warm: var(--aura-surface-warm);
   --color-aura-surface-elevated: var(--aura-surface-elevated);
   --color-aura-depth: var(--aura-depth);
@@ -150,10 +162,17 @@
     @apply bg-background text-foreground font-serif;
     background-image: linear-gradient(
       180deg,
-      oklch(0.9721 0.0107 76.6) 0%,
-      oklch(0.9541 0.0148 80.71) 100%
+      color-mix(in oklab, var(--background) 88%, white) 0%,
+      var(--background) 100%
     );
     letter-spacing: 0.004em;
+  }
+  .dark body {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--background) 82%, black) 0%,
+      var(--background) 100%
+    );
   }
 }
 
