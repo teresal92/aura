@@ -13,9 +13,9 @@ laundry today, dentist sometime this week, reply to Sarah because that's urgent
 Aura turns that into structured tasks:
 
 ```text
-Do laundry            Today        Home
-Dentist appointment   This week    Health
-Reply to Sarah        Urgent       Communication
+✅ Do laundry          · Today · ~45 min · Home
+📅 Dentist appointment · This week · Health
+⚡ Reply to Sarah      · Urgent · ~5 min · Communication
 ```
 
 The product idea is simple: reduce the planning burden so you can get moving. The interface stays calm, the input stays natural, and the AI helps turn unstructured thoughts into structured tasks with the right priority, category, and time cues. When you need more support, Aura can help break things down further. When you do not, it stays out of the way.
@@ -27,6 +27,18 @@ The product idea is simple: reduce the planning burden so you can get moving. Th
 For a lot of people, the hardest part is not checking a list. It is figuring out what the task actually is, how urgent it feels, and where to start without getting lost in the overhead.
 
 Aura is designed around that gap. Sometimes a little structure and support are enough to turn vague mental clutter into concrete action, and that support does not look the same for everyone.
+
+## Design Philosophy
+
+No onboarding, no tutorial, no manual. If you can type a sentence, you can use it.
+
+**Simplicity** - Every feature has to earn its place. If it adds complexity without clear value, it does not belong.
+
+**Low friction** - One input, accepts anything. When something is vague, Aura asks a short follow-up rather than pretending to know what you meant.
+
+**Less on screen** - Only what is needed, when it is needed. Details are there when they help and hidden when they do not.
+
+**Flexible support** - Some days you want the high-level version. Some days you need help breaking a task down. Aura should support both.
 
 ## Features
 
