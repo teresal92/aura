@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import { ClerkProvider } from '@clerk/nextjs'
+
 import { Geist_Mono, Libre_Baskerville } from 'next/font/google'
 import './globals.css'
+import AppProviders from './providers'
 
 const libreBaskerville = Libre_Baskerville({
   variable: '--font-libre-baskerville',
@@ -25,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
+    <AppProviders>
       <html lang="en" className="h-full">
         <body
           className={`${libreBaskerville.variable} ${geistMono.variable} min-h-screen antialiased`}
@@ -33,6 +34,6 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </AppProviders>
   )
 }
