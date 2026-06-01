@@ -1,5 +1,6 @@
 import 'server-only'
 
+import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { z } from 'zod'
 import { zodTextFormat } from 'openai/helpers/zod'
@@ -9,7 +10,7 @@ import type { ParsedTaskResponse } from '@/types/task'
 type Provider = 'openai' | 'anthropic'
 
 const DEFAULT_OPENAI_MODEL = 'gpt-5-mini'
-const DEFAULT_ANTHROPIC_MODEL = 'claude-3-5-sonnet-20241022'
+const DEFAULT_ANTHROPIC_MODEL = 'claude-sonnet-4-6'
 
 function extractJson(text: string): ParsedTaskResponse {
   try {
@@ -84,39 +85,30 @@ async function parseWithOpenAI(input: string): Promise<ParsedTaskResponse> {
   return response.output_parsed as ParsedTaskResponse
 }
 
-// TODO: need to validate Anthropic API
 async function parseWithAnthropic(input: string): Promise<ParsedTaskResponse> {
   const apiKey = process.env.ANTHROPIC_API_KEY
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not set')
 
   const model = process.env.ANTHROPIC_MODEL || DEFAULT_ANTHROPIC_MODEL
+  const client = new Anthropic({ apiKey })
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 800,
-      temperature: 0.2,
-      system: TASK_PARSER_SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: input }],
-    }),
+  const response = await client.messages.create({
+    model,
+    max_tokens: 1024,
+    system: [
+      {
+        type: 'text',
+        text: TASK_PARSER_SYSTEM_PROMPT,
+        cache_control: { type: 'ephemeral' },
+      },
+    ],
+    messages: [{ role: 'user', content: input }],
   })
 
-  if (!response.ok) {
-    const errorText = await response.text()
-    throw new Error(`Anthropic error: ${response.status} ${errorText}`)
-  }
+  const textBlock = response.content.find(
+    (block): block is Anthropic.TextBlock => block.type === 'text'
+  )
+  if (!textBlock) throw new Error('Anthropic returned no content')
 
-  const payload = (await response.json()) as {
-    content?: { type: string; text?: string }[]
-  }
-  const text = payload.content?.find((item) => item.type === 'text')?.text
-  if (!text) throw new Error('Anthropic returned no content')
-
-  return extractJson(text)
+  return extractJson(textBlock.text)
 }
