@@ -12,14 +12,34 @@ type Provider = 'openai' | 'anthropic'
 const DEFAULT_OPENAI_MODEL = 'gpt-5-mini'
 const DEFAULT_ANTHROPIC_MODEL = 'claude-sonnet-4-6'
 
-function extractJson(text: string): ParsedTaskResponse {
+const parsedTaskSchema = z.object({
+  tasks: z.array(
+    z.object({
+      title: z.string(),
+      priority: z.enum(['low', 'medium', 'high', 'urgent']),
+      estimatedDuration: z.number(),
+      dueDate: z
+        .string()
+        .nullish()
+        .transform((v) => v ?? null),
+      category: z.string(),
+      subtasks: z.array(z.string()).default([]),
+      notes: z
+        .string()
+        .nullish()
+        .transform((v) => v ?? null),
+    })
+  ),
+})
+
+function extractJson(text: string): unknown {
   try {
-    return JSON.parse(text) as ParsedTaskResponse
+    return JSON.parse(text)
   } catch {
     const start = text.indexOf('{')
     const end = text.lastIndexOf('}')
     if (start >= 0 && end > start) {
-      return JSON.parse(text.slice(start, end + 1)) as ParsedTaskResponse
+      return JSON.parse(text.slice(start, end + 1))
     }
     throw new Error('Unable to parse JSON from AI response')
   }
@@ -36,16 +56,7 @@ export async function parseTasks(input: string): Promise<ParsedTaskResponse> {
   if (provider === 'anthropic') {
     return parseWithAnthropic(input)
   }
-  const result = await parseWithOpenAI(input)
-  const normalized = {
-    tasks: result.tasks.map((task) => ({
-      ...task,
-      dueDate: task.dueDate ?? null,
-      notes: task.notes ?? null,
-      subtasks: Array.isArray(task.subtasks) ? task.subtasks : [],
-    })),
-  }
-  return normalized
+  return parseWithOpenAI(input)
 }
 
 async function parseWithOpenAI(input: string): Promise<ParsedTaskResponse> {
@@ -55,28 +66,17 @@ async function parseWithOpenAI(input: string): Promise<ParsedTaskResponse> {
   const model = process.env.OPENAI_MODEL || DEFAULT_OPENAI_MODEL
   const client = new OpenAI({ apiKey })
 
-  const taskSchema = z.object({
-    tasks: z.array(
-      z.object({
-        title: z.string(),
-        priority: z.enum(['low', 'medium', 'high', 'urgent']),
-        estimatedDuration: z.number(),
-        dueDate: z.string().nullable(),
-        category: z.string(),
-        subtasks: z.array(z.string()),
-        notes: z.string().nullable(),
-      })
-    ),
-  })
+  const today = new Date().toISOString().split('T')[0]
+  const userContent = `Today's date: ${today}\n\n${input}`
 
   const response = await client.responses.parse({
     model,
     input: [
       { role: 'system', content: TASK_PARSER_SYSTEM_PROMPT },
-      { role: 'user', content: input },
+      { role: 'user', content: userContent },
     ],
     text: {
-      format: zodTextFormat(taskSchema, 'task_parse'),
+      format: zodTextFormat(parsedTaskSchema, 'task_parse'),
     },
   })
 
@@ -92,9 +92,12 @@ async function parseWithAnthropic(input: string): Promise<ParsedTaskResponse> {
   const model = process.env.ANTHROPIC_MODEL || DEFAULT_ANTHROPIC_MODEL
   const client = new Anthropic({ apiKey })
 
+  const today = new Date().toISOString().split('T')[0]
+  const userContent = `Today's date: ${today}\n\n${input}`
+
   const response = await client.messages.create({
     model,
-    max_tokens: 1024,
+    max_tokens: 4096,
     system: [
       {
         type: 'text',
@@ -102,7 +105,7 @@ async function parseWithAnthropic(input: string): Promise<ParsedTaskResponse> {
         cache_control: { type: 'ephemeral' },
       },
     ],
-    messages: [{ role: 'user', content: input }],
+    messages: [{ role: 'user', content: userContent }],
   })
 
   const textBlock = response.content.find(
@@ -110,5 +113,5 @@ async function parseWithAnthropic(input: string): Promise<ParsedTaskResponse> {
   )
   if (!textBlock) throw new Error('Anthropic returned no content')
 
-  return extractJson(textBlock.text)
+  return parsedTaskSchema.parse(extractJson(textBlock.text))
 }

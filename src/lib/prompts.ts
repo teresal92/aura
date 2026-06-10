@@ -37,8 +37,7 @@ Response format:
       "dueDate": "ISO 8601 string" | null,
       "category": "string",
       "subtasks": ["string"] | [],
-      "userContext": "string" | null,
-      "aiNotes": "string" | null,
+      "notes": "string" | null,
       "ambiguous": boolean,
       "clarificationPrompt": "string" | null,
       "source": "direct" | "clarified"

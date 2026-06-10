@@ -12,8 +12,16 @@ export function TaskList() {
 
   if (tasks.length === 0) return null
 
+  const today = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
+
   return (
     <div className="space-y-8">
+      <p className="aura-text-label-wide text-muted-foreground/60">{today}</p>
       {activeTasks.length > 0 ? (
         <section className="space-y-3">
           <SectionHeader count={activeTasks.length}>To do ·</SectionHeader>
