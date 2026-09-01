@@ -70,7 +70,3 @@ Clerk keys (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`) must also b
 - Commits follow Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`, `test:`
 - Tests are co-located next to source files (`*.test.ts` / `*.test.tsx`)
 - Use React Testing Library role/text queries, not implementation details
-
-## ExecPlans
-
-For complex features or significant refactors, create an ExecPlan following the spec in `.agent/PLANS.md`. Store plans as `.agent/<name>.md`. ExecPlans are living documents — update Progress, Surprises, Decision Log, and Retrospective sections as work proceeds.
