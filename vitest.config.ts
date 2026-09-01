@@ -22,6 +22,11 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   test: {
     environment: 'jsdom',
+    env: {
+      // Pin timezone so local-day-boundary logic (e.g. src/lib/dates.ts)
+      // is deterministic regardless of the host/CI runner's system TZ.
+      TZ: 'America/Los_Angeles',
+    },
     projects: [
       {
         extends: true,
