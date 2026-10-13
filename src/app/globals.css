@@ -121,9 +121,9 @@
   h6 {
     @apply font-heading font-semibold text-balance;
   }
-  /* Heading scale follows @tailwindcss/typography defaults (h1 2.25rem, h2 1.5rem, h3 1.25rem). */
+  /* h1 is the page headline; h2/h3 follow @tailwindcss/typography defaults (1.5rem / 1.25rem). */
   h1 {
-    @apply text-4xl;
+    @apply text-5xl sm:text-6xl;
   }
   h2 {
     @apply text-2xl;
