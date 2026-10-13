@@ -20,7 +20,7 @@ export const clerkAppearance: ClerkAppearance = {
     colorRing: 'var(--foreground)',
     colorDanger: 'var(--destructive)',
     borderRadius: '0',
-    fontFamily: 'var(--font-lora), serif',
+    fontFamily: 'var(--font-geist-sans), sans-serif',
     fontSize: '1rem',
   },
   elements: {

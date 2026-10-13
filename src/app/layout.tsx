@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { Cormorant_Garamond, Fraunces, Geist_Mono, Lora } from 'next/font/google'
+import { Cormorant_Garamond, Fraunces, Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import AppProviders from './providers'
 
@@ -17,8 +17,8 @@ const fraunces = Fraunces({
   axes: ['SOFT', 'WONK'],
 })
 
-const lora = Lora({
-  variable: '--font-lora',
+const geist = Geist({
+  variable: '--font-geist-sans',
   subsets: ['latin'],
 })
 
@@ -41,7 +41,7 @@ export default function RootLayout({
     <AppProviders>
       <html lang="en" className="h-full">
         <body
-          className={`${cormorantGaramond.variable} ${fraunces.variable} ${lora.variable} ${geistMono.variable} min-h-screen antialiased`}
+          className={`${cormorantGaramond.variable} ${fraunces.variable} ${geist.variable} ${geistMono.variable} min-h-screen antialiased`}
         >
           {children}
         </body>

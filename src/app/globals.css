@@ -71,8 +71,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-lora), 'Lora', serif;
-  --font-serif: var(--font-lora), 'Lora', serif;
+  --font-sans: var(--font-geist-sans), 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant-garamond), 'Cormorant Garamond', serif;
   --font-heading: var(--font-cormorant-garamond), 'Cormorant Garamond', serif;
   --font-display: var(--font-fraunces), 'Fraunces', serif;
   --font-mono: var(--font-geist-mono), 'Geist Mono', monospace;
@@ -113,7 +113,7 @@
     min-height: 100%;
   }
   body {
-    @apply bg-background text-foreground font-serif;
+    @apply bg-background text-foreground font-sans;
     letter-spacing: 0.004em;
   }
   h1,
