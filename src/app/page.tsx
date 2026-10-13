@@ -74,13 +74,7 @@ export default function Home() {
                 </SignedOut>
 
                 <SignedIn>
-                  <UserButton
-                    appearance={{
-                      elements: {
-                        avatarBox: 'size-8 ring-1 ring-border',
-                      },
-                    }}
-                  />
+                  <UserButton />
                 </SignedIn>
               </div>
             </div>

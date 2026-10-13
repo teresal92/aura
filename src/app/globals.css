@@ -1,3 +1,5 @@
+/* Clerk sits between base and components so it beats Aura's base styles but not utilities. */
+@layer theme, base, clerk, components, utilities;
 @import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
