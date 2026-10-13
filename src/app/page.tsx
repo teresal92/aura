@@ -30,7 +30,7 @@ export default function Home() {
   const taskList = (
     <div
       className={cn(
-        'mt-16 transition-opacity duration-250',
+        'mt-16 border-t border-border pt-12 transition-opacity duration-250',
         isWritingFocused ? 'opacity-50' : 'opacity-100'
       )}
     >
@@ -41,8 +41,9 @@ export default function Home() {
   const completedTasks = tasks.filter((task) => task.completed)
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background">
-      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 pb-24 pt-6 sm:px-6 lg:px-8">
+    <main className="relative min-h-screen overflow-hidden bg-background px-4 sm:px-6 lg:px-8">
+      {/* Single axis: header, headline, input and tasks all share one column edge. */}
+      <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col pb-24 pt-8">
         <header
           className={cn(
             'border-b border-border pb-6 transition-opacity duration-250',
@@ -81,15 +82,16 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="mx-auto my-auto flex w-full max-w-3xl flex-col py-12 sm:py-16">
+        <div className="flex flex-col pt-16 pb-12 sm:pt-24">
           <div
             className={cn(
-              'mb-12 transition-all duration-250',
+              'mb-16 transition-all duration-250',
               isWritingFocused ? 'translate-y-1 opacity-50' : 'opacity-100'
             )}
           >
             {tasks.length === 0 ? (
-              <h1>
+              // pl-1: Cormorant's "J" hooks ~0.05em left of its box; nudge it onto the textarea edge.
+              <h1 className="pl-1">
                 Just start <TypewriterText text="typing." className="italic" />
               </h1>
             ) : (
