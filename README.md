@@ -20,8 +20,6 @@ Aura turns that into structured tasks:
 
 The product idea is simple: reduce the planning burden so you can get moving. The interface stays calm, the input stays natural, and the AI helps turn unstructured thoughts into structured tasks with the right priority, category, and time cues. When you need more support, Aura can help break things down further. When you do not, it stays out of the way.
 
-![Aura desktop view](docs/aura-mvp-desktop.png)
-
 ## Why It Exists
 
 For a lot of people, the hardest part is not checking a list. It is figuring out what the task actually is, how urgent it feels, and where to start without getting lost in the overhead.

@@ -41,7 +41,6 @@ The `Task` type (`src/types/task.ts`) is the central contract shared across the 
 `src/app/globals.css` is the source of truth for all design tokens, shadows, and motion utilities. Use:
 
 - Tailwind semantic tokens: `bg-background`, `text-foreground`, `border-border`
-- Aura semantic colors: `bg-aura-urgent/10`, `text-aura-success`
 - Aura utilities: `aura-shadow-sm`, `aura-transition-fast`, `aura-focus-ring`
 - Light/dark theming via `.dark` class on `<html>` — tokens defined under `:root` and `.dark`
 
