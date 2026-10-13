@@ -1,33 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import { forwardRef } from 'react'
 import { cn } from '@/lib/utils'
-
-export function AuraLogo({
-  size = 'md',
-  className,
-}: {
-  size?: 'sm' | 'md' | 'lg'
-  className?: string
-}) {
-  const sizeMap = {
-    sm: 'h-8',
-    md: 'h-12',
-    lg: 'h-16',
-  }
-
-  return (
-    <Image
-      src="/aura-main-logo.png"
-      alt="Aura"
-      width={804}
-      height={244}
-      priority
-      className={cn(sizeMap[size], 'w-auto shrink-0', className)}
-    />
-  )
-}
 
 interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'sm' | 'md' | 'lg'
@@ -43,9 +17,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     }
     const variantMap = {
       ghost: 'aura-icon-btn',
-      subtle: 'aura-icon-btn hover:bg-secondary/70 hover:text-aura-foreground-strong',
+      subtle: 'aura-icon-btn hover:bg-secondary/70 hover:text-foreground',
       danger: 'aura-icon-btn hover:bg-destructive/10 hover:text-destructive',
-      success: 'aura-icon-btn hover:bg-aura-success/10 hover:text-aura-success',
+      success: 'aura-icon-btn hover:bg-foreground/10 hover:text-foreground',
     }
 
     return (
@@ -64,27 +38,23 @@ IconButton.displayName = 'IconButton'
 const PRIORITY_CONFIG = {
   urgent: {
     label: 'Urgent',
-    bg: 'bg-aura-urgent/10',
-    text: 'text-aura-foreground-strong',
-    dot: 'bg-aura-urgent',
+    text: 'text-foreground',
+    dot: 'bg-foreground',
   },
   high: {
     label: 'High',
-    bg: 'bg-aura-high/10',
     text: 'text-foreground',
-    dot: 'bg-aura-high',
+    dot: 'bg-muted-foreground',
   },
   medium: {
     label: 'Medium',
-    bg: 'bg-aura-medium/10',
     text: 'text-muted-foreground',
-    dot: 'bg-aura-medium',
+    dot: 'bg-muted-foreground',
   },
   low: {
     label: 'Low',
-    bg: 'bg-aura-low/10',
     text: 'text-muted-foreground',
-    dot: 'bg-aura-low',
+    dot: 'bg-muted-foreground',
   },
 } as const
 
@@ -93,7 +63,7 @@ export type Priority = keyof typeof PRIORITY_CONFIG
 export function PriorityBadge({ priority, className }: { priority: Priority; className?: string }) {
   const config = PRIORITY_CONFIG[priority]
   return (
-    <span className={cn('aura-badge', config.bg, config.text, className)}>
+    <span className={cn('inline-flex items-center gap-1.5 text-base', config.text, className)}>
       <span className={cn('h-1.5 w-1.5 rounded-full', config.dot)} />
       {config.label}
     </span>
@@ -112,7 +82,7 @@ export function PriorityDot({ priority, className }: { priority: Priority; class
 
 export function CategoryBadge({ category, className }: { category: string; className?: string }) {
   return (
-    <span className={cn('aura-badge bg-secondary/70 text-muted-foreground', className)}>
+    <span className={cn('inline-flex items-center text-base text-muted-foreground', className)}>
       {category}
     </span>
   )
@@ -128,7 +98,9 @@ export function MetaText({
   className?: string
 }) {
   return (
-    <span className={cn('inline-flex items-center gap-1 text-xs text-muted-foreground', className)}>
+    <span
+      className={cn('inline-flex items-center gap-1 text-base text-muted-foreground', className)}
+    >
       {icon}
       {children}
     </span>
@@ -148,18 +120,18 @@ export function CompletionCheckbox({
     <button
       onClick={onChange}
       className={cn(
-        'aura-focus-ring flex h-6 w-6 shrink-0 items-center justify-center rounded-full border',
-        'transition-all duration-200',
+        'aura-focus-ring flex size-6 shrink-0 items-center justify-center border p-0',
+        'transition-all duration-150',
         checked
           ? 'border-foreground bg-foreground text-background'
-          : 'border-border bg-background/50 hover:border-muted-foreground hover:bg-secondary/60',
+          : 'border-foreground bg-transparent',
         className
       )}
       aria-label={checked ? 'Mark as incomplete' : 'Mark as complete'}
       role="checkbox"
       aria-checked={checked}
     >
-      {checked ? <span className="aura-text-micro font-bold">✓</span> : null}
+      {checked ? <span className="text-sm font-bold">✓</span> : null}
     </button>
   )
 }
@@ -175,11 +147,13 @@ export function SectionHeader({
 }) {
   return (
     <div className={cn('flex items-center gap-4', className)}>
-      <h2 className="aura-text-label-wide font-medium uppercase text-muted-foreground">
+      <h2>
         {children}
-        {count !== undefined ? <span className="ml-1.5 tabular-nums">{count}</span> : null}
+        {count !== undefined ? (
+          <span className="ml-2 tabular-nums lining-nums">{count}</span>
+        ) : null}
       </h2>
-      <span className="h-px flex-1 bg-aura-divider/80" aria-hidden="true" />
+      <span className="h-px flex-1 bg-border" aria-hidden="true" />
     </div>
   )
 }

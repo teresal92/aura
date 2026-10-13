@@ -21,11 +21,11 @@ export function TaskList() {
 
   return (
     <div className="space-y-8">
-      <p className="aura-text-label-wide text-muted-foreground/60">{today}</p>
+      <p className="font-heading text-xl text-foreground lining-nums">{today}</p>
       {activeTasks.length > 0 ? (
-        <section className="space-y-3">
+        <section className="space-y-4">
           <SectionHeader count={activeTasks.length}>To do ·</SectionHeader>
-          <div className="space-y-2.5">
+          <div className="space-y-4">
             {activeTasks.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}
@@ -34,9 +34,9 @@ export function TaskList() {
       ) : null}
 
       {completedTasks.length > 0 ? (
-        <section className="space-y-3">
+        <section className="space-y-4">
           <SectionHeader count={completedTasks.length}>Done ·</SectionHeader>
-          <div className="space-y-2.5">
+          <div className="space-y-4">
             {completedTasks.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}

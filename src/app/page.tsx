@@ -1,37 +1,56 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
-import { AuraLogo } from '@/components/aura-primitives'
 import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
+import { TypewriterText } from '@/components/TypewriterText'
+import { PREVIEW_TASKS } from '@/lib/preview-tasks'
 import { cn } from '@/lib/utils'
 import { useTaskStore } from '@/store/tasks'
+
+// Temporary: set to true to preview the task list with placeholder data (no sign-in needed).
+const SHOW_PREVIEW_TASKS = false
 
 export default function Home() {
   const [isWritingFocused, setIsWritingFocused] = useState(false)
   const { tasks, isInputLoading } = useTaskStore()
+
+  useEffect(() => {
+    if (!SHOW_PREVIEW_TASKS) return
+    const store = useTaskStore.getState()
+    if (store.tasks.length > 0) return
+
+    store.addTasks(PREVIEW_TASKS)
+    const lastTask = useTaskStore.getState().tasks.at(-1)
+    if (lastTask) store.completeTask(lastTask.id)
+  }, [])
+
+  const taskList = (
+    <div
+      className={cn(
+        'mt-16 transition-opacity duration-250',
+        isWritingFocused ? 'opacity-50' : 'opacity-100'
+      )}
+    >
+      <TaskList />
+    </div>
+  )
   const activeTasks = tasks.filter((task) => !task.completed)
   const completedTasks = tasks.filter((task) => task.completed)
 
   return (
-    <main
-      className={cn(
-        'relative min-h-screen overflow-hidden bg-background transition-colors duration-300',
-        isWritingFocused && 'bg-aura-depth/70'
-      )}
-    >
-      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-5 pb-20 pt-6 sm:px-8 sm:pb-24 lg:px-12">
+    <main className="relative min-h-screen overflow-hidden bg-background">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 pb-24 pt-6 sm:px-6 lg:px-8">
         <header
           className={cn(
-            'border-b border-aura-divider/75 pb-5 transition-all duration-300',
-            isWritingFocused ? 'opacity-55' : 'opacity-90'
+            'border-b border-border pb-6 transition-opacity duration-250',
+            isWritingFocused ? 'opacity-50' : 'opacity-100'
           )}
         >
           <div className="flex items-center justify-between gap-4">
-            <AuraLogo />
-
+            <p className="font-display text-3xl">aura</p>
             <div className="flex items-center gap-4">
               <SignedIn>
                 {tasks.length > 0 ? (
@@ -45,12 +64,10 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <SignedOut>
                   <SignInButton mode="modal">
-                    <button className="aura-btn-shell-secondary" type="button">
-                      Sign in
-                    </button>
+                    <button type="button">Sign in</button>
                   </SignInButton>
                   <SignUpButton mode="modal">
-                    <button className="aura-btn-shell-primary" type="button">
+                    <button type="button" className="aura-btn-primary">
                       Sign up
                     </button>
                   </SignUpButton>
@@ -60,7 +77,7 @@ export default function Home() {
                   <UserButton
                     appearance={{
                       elements: {
-                        avatarBox: 'h-8 w-8 ring-1 ring-border',
+                        avatarBox: 'size-8 ring-1 ring-border',
                       },
                     }}
                   />
@@ -70,62 +87,36 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="mx-auto my-auto flex w-full max-w-184 flex-col py-12 sm:py-16">
+        <div className="mx-auto my-auto flex w-full max-w-3xl flex-col py-12 sm:py-16">
           <div
             className={cn(
-              'mb-10 px-4 transition-all duration-300 sm:mb-12 sm:px-6',
-              isWritingFocused ? 'translate-y-1 opacity-38' : 'opacity-88'
+              'mb-12 transition-all duration-250',
+              isWritingFocused ? 'translate-y-1 opacity-50' : 'opacity-100'
             )}
           >
             {tasks.length === 0 ? (
-              <>
-                <h1 className="max-w-136 text-[2.15rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.95rem]">
-                  Begin anywhere.
-                </h1>
-                <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground text-balance">
-                  Rough sentences first. Structure after.
-                </p>
-              </>
+              <h1>
+                Just start <TypewriterText text="typing." className="italic" />
+              </h1>
             ) : (
-              <>
-                <h1 className="max-w-120 text-[2.05rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.8rem]">
-                  Keep going.
-                </h1>
-                <p className="mt-4 max-w-104 text-base leading-relaxed text-muted-foreground text-balance">
-                  Add anything still circling.
-                </p>
-              </>
+              <h1>Keep going.</h1>
             )}
           </div>
 
           <TaskInput onFocusChange={setIsWritingFocused} />
 
-          <SignedIn>
-            <div
-              className={cn(
-                'mt-14 px-4 transition-all duration-300 sm:px-6',
-                isWritingFocused ? 'opacity-50' : 'opacity-100'
-              )}
-            >
-              <TaskList />
-            </div>
-          </SignedIn>
+          {SHOW_PREVIEW_TASKS ? taskList : <SignedIn>{taskList}</SignedIn>}
         </div>
       </div>
 
       <Overlay
         isActive={isInputLoading}
-        contentClassName={cn(
-          'aura-card flex min-w-72 items-center gap-4 rounded-3xl px-5 py-4',
-          'border-aura-divider/80 bg-card/92 aura-shadow-lg'
-        )}
+        contentClassName="flex min-w-72 items-center gap-4 border border-border bg-background px-6 py-4 aura-shadow-lg"
       >
-        <div className="h-5 w-5 animate-spin rounded-full border-2 border-aura-divider border-t-primary" />
+        <div className="size-5 animate-spin rounded-full border-2 border-border border-t-primary" />
         <div role="status" aria-live="polite" aria-busy={isInputLoading}>
-          <p className="text-sm font-semibold text-aura-foreground-strong">
-            Organizing your thoughts
-          </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-base font-semibold text-foreground">Organizing your thoughts</p>
+          <p className="text-base text-muted-foreground">
             Turning your brain dump into a clearer plan.
           </p>
         </div>
