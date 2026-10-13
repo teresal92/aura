@@ -141,8 +141,11 @@
       color var(--aura-duration-fast) var(--aura-ease-out),
       opacity var(--aura-duration-fast) var(--aura-ease-out);
   }
-  button:hover:not(:disabled) {
-    @apply bg-foreground text-background;
+  /* Gate hover like Tailwind v4's hover: variant, so a tap on touch screens doesn't leave it stuck on. */
+  @media (hover: hover) {
+    button:hover:not(:disabled) {
+      @apply bg-foreground text-background;
+    }
   }
   button:disabled {
     @apply cursor-not-allowed opacity-50;
@@ -154,8 +157,10 @@
   .aura-btn-primary {
     @apply bg-foreground text-background;
   }
-  .aura-btn-primary:hover:not(:disabled) {
-    @apply bg-transparent text-foreground;
+  @media (hover: hover) {
+    .aura-btn-primary:hover:not(:disabled) {
+      @apply bg-transparent text-foreground;
+    }
   }
 
   .aura-shadow-xs {

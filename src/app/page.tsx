@@ -90,7 +90,8 @@ export default function Home() {
 
           <TaskInput onFocusChange={setIsWritingFocused} />
 
-          {previewTasksEnabled ? taskList : <SignedIn>{taskList}</SignedIn>}
+          {/* TaskList renders nothing when empty, so skip its ruled wrapper too. */}
+          {tasks.length > 0 && (previewTasksEnabled ? taskList : <SignedIn>{taskList}</SignedIn>)}
         </div>
       </div>
 
