@@ -127,14 +127,13 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
       >
         <div
           className={cn(
-            'relative overflow-hidden py-3 sm:py-4',
-            'transition-all duration-300 ease-out',
-            isInputLoading && 'opacity-85',
-            'opacity-95'
+            'relative overflow-hidden py-4',
+            'transition-opacity duration-250 ease-out',
+            isInputLoading && 'opacity-50'
           )}
         >
           <div className="relative">
-            <div className="px-4 sm:px-6">
+            <div className="border border-border p-4 transition-colors duration-150 focus-within:border-foreground sm:p-6">
               <textarea
                 ref={textareaRef}
                 value={input}
@@ -144,7 +143,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
                 disabled={isInputLoading}
                 rows={6}
                 className={cn(
-                  'aura-text-typewriter min-h-54 w-full resize-none bg-transparent pr-1 font-normal',
+                  'aura-text-typewriter min-h-54 w-full resize-none bg-transparent font-normal',
                   'text-foreground placeholder:text-muted-foreground',
                   'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground'
                 )}
@@ -153,7 +152,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
               />
             </div>
 
-            <div className="mt-4 p-4 sm:mt-5 sm:px-6">
+            <div className="mt-6">
               <button
                 onClick={() => handleSubmit()}
                 disabled={!input.trim() || isInputLoading}

@@ -38,25 +38,21 @@ IconButton.displayName = 'IconButton'
 const PRIORITY_CONFIG = {
   urgent: {
     label: 'Urgent',
-    bg: 'bg-muted',
     text: 'text-foreground',
     dot: 'bg-foreground',
   },
   high: {
     label: 'High',
-    bg: 'bg-muted',
     text: 'text-foreground',
     dot: 'bg-muted-foreground',
   },
   medium: {
     label: 'Medium',
-    bg: 'bg-muted',
     text: 'text-muted-foreground',
     dot: 'bg-muted-foreground',
   },
   low: {
     label: 'Low',
-    bg: 'bg-muted',
     text: 'text-muted-foreground',
     dot: 'bg-muted-foreground',
   },
@@ -67,7 +63,7 @@ export type Priority = keyof typeof PRIORITY_CONFIG
 export function PriorityBadge({ priority, className }: { priority: Priority; className?: string }) {
   const config = PRIORITY_CONFIG[priority]
   return (
-    <span className={cn('aura-badge', config.bg, config.text, className)}>
+    <span className={cn('inline-flex items-center gap-1.5 text-base', config.text, className)}>
       <span className={cn('h-1.5 w-1.5 rounded-full', config.dot)} />
       {config.label}
     </span>
@@ -86,7 +82,7 @@ export function PriorityDot({ priority, className }: { priority: Priority; class
 
 export function CategoryBadge({ category, className }: { category: string; className?: string }) {
   return (
-    <span className={cn('aura-badge bg-secondary/70 text-muted-foreground', className)}>
+    <span className={cn('inline-flex items-center text-base text-muted-foreground', className)}>
       {category}
     </span>
   )
@@ -102,7 +98,9 @@ export function MetaText({
   className?: string
 }) {
   return (
-    <span className={cn('inline-flex items-center gap-1 text-xs text-muted-foreground', className)}>
+    <span
+      className={cn('inline-flex items-center gap-1 text-base text-muted-foreground', className)}
+    >
       {icon}
       {children}
     </span>
@@ -122,18 +120,18 @@ export function CompletionCheckbox({
     <button
       onClick={onChange}
       className={cn(
-        'aura-focus-ring flex h-6 w-6 shrink-0 items-center justify-center rounded-full border',
-        'transition-all duration-200',
+        'aura-focus-ring flex size-6 shrink-0 items-center justify-center border p-0',
+        'transition-all duration-150',
         checked
           ? 'border-foreground bg-foreground text-background'
-          : 'border-border bg-background/50 hover:border-muted-foreground hover:bg-secondary/60',
+          : 'border-foreground bg-transparent',
         className
       )}
       aria-label={checked ? 'Mark as incomplete' : 'Mark as complete'}
       role="checkbox"
       aria-checked={checked}
     >
-      {checked ? <span className="aura-text-micro font-bold">✓</span> : null}
+      {checked ? <span className="text-sm font-bold">✓</span> : null}
     </button>
   )
 }
@@ -149,11 +147,13 @@ export function SectionHeader({
 }) {
   return (
     <div className={cn('flex items-center gap-4', className)}>
-      <h2 className="aura-text-label-wide font-medium uppercase text-muted-foreground">
+      <h2>
         {children}
-        {count !== undefined ? <span className="ml-1.5 tabular-nums">{count}</span> : null}
+        {count !== undefined ? (
+          <span className="ml-2 tabular-nums lining-nums">{count}</span>
+        ) : null}
       </h2>
-      <span className="h-px flex-1 bg-border/80" aria-hidden="true" />
+      <span className="h-px flex-1 bg-border" aria-hidden="true" />
     </div>
   )
 }

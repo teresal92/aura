@@ -16,9 +16,9 @@ export function Overlay({
     <div
       className={cn(
         'fixed inset-0 z-30 flex items-center justify-center p-4 backdrop-blur-md',
-        'transition-opacity duration-200',
+        'transition-opacity duration-250',
         isActive
-          ? 'bg-background/55 opacity-100 pointer-events-auto cursor-wait'
+          ? 'bg-background/50 opacity-100 pointer-events-auto cursor-wait'
           : 'opacity-0 pointer-events-none',
         className
       )}
@@ -26,8 +26,8 @@ export function Overlay({
     >
       <div
         className={cn(
-          'transition-transform duration-200',
-          isActive ? 'translate-y-0 scale-100' : 'translate-y-1 scale-[0.985]',
+          'transition-transform duration-250',
+          isActive ? 'translate-y-0 scale-100' : 'translate-y-1 scale-98',
           contentClassName
         )}
       >
