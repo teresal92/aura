@@ -9,18 +9,19 @@
   /* Core palette */
   --background: #c8c57a;
   --foreground: #3e190f;
-  --card: oklch(0.9751 0.0107 76.6);
-  --card-foreground: #3e190f;
-  --popover: oklch(0.9751 0.0107 76.6);
-  --popover-foreground: #3e190f;
-  --primary: #3e190f;
-  --primary-foreground: oklch(0.9773 0.0102 81.8);
-  --secondary: oklch(0.9312 0.0171 76.11);
-  --secondary-foreground: #3e190f;
-  --muted: oklch(0.9288 0.0188 75.32);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  /* Subtle fills (hover, muted surfaces): a light brown tint over the background. */
+  --secondary: color-mix(in oklab, var(--foreground) 8%, var(--background));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in oklab, var(--foreground) 8%, var(--background));
   --muted-foreground: #634a2c;
-  --accent: oklch(0.9458 0.0153 77.07);
-  --accent-foreground: oklch(0.2653 0.0128 62.04);
+  --accent: color-mix(in oklab, var(--foreground) 8%, var(--background));
+  --accent-foreground: var(--foreground);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --border: #9f915a;
