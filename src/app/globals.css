@@ -75,7 +75,7 @@
   --font-serif: var(--font-lora), 'Lora', serif;
   --font-heading: var(--font-cormorant-garamond), 'Cormorant Garamond', serif;
   --font-display: var(--font-fraunces), 'Fraunces', serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-mono: var(--font-geist-mono), 'Geist Mono', monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
