@@ -17,9 +17,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     }
     const variantMap = {
       ghost: 'aura-icon-btn',
-      subtle: 'aura-icon-btn hover:bg-secondary/70 hover:text-aura-foreground-strong',
+      subtle: 'aura-icon-btn hover:bg-secondary/70 hover:text-foreground',
       danger: 'aura-icon-btn hover:bg-destructive/10 hover:text-destructive',
-      success: 'aura-icon-btn hover:bg-aura-success/10 hover:text-aura-success',
+      success: 'aura-icon-btn hover:bg-foreground/10 hover:text-foreground',
     }
 
     return (
@@ -38,27 +38,27 @@ IconButton.displayName = 'IconButton'
 const PRIORITY_CONFIG = {
   urgent: {
     label: 'Urgent',
-    bg: 'bg-aura-urgent/10',
-    text: 'text-aura-foreground-strong',
-    dot: 'bg-aura-urgent',
+    bg: 'bg-muted',
+    text: 'text-foreground',
+    dot: 'bg-foreground',
   },
   high: {
     label: 'High',
-    bg: 'bg-aura-high/10',
+    bg: 'bg-muted',
     text: 'text-foreground',
-    dot: 'bg-aura-high',
+    dot: 'bg-muted-foreground',
   },
   medium: {
     label: 'Medium',
-    bg: 'bg-aura-medium/10',
+    bg: 'bg-muted',
     text: 'text-muted-foreground',
-    dot: 'bg-aura-medium',
+    dot: 'bg-muted-foreground',
   },
   low: {
     label: 'Low',
-    bg: 'bg-aura-low/10',
+    bg: 'bg-muted',
     text: 'text-muted-foreground',
-    dot: 'bg-aura-low',
+    dot: 'bg-muted-foreground',
   },
 } as const
 
@@ -153,7 +153,7 @@ export function SectionHeader({
         {children}
         {count !== undefined ? <span className="ml-1.5 tabular-nums">{count}</span> : null}
       </h2>
-      <span className="h-px flex-1 bg-aura-divider/80" aria-hidden="true" />
+      <span className="h-px flex-1 bg-border/80" aria-hidden="true" />
     </div>
   )
 }

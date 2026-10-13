@@ -1,13 +1,18 @@
 import type { Metadata } from 'next'
 
-import { Geist_Mono, Libre_Baskerville } from 'next/font/google'
+import { Cormorant_Garamond, Geist_Mono, Lora } from 'next/font/google'
 import './globals.css'
 import AppProviders from './providers'
 
-const libreBaskerville = Libre_Baskerville({
-  variable: '--font-libre-baskerville',
+const cormorantGaramond = Cormorant_Garamond({
+  variable: '--font-cormorant-garamond',
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['400', '500', '600', '700'],
+})
+
+const lora = Lora({
+  variable: '--font-lora',
+  subsets: ['latin'],
 })
 
 const geistMono = Geist_Mono({
@@ -29,7 +34,7 @@ export default function RootLayout({
     <AppProviders>
       <html lang="en" className="h-full">
         <body
-          className={`${libreBaskerville.variable} ${geistMono.variable} min-h-screen antialiased`}
+          className={`${cormorantGaramond.variable} ${lora.variable} ${geistMono.variable} min-h-screen antialiased`}
         >
           {children}
         </body>

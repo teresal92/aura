@@ -7,10 +7,6 @@ const TOKENS = [
   ['Secondary', 'var(--secondary)'],
   ['Muted', 'var(--muted)'],
   ['Border', 'var(--border)'],
-  ['Urgent', 'var(--aura-urgent)'],
-  ['High', 'var(--aura-high)'],
-  ['Medium', 'var(--aura-medium)'],
-  ['Low', 'var(--aura-low)'],
 ] as const
 
 export function TokensSection() {

@@ -12,9 +12,9 @@ const variantClasses: Record<ButtonVariant, string> = {
   subtle: 'aura-btn-subtle',
   ghost: 'aura-btn-subtle bg-transparent hover:bg-secondary',
   danger:
-    'aura-btn-linklike font-medium text-destructive hover:text-aura-foreground-strong hover:decoration-current',
+    'aura-btn-linklike font-medium text-destructive hover:text-foreground hover:decoration-current',
   success:
-    'aura-btn-linklike font-medium text-aura-success hover:text-aura-foreground-strong hover:decoration-current',
+    'aura-btn-linklike font-medium text-foreground hover:text-foreground hover:decoration-current',
 }
 
 export function Button({ variant = 'primary', className, ...props }: ButtonProps) {

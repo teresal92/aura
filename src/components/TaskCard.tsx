@@ -34,7 +34,7 @@ export function TaskCard({ task }: { task: Task }) {
   return (
     <div
       className={cn(
-        'aura-card rounded-[1.6rem] border-aura-divider/80 bg-card/75 p-4 aura-shadow-xs',
+        'aura-card rounded-[1.6rem] border-border/80 bg-card/75 p-4 aura-shadow-xs',
         task.completed && 'opacity-55'
       )}
       role="article"

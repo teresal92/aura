@@ -15,16 +15,11 @@ export default function Home() {
   const completedTasks = tasks.filter((task) => task.completed)
 
   return (
-    <main
-      className={cn(
-        'relative min-h-screen overflow-hidden bg-background transition-colors duration-300',
-        isWritingFocused && 'bg-aura-depth/70'
-      )}
-    >
+    <main className="relative min-h-screen overflow-hidden bg-background transition-colors duration-300">
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-5 pb-20 pt-6 sm:px-8 sm:pb-24 lg:px-12">
         <header
           className={cn(
-            'border-b border-aura-divider/75 pb-5 transition-all duration-300',
+            'border-b border-border/75 pb-5 transition-all duration-300',
             isWritingFocused ? 'opacity-55' : 'opacity-90'
           )}
         >
@@ -73,13 +68,13 @@ export default function Home() {
           >
             {tasks.length === 0 ? (
               <>
-                <h1 className="max-w-136 text-4xl leading-[1.04] font-normal text-aura-foreground-strong text-balance">
+                <h1 className="max-w-136 text-4xl leading-[1.04] font-normal text-foreground text-balance">
                   Just start typing.
                 </h1>
               </>
             ) : (
               <>
-                <h1 className="max-w-120 text-[2.05rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.8rem]">
+                <h1 className="max-w-120 text-[2.05rem] leading-[1.04] font-normal text-foreground text-balance sm:text-[2.8rem]">
                   Keep going.
                 </h1>
                 <p className="mt-4 max-w-104 text-base leading-relaxed text-muted-foreground text-balance">
@@ -108,14 +103,12 @@ export default function Home() {
         isActive={isInputLoading}
         contentClassName={cn(
           'aura-card flex min-w-72 items-center gap-4 rounded-3xl px-5 py-4',
-          'border-aura-divider/80 bg-card/92 aura-shadow-lg'
+          'border-border/80 bg-card/92 aura-shadow-lg'
         )}
       >
-        <div className="h-5 w-5 animate-spin rounded-full border-2 border-aura-divider border-t-primary" />
+        <div className="h-5 w-5 animate-spin rounded-full border-2 border-border border-t-primary" />
         <div role="status" aria-live="polite" aria-busy={isInputLoading}>
-          <p className="text-sm font-semibold text-aura-foreground-strong">
-            Organizing your thoughts
-          </p>
+          <p className="text-sm font-semibold text-foreground">Organizing your thoughts</p>
           <p className="text-sm text-muted-foreground">
             Turning your brain dump into a clearer plan.
           </p>
