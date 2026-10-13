@@ -1,31 +1,20 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { DevPreviewToggle } from '@/components/DevPreviewToggle'
 import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
 import { TypewriterText } from '@/components/TypewriterText'
-import { PREVIEW_TASKS } from '@/lib/preview-tasks'
+import { usePreviewTasksEnabled } from '@/lib/preview-tasks'
 import { cn } from '@/lib/utils'
 import { useTaskStore } from '@/store/tasks'
-
-// Temporary: set to true to preview the task list with placeholder data (no sign-in needed).
-const SHOW_PREVIEW_TASKS = false
 
 export default function Home() {
   const [isWritingFocused, setIsWritingFocused] = useState(false)
   const { tasks, isInputLoading } = useTaskStore()
-
-  useEffect(() => {
-    if (!SHOW_PREVIEW_TASKS) return
-    const store = useTaskStore.getState()
-    if (store.tasks.length > 0) return
-
-    store.addTasks(PREVIEW_TASKS)
-    const lastTask = useTaskStore.getState().tasks.at(-1)
-    if (lastTask) store.completeTask(lastTask.id)
-  }, [])
+  const previewTasksEnabled = usePreviewTasksEnabled()
 
   const taskList = (
     <div
@@ -101,7 +90,7 @@ export default function Home() {
 
           <TaskInput onFocusChange={setIsWritingFocused} />
 
-          {SHOW_PREVIEW_TASKS ? taskList : <SignedIn>{taskList}</SignedIn>}
+          {previewTasksEnabled ? taskList : <SignedIn>{taskList}</SignedIn>}
         </div>
       </div>
 
@@ -117,6 +106,8 @@ export default function Home() {
           </p>
         </div>
       </Overlay>
+
+      <DevPreviewToggle />
     </main>
   )
 }
