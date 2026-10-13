@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
-import { AuraLogo } from '@/components/aura-primitives'
 import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
@@ -30,8 +29,7 @@ export default function Home() {
           )}
         >
           <div className="flex items-center justify-between gap-4">
-            <AuraLogo />
-
+            <h1 className="text-3xl">aura</h1>
             <div className="flex items-center gap-4">
               <SignedIn>
                 {tasks.length > 0 ? (
@@ -45,14 +43,10 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <SignedOut>
                   <SignInButton mode="modal">
-                    <button className="aura-btn-shell-secondary" type="button">
-                      Sign in
-                    </button>
+                    <button type="button">Sign in</button>
                   </SignInButton>
                   <SignUpButton mode="modal">
-                    <button className="aura-btn-shell-primary" type="button">
-                      Sign up
-                    </button>
+                    <button type="button">Sign up</button>
                   </SignUpButton>
                 </SignedOut>
 
@@ -79,12 +73,9 @@ export default function Home() {
           >
             {tasks.length === 0 ? (
               <>
-                <h1 className="max-w-136 text-[2.15rem] leading-[1.04] font-normal text-aura-foreground-strong text-balance sm:text-[2.95rem]">
-                  Begin anywhere.
+                <h1 className="max-w-136 text-4xl leading-[1.04] font-normal text-aura-foreground-strong text-balance">
+                  Just start typing.
                 </h1>
-                <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground text-balance">
-                  Rough sentences first. Structure after.
-                </p>
               </>
             ) : (
               <>

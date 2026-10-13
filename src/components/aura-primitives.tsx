@@ -1,33 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import { forwardRef } from 'react'
 import { cn } from '@/lib/utils'
-
-export function AuraLogo({
-  size = 'md',
-  className,
-}: {
-  size?: 'sm' | 'md' | 'lg'
-  className?: string
-}) {
-  const sizeMap = {
-    sm: 'h-8',
-    md: 'h-12',
-    lg: 'h-16',
-  }
-
-  return (
-    <Image
-      src="/aura-main-logo.png"
-      alt="Aura"
-      width={804}
-      height={244}
-      priority
-      className={cn(sizeMap[size], 'w-auto shrink-0', className)}
-    />
-  )
-}
 
 interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'sm' | 'md' | 'lg'

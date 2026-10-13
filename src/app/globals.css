@@ -141,6 +141,19 @@
     @apply bg-background text-foreground font-serif;
     letter-spacing: 0.004em;
   }
+  button {
+    @apply cursor-pointer rounded-none border border-foreground px-3 py-1.5;
+    transition:
+      background-color var(--aura-duration-fast) var(--aura-ease-out),
+      color var(--aura-duration-fast) var(--aura-ease-out),
+      opacity var(--aura-duration-fast) var(--aura-ease-out);
+  }
+  button:hover:not(:disabled) {
+    @apply bg-foreground text-background;
+  }
+  button:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
 }
 
 @layer components {
@@ -184,15 +197,6 @@
       transform var(--aura-duration-base) var(--aura-ease-out);
   }
 
-  .aura-text-logo {
-    letter-spacing: 0.08em;
-  }
-
-  .aura-test-label {
-    font-size: 0.72rem;
-    line-height: 1rem;
-  }
-
   .aura-text-label-wide {
     font-size: 0.72rem;
     line-height: 1rem;
@@ -211,111 +215,10 @@
     letter-spacing: 0.018em;
   }
 
-  .aura-btn-editorial {
-    @apply inline-flex items-center justify-center border-b border-current pb-1 text-[0.7rem] uppercase text-muted-foreground;
-    letter-spacing: 0.28em;
-    transition:
-      color var(--aura-duration-fast) var(--aura-ease-out),
-      opacity var(--aura-duration-fast) var(--aura-ease-out),
-      border-color var(--aura-duration-fast) var(--aura-ease-out);
-  }
-
-  .aura-btn-editorial:hover {
-    @apply text-aura-foreground-strong;
-  }
-
-  .aura-btn-editorial:disabled {
-    @apply cursor-not-allowed opacity-40;
-  }
-
   .aura-badge {
     @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium;
     font-size: 0.72rem;
     line-height: 1rem;
     letter-spacing: 0.04em;
-  }
-
-  .aura-btn-linklike,
-  .aura-btn-primary,
-  .aura-btn-subtle {
-    @apply inline-flex items-center justify-center rounded-full px-1 py-1 text-sm;
-    text-decoration-line: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
-    transition:
-      color var(--aura-duration-fast) var(--aura-ease-out),
-      opacity var(--aura-duration-fast) var(--aura-ease-out),
-      text-decoration-color var(--aura-duration-fast) var(--aura-ease-out);
-  }
-
-  .aura-btn-shell-primary {
-    @apply inline-flex items-center justify-center rounded-full border border-aura-foreground-strong bg-primary px-3.5 py-1.5 text-sm font-bold text-primary-foreground;
-    box-shadow: var(--aura-shadow-sm);
-    transition:
-      background-color var(--aura-duration-fast) var(--aura-ease-out),
-      box-shadow var(--aura-duration-fast) var(--aura-ease-out),
-      transform var(--aura-duration-fast) var(--aura-ease-out),
-      opacity var(--aura-duration-fast) var(--aura-ease-out);
-  }
-
-  .aura-btn-shell-primary:hover {
-    @apply bg-aura-foreground-strong;
-    box-shadow: var(--aura-shadow-md);
-  }
-
-  .aura-btn-shell-primary:active {
-    transform: translateY(1px);
-  }
-
-  .aura-btn-shell-primary:disabled {
-    @apply cursor-not-allowed opacity-45;
-    box-shadow: none;
-  }
-
-  .aura-btn-shell-secondary {
-    @apply inline-flex items-center justify-center rounded-full border border-aura-divider bg-background/70 px-3.5 py-1.5 text-sm font-bold text-muted-foreground;
-    transition:
-      background-color var(--aura-duration-fast) var(--aura-ease-out),
-      border-color var(--aura-duration-fast) var(--aura-ease-out),
-      color var(--aura-duration-fast) var(--aura-ease-out);
-  }
-
-  .aura-btn-shell-secondary:hover {
-    @apply border-ring bg-card text-aura-foreground-strong;
-  }
-
-  .aura-btn-primary {
-    @apply font-bold text-aura-foreground-strong;
-  }
-
-  .aura-btn-primary:hover {
-    @apply text-aura-foreground-strong;
-    text-decoration-color: currentColor;
-  }
-
-  .aura-btn-primary:disabled {
-    @apply cursor-not-allowed opacity-50;
-    text-decoration-color: transparent;
-  }
-
-  .aura-btn-subtle {
-    @apply font-bold text-muted-foreground;
-  }
-
-  .aura-btn-subtle:hover {
-    @apply text-aura-foreground-strong;
-    text-decoration-color: currentColor;
-  }
-
-  .aura-icon-btn {
-    @apply inline-flex items-center justify-center rounded-full text-muted-foreground;
-    transition:
-      background-color var(--aura-duration-fast) var(--aura-ease-out),
-      color var(--aura-duration-fast) var(--aura-ease-out);
-  }
-
-  .aura-icon-btn:hover {
-    @apply bg-secondary/60 text-aura-foreground-strong;
   }
 }

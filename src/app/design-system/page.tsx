@@ -1,5 +1,4 @@
 import { DesignSystemClient } from './design-system-client'
-import { AuraLogo } from '@/components/aura-primitives'
 import { Badge } from '@/components/ui/badge'
 
 export default function DesignSystemPage() {
@@ -7,7 +6,6 @@ export default function DesignSystemPage() {
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-5xl px-6 py-12 space-y-16">
         <header className="flex items-center justify-between">
-          <AuraLogo />
           <Badge variant="secondary">Design System</Badge>
         </header>
         <section className="space-y-4">

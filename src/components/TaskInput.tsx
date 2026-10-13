@@ -5,7 +5,7 @@ import { useAuth, useClerk } from '@clerk/nextjs'
 import { cn } from '@/lib/utils'
 import { useTaskStore } from '@/store/tasks'
 
-const HERO_PLACEHOLDER = 'fragments, errands, worries, names, half-formed plans...'
+const HERO_PLACEHOLDER = 'Brain dump any fragments, errands, worries, names, half-formed plans...'
 
 const MIN_TEXTAREA_HEIGHT = 216
 const MAX_TEXTAREA_HEIGHT = 360
@@ -153,15 +153,11 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
               />
             </div>
 
-            <div className="mt-4 flex flex-wrap items-end justify-between gap-4 px-4 pt-3 sm:mt-5 sm:px-6">
-              <p className="text-xs italic leading-relaxed text-muted-foreground/78">
-                Enter sends. Shift+Enter adds a line.
-              </p>
-
+            <div className="mt-4 p-4 sm:mt-5 sm:px-6">
               <button
                 onClick={() => handleSubmit()}
                 disabled={!input.trim() || isInputLoading}
-                className={cn('aura-btn-editorial shrink-0')}
+                className="shrink-0"
                 aria-label="Organize tasks"
               >
                 {isInputLoading ? 'organizing' : 'organize'}
