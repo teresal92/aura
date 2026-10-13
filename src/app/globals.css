@@ -18,12 +18,12 @@
   --secondary: oklch(0.9312 0.0171 76.11);
   --secondary-foreground: #3e190f;
   --muted: oklch(0.9288 0.0188 75.32);
-  --muted-foreground: #6c6648;
+  --muted-foreground: #634a2c;
   --accent: oklch(0.9458 0.0153 77.07);
   --accent-foreground: oklch(0.2653 0.0128 62.04);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.922 0 0);
+  --border: #9f915a;
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --radius: 1.25rem;
@@ -138,6 +138,13 @@
 
 @layer components {
   /* Hybrid rule: repeated treatments live here; one-off component styling should reference vars/tokens directly. */
+  .aura-btn-primary {
+    @apply bg-foreground text-background;
+  }
+  .aura-btn-primary:hover:not(:disabled) {
+    @apply bg-transparent text-foreground;
+  }
+
   .aura-shadow-xs {
     box-shadow: var(--aura-shadow-xs);
   }

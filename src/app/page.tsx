@@ -41,7 +41,9 @@ export default function Home() {
                     <button type="button">Sign in</button>
                   </SignInButton>
                   <SignUpButton mode="modal">
-                    <button type="button">Sign up</button>
+                    <button type="button" className="aura-btn-primary">
+                      Sign up
+                    </button>
                   </SignUpButton>
                 </SignedOut>
 

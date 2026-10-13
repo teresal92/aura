@@ -145,7 +145,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
                 rows={6}
                 className={cn(
                   'aura-text-typewriter min-h-54 w-full resize-none bg-transparent pr-1 font-normal',
-                  'text-foreground placeholder:text-muted-foreground/76',
+                  'text-foreground placeholder:text-muted-foreground',
                   'focus:outline-none disabled:cursor-not-allowed disabled:text-muted-foreground'
                 )}
                 style={{ height: `${MIN_TEXTAREA_HEIGHT}px` }}
@@ -157,7 +157,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
               <button
                 onClick={() => handleSubmit()}
                 disabled={!input.trim() || isInputLoading}
-                className="shrink-0"
+                className="aura-btn-primary shrink-0"
                 aria-label="Organize tasks"
               >
                 {isInputLoading ? 'organizing' : 'organize'}
