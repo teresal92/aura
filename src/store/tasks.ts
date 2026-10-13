@@ -30,7 +30,7 @@ const priorityOrder: Record<Priority, number> = {
   low: 3,
 }
 
-function sortTasks(tasks: Task[]): Task[] {
+export function sortTasks(tasks: Task[]): Task[] {
   return [...tasks].sort((a, b) => {
     if (a.completed !== b.completed) return a.completed ? 1 : -1
     return priorityOrder[a.priority] - priorityOrder[b.priority]

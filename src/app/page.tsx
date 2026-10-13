@@ -1,36 +1,25 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { DevPreviewToggle } from '@/components/DevPreviewToggle'
 import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
 import { TypewriterText } from '@/components/TypewriterText'
-import { PREVIEW_TASKS } from '@/lib/preview-tasks'
+import { usePreviewTasksEnabled } from '@/lib/preview-tasks'
 import { cn } from '@/lib/utils'
 import { useTaskStore } from '@/store/tasks'
-
-// Temporary: set to true to preview the task list with placeholder data (no sign-in needed).
-const SHOW_PREVIEW_TASKS = false
 
 export default function Home() {
   const [isWritingFocused, setIsWritingFocused] = useState(false)
   const { tasks, isInputLoading } = useTaskStore()
-
-  useEffect(() => {
-    if (!SHOW_PREVIEW_TASKS) return
-    const store = useTaskStore.getState()
-    if (store.tasks.length > 0) return
-
-    store.addTasks(PREVIEW_TASKS)
-    const lastTask = useTaskStore.getState().tasks.at(-1)
-    if (lastTask) store.completeTask(lastTask.id)
-  }, [])
+  const previewTasksEnabled = usePreviewTasksEnabled()
 
   const taskList = (
     <div
       className={cn(
-        'mt-16 transition-opacity duration-250',
+        'mt-16 border-t border-border pt-12 transition-opacity duration-250',
         isWritingFocused ? 'opacity-50' : 'opacity-100'
       )}
     >
@@ -41,8 +30,9 @@ export default function Home() {
   const completedTasks = tasks.filter((task) => task.completed)
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background">
-      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 pb-24 pt-6 sm:px-6 lg:px-8">
+    <main className="relative min-h-screen overflow-hidden bg-background px-4 sm:px-6 lg:px-8">
+      {/* Single axis: header, headline, input and tasks all share one column edge. */}
+      <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col pb-24 pt-8">
         <header
           className={cn(
             'border-b border-border pb-6 transition-opacity duration-250',
@@ -74,28 +64,23 @@ export default function Home() {
                 </SignedOut>
 
                 <SignedIn>
-                  <UserButton
-                    appearance={{
-                      elements: {
-                        avatarBox: 'size-8 ring-1 ring-border',
-                      },
-                    }}
-                  />
+                  <UserButton />
                 </SignedIn>
               </div>
             </div>
           </div>
         </header>
 
-        <div className="mx-auto my-auto flex w-full max-w-3xl flex-col py-12 sm:py-16">
+        <div className="flex flex-col pt-16 pb-12 sm:pt-24">
           <div
             className={cn(
-              'mb-12 transition-all duration-250',
+              'mb-16 transition-all duration-250',
               isWritingFocused ? 'translate-y-1 opacity-50' : 'opacity-100'
             )}
           >
             {tasks.length === 0 ? (
-              <h1>
+              // pl-1: Cormorant's "J" hooks ~0.05em left of its box; nudge it onto the textarea edge.
+              <h1 className="pl-1">
                 Just start <TypewriterText text="typing." className="italic" />
               </h1>
             ) : (
@@ -105,7 +90,8 @@ export default function Home() {
 
           <TaskInput onFocusChange={setIsWritingFocused} />
 
-          {SHOW_PREVIEW_TASKS ? taskList : <SignedIn>{taskList}</SignedIn>}
+          {/* TaskList renders nothing when empty, so skip its ruled wrapper too. */}
+          {tasks.length > 0 && (previewTasksEnabled ? taskList : <SignedIn>{taskList}</SignedIn>)}
         </div>
       </div>
 
@@ -121,6 +107,8 @@ export default function Home() {
           </p>
         </div>
       </Overlay>
+
+      <DevPreviewToggle />
     </main>
   )
 }

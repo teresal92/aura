@@ -127,7 +127,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
       >
         <div
           className={cn(
-            'relative overflow-hidden py-4',
+            'relative overflow-hidden',
             'transition-opacity duration-250 ease-out',
             isInputLoading && 'opacity-50'
           )}

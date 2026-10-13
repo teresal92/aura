@@ -1,3 +1,5 @@
+/* Clerk sits between base and components so it beats Aura's base styles but not utilities. */
+@layer theme, base, clerk, components, utilities;
 @import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
@@ -69,11 +71,11 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-lora), 'Lora', serif;
-  --font-serif: var(--font-lora), 'Lora', serif;
+  --font-sans: var(--font-geist-sans), 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant-garamond), 'Cormorant Garamond', serif;
   --font-heading: var(--font-cormorant-garamond), 'Cormorant Garamond', serif;
   --font-display: var(--font-fraunces), 'Fraunces', serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-mono: var(--font-geist-mono), 'Geist Mono', monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -111,7 +113,7 @@
     min-height: 100%;
   }
   body {
-    @apply bg-background text-foreground font-serif;
+    @apply bg-background text-foreground font-sans;
     letter-spacing: 0.004em;
   }
   h1,
@@ -139,8 +141,11 @@
       color var(--aura-duration-fast) var(--aura-ease-out),
       opacity var(--aura-duration-fast) var(--aura-ease-out);
   }
-  button:hover:not(:disabled) {
-    @apply bg-foreground text-background;
+  /* Gate hover like Tailwind v4's hover: variant, so a tap on touch screens doesn't leave it stuck on. */
+  @media (hover: hover) {
+    button:hover:not(:disabled) {
+      @apply bg-foreground text-background;
+    }
   }
   button:disabled {
     @apply cursor-not-allowed opacity-50;
@@ -152,8 +157,10 @@
   .aura-btn-primary {
     @apply bg-foreground text-background;
   }
-  .aura-btn-primary:hover:not(:disabled) {
-    @apply bg-transparent text-foreground;
+  @media (hover: hover) {
+    .aura-btn-primary:hover:not(:disabled) {
+      @apply bg-transparent text-foreground;
+    }
   }
 
   .aura-shadow-xs {
