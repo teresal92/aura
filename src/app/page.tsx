@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { DevPreviewToggle } from '@/components/DevPreviewToggle'
+import { OrganizedView } from '@/components/OrganizedView'
 import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
@@ -13,7 +14,7 @@ import { useTaskStore } from '@/store/tasks'
 
 export default function Home() {
   const [isWritingFocused, setIsWritingFocused] = useState(false)
-  const { tasks, isInputLoading } = useTaskStore()
+  const { tasks, isInputLoading, isReviewing, dumpCount } = useTaskStore()
   const previewTasksEnabled = usePreviewTasksEnabled()
 
   const taskList = (
@@ -28,11 +29,22 @@ export default function Home() {
   )
   const activeTasks = tasks.filter((task) => !task.completed)
   const completedTasks = tasks.filter((task) => task.completed)
+  const showOrganized = isReviewing && tasks.length > 0
+  const entryDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+  })
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background px-4 sm:px-6 lg:px-8">
       {/* Single axis: header, headline, input and tasks all share one column edge. */}
-      <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col pb-24 pt-8">
+      <div
+        className={cn(
+          'mx-auto flex min-h-screen w-full flex-col pb-24 pt-8',
+          showOrganized ? 'max-w-6xl' : 'max-w-3xl'
+        )}
+      >
         <header
           className={cn(
             'border-b border-border pb-6 transition-opacity duration-250',
@@ -40,10 +52,23 @@ export default function Home() {
           )}
         >
           <div className="flex items-center justify-between gap-4">
-            <p className="font-display text-3xl">aura</p>
+            <div className="flex items-baseline gap-4">
+              <p className="font-display text-3xl">aura</p>
+              {showOrganized ? (
+                <span className="hidden font-mono text-xs uppercase tracking-wider text-muted-foreground sm:inline">
+                  {entryDate}
+                </span>
+              ) : null}
+            </div>
             <div className="flex items-center gap-4">
+              {showOrganized ? (
+                <span className="hidden font-mono text-xs text-muted-foreground tabular-nums sm:inline">
+                  Organized from {dumpCount} {dumpCount === 1 ? 'dump' : 'dumps'} · {tasks.length}{' '}
+                  items
+                </span>
+              ) : null}
               <SignedIn>
-                {tasks.length > 0 ? (
+                {tasks.length > 0 && !showOrganized ? (
                   <div className="flex items-center gap-3 text-sm text-muted-foreground tabular-nums">
                     {activeTasks.length > 0 ? <span>{activeTasks.length} active</span> : null}
                     {completedTasks.length > 0 ? <span>{completedTasks.length} done</span> : null}
@@ -71,28 +96,34 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="flex flex-col pt-16 pb-12 sm:pt-24">
-          <div
-            className={cn(
-              'mb-16 transition-all duration-250',
-              isWritingFocused ? 'translate-y-1 opacity-50' : 'opacity-100'
-            )}
-          >
-            {tasks.length === 0 ? (
-              // pl-1: Cormorant's "J" hooks ~0.05em left of its box; nudge it onto the textarea edge.
-              <h1 className="pl-1">
-                Just start <TypewriterText text="typing." className="italic" />
-              </h1>
-            ) : (
-              <h1>Keep going.</h1>
-            )}
+        {showOrganized ? (
+          <div className="pt-8">
+            <OrganizedView />
           </div>
+        ) : (
+          <div className="flex flex-col pt-16 pb-12 sm:pt-24">
+            <div
+              className={cn(
+                'mb-16 transition-all duration-250',
+                isWritingFocused ? 'translate-y-1 opacity-50' : 'opacity-100'
+              )}
+            >
+              {tasks.length === 0 ? (
+                // pl-1: Cormorant's "J" hooks ~0.05em left of its box; nudge it onto the textarea edge.
+                <h1 className="pl-1">
+                  Just start <TypewriterText text="typing." className="italic" />
+                </h1>
+              ) : (
+                <h1>Keep going.</h1>
+              )}
+            </div>
 
-          <TaskInput onFocusChange={setIsWritingFocused} />
+            <TaskInput onFocusChange={setIsWritingFocused} />
 
-          {/* TaskList renders nothing when empty, so skip its ruled wrapper too. */}
-          {tasks.length > 0 && (previewTasksEnabled ? taskList : <SignedIn>{taskList}</SignedIn>)}
-        </div>
+            {/* TaskList renders nothing when empty, so skip its ruled wrapper too. */}
+            {tasks.length > 0 && (previewTasksEnabled ? taskList : <SignedIn>{taskList}</SignedIn>)}
+          </div>
+        )}
       </div>
 
       <Overlay

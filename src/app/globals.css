@@ -27,6 +27,10 @@
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --border: #9f915a;
+  /* Loose ends the AI flagged for a follow-up question. */
+  --flag: #6e2a22;
+  /* Raised panel that sits on the page (e.g. the follow-up panel). */
+  --surface: color-mix(in oklab, white 45%, var(--background));
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --radius: 1.25rem;
@@ -61,6 +65,8 @@
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
+  --flag: oklch(0.72 0.11 30);
+  --surface: oklch(0.2544 0.0131 51.58);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
 
@@ -94,6 +100,8 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
+  --color-flag: var(--flag);
+  --color-surface: var(--surface);
   --color-input: var(--input);
   --color-ring: var(--ring);
 

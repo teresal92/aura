@@ -16,7 +16,12 @@ export function DevPreviewToggle() {
   useEffect(() => {
     useTaskStore.setState((state) => {
       const realTasks = state.tasks.filter((task) => !isPreviewTask(task))
-      return { tasks: enabled ? sortTasks([...realTasks, ...createPreviewTasks()]) : realTasks }
+      return {
+        tasks: enabled ? sortTasks([...realTasks, ...createPreviewTasks()]) : realTasks,
+        // Land on the organized/follow-up screen so the elicitation flow can be previewed.
+        isReviewing: enabled,
+        dumpCount: enabled ? Math.max(state.dumpCount, 1) : state.dumpCount,
+      }
     })
   }, [enabled])
 

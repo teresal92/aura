@@ -19,9 +19,18 @@ Rules — task extraction:
 Rules — ambiguity detection:
 - Mark a task as ambiguous if it describes a project rather than a discrete action
   (e.g. "plan Yosemite trip", "sort out taxes", "deal with the kitchen")
+- Mark a task as ambiguous if you can't tell whether it's a task or just a thought, or which
+  other task/project it belongs to
 - Mark a task as ambiguous if critical information is missing and would meaningfully
   change how the task is structured (e.g. "dentist appointment" with no date or context)
-- If ambiguous, provide a clarificationPrompt — a single, short question for the user
+- Every ambiguous task must include a clarification
+- A task that is NOT ambiguous may still include a clarification when one answer would
+  noticeably improve it (e.g. a missing date). These are optional, lower-priority questions —
+  add at most 2 across the whole list
+- A clarification has:
+  - question: one short question that quotes or names the task
+  - options: 2-3 short answers the user can tap, each under 4 words
+  - label: a 2-4 word lowercase note shown under the task (e.g. "which project?", "task or thought?")
 - If personalization context is provided, use it to improve category inference,
   duration estimates, and priority signals before returning tasks
 
@@ -39,8 +48,11 @@ Response format:
       "subtasks": ["string"] | [],
       "notes": "string" | null,
       "ambiguous": boolean,
-      "clarificationPrompt": "string" | null,
-      "source": "direct" | "clarified"
+      "clarification": {
+        "question": "string",
+        "options": ["string"],
+        "label": "string"
+      } | null
     }
   ]
 }
