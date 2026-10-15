@@ -13,7 +13,7 @@ const MAX_TEXTAREA_HEIGHT = 360
 export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boolean) => void }) {
   const [input, setInput] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const { addTasks, isInputLoading, setInputLoading } = useTaskStore()
+  const { addTasks, isInputLoading, setInputLoading, startReview } = useTaskStore()
   const { isLoaded, isSignedIn } = useAuth()
   const clerk = useClerk()
 
@@ -90,6 +90,7 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
       }
 
       addTasks(data.tasks as Parameters<typeof addTasks>[0])
+      startReview()
       setInput('')
 
       if (textareaRef.current) {

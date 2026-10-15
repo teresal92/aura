@@ -28,6 +28,15 @@ const parsedTaskSchema = z.object({
         .string()
         .nullish()
         .transform((v) => v ?? null),
+      ambiguous: z.boolean().default(false),
+      clarification: z
+        .object({
+          question: z.string(),
+          options: z.array(z.string()),
+          label: z.string(),
+        })
+        .nullish()
+        .transform((v) => v ?? null),
     })
   ),
 })

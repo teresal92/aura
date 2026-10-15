@@ -36,65 +36,106 @@ export function isPreviewTask(task: Task) {
   return task.id.startsWith(PREVIEW_ID_PREFIX)
 }
 
-// The last task is marked done so both list sections show.
 export function createPreviewTasks(): Task[] {
   const createdAt = new Date().toISOString()
-  return PREVIEW_TASKS.map((task, index) => {
-    const completed = index === PREVIEW_TASKS.length - 1
-    return {
-      ...task,
-      id: `${PREVIEW_ID_PREFIX}${index}`,
-      completed,
-      completedAt: completed ? createdAt : null,
-      createdAt,
-    }
-  })
+  return PREVIEW_TASKS.map((task, index) => ({
+    ...task,
+    id: `${PREVIEW_ID_PREFIX}${index}`,
+    completed: false,
+    completedAt: null,
+    createdAt,
+  }))
 }
 
+function daysFromNow(days: number) {
+  const date = new Date()
+  date.setDate(date.getDate() + days)
+  return date.toISOString().slice(0, 10)
+}
+
+const base = { subtasks: [], notes: null, ambiguous: false, clarification: null }
+
+// Mirrors the "Organized result + clarify" mockup: two loose ends plus one optional question.
 const PREVIEW_TASKS: ParsedTaskResponse['tasks'] = [
   {
-    title: 'Pay the electricity bill',
+    ...base,
+    title: 'Email landlord about the leak',
     priority: 'urgent',
     estimatedDuration: 10,
-    dueDate: new Date().toISOString().slice(0, 10),
-    category: 'Finance',
-    subtasks: [],
-    notes: null,
-  },
-  {
-    title: 'Call mom about the weekend',
-    priority: 'high',
-    estimatedDuration: 20,
-    dueDate: null,
-    category: 'Communication',
-    subtasks: ['Check train times', 'Ask what to bring'],
-    notes: null,
-  },
-  {
-    title: 'Do laundry',
-    priority: 'medium',
-    estimatedDuration: 45,
     dueDate: null,
     category: 'Home',
-    subtasks: [],
-    notes: 'Darks and towels',
   },
   {
-    title: 'Book a dentist appointment',
+    ...base,
+    title: 'Pick up dog food',
+    priority: 'medium',
+    estimatedDuration: 30,
+    dueDate: daysFromNow(0),
+    category: 'Errand',
+  },
+  {
+    ...base,
+    title: 'Reply to recruiter',
+    priority: 'high',
+    estimatedDuration: 15,
+    dueDate: null,
+    category: 'Job search',
+  },
+  {
+    ...base,
+    title: 'Book campsite for Tahoe',
+    priority: 'medium',
+    estimatedDuration: 20,
+    dueDate: daysFromNow(4),
+    category: 'Trip',
+  },
+  {
+    ...base,
+    title: 'Draft next Substack issue',
+    priority: 'medium',
+    estimatedDuration: 90,
+    dueDate: null,
+    category: 'Writing',
+  },
+  {
+    ...base,
+    title: 'Book vet appointment',
     priority: 'low',
-    estimatedDuration: 5,
+    estimatedDuration: 10,
     dueDate: null,
     category: 'Health',
-    subtasks: [],
-    notes: null,
+    clarification: {
+      question: 'Vet appointment — does it need a date?',
+      options: ['This week', 'Later', 'Already booked'],
+      label: 'when?',
+    },
   },
   {
-    title: 'Water the plants',
-    priority: 'low',
-    estimatedDuration: 5,
+    ...base,
+    title: 'Call Dana about the cabin',
+    priority: 'medium',
+    estimatedDuration: 15,
     dueDate: null,
-    category: 'Home',
-    subtasks: [],
-    notes: null,
+    category: 'Communication',
+    ambiguous: true,
+    clarification: {
+      question: '“Call Dana about the cabin” — is this for the Tahoe trip?',
+      options: ['Yes, Tahoe trip', 'No, separate'],
+      label: 'task — which project?',
+    },
+  },
+  {
+    ...base,
+    title: 'Redwoods idea for the Substack',
+    priority: 'low',
+    estimatedDuration: 15,
+    dueDate: null,
+    category: 'Writing',
+    ambiguous: true,
+    clarification: {
+      question: '“Redwoods idea for the Substack” — a task or a thought to keep?',
+      options: ['Task', 'Just a thought'],
+      label: 'task or thought?',
+    },
   },
 ]
