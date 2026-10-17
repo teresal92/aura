@@ -1,7 +1,0 @@
-[    5135ms] [WARNING] Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'. @ :0
-[    5643ms] [INFO] [O11Y] [DatadogRUM] Initialized {service: claude-ai, env: production, version: d40c622ef0} @ https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/vendor-datadog-Cx_GiDCs.js:4
-[    5858ms] [LOG] recaptchacompat disabled @ https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/vendor-datadog-Cx_GiDCs.js:4
-[    6297ms] [ERROR] Not signed in with the identity provider. @ https://claude.ai/login?selectAccount=true&returnTo=%2Foauth%2Fauthorize%3Fcode%3Dtrue%26client_id%3D9d1c250a-e61b-44d9-88ed-5944d1962f5e%26response_type%3Dcode%26redirect_u%3D:0
-[    7570ms] [ERROR] [GSI_LOGGER]: FedCM get() rejects with NetworkError: Error retrieving a token. @ https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/vendor-datadog-Cx_GiDCs.js:4
-[    9737ms] [ERROR] Cross-Origin-Opener-Policy policy would block the window.closed call. @ https://accounts.google.com/gsi/client:137
-[    9737ms] [ERROR] Cross-Origin-Opener-Policy policy would block the window.closed call. @ https://accounts.google.com/gsi/client:137
