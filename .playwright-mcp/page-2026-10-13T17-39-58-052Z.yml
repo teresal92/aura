@@ -1,0 +1,19 @@
+- generic [active] [ref=e1]:
+    - main [ref=e2]:
+        - generic [ref=e3]:
+            - paragraph [ref=e6]: aura
+            - generic [ref=e7]:
+                - heading "Just start typing." [level=1] [ref=e9]:
+                    - text: Just start
+                    - generic [ref=e10]: typing.
+                - generic [ref=e17]:
+                    - textbox "Type your thoughts, tasks, or brain dump here" [ref=e19]:
+                        - /placeholder: Brain dump any fragments, errands, worries, names, half-formed plans...
+                    - button "Organize tasks" [disabled] [ref=e21]: organize
+        - generic [aria-hidden]:
+            - generic:
+                - status:
+                    - paragraph: Organizing your thoughts
+                    - paragraph: Turning your brain dump into a clearer plan.
+        - 'switch "Preview tasks: off" [ref=e22] [cursor=pointer]'
+    - alert [ref=e23]

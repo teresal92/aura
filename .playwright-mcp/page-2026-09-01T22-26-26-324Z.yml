@@ -1,0 +1,68 @@
+- generic [active] [ref=e1]:
+    - main [ref=e2]:
+        - generic [ref=e3]:
+            - generic [ref=e5]:
+                - img "Aura" [ref=e6]
+                - generic [ref=e31]:
+                    - button "Sign in" [ref=e32]
+                    - button "Sign up" [ref=e33]
+            - generic [ref=e7]:
+                - generic [ref=e8]:
+                    - heading "Begin anywhere." [level=1] [ref=e9]
+                    - paragraph [ref=e10]: Rough sentences first. Structure after.
+                - generic [ref=e14]:
+                    - textbox "Type your thoughts, tasks, or brain dump here" [ref=e16]:
+                        - /placeholder: fragments, errands, worries, names, half-formed plans...
+                    - generic [ref=e17]:
+                        - paragraph [ref=e18]: Enter sends. Shift+Enter adds a line.
+                        - button "Organize tasks" [disabled] [ref=e19]: organize
+        - generic [aria-hidden]:
+            - generic:
+                - status:
+                    - paragraph: Organizing your thoughts
+                    - paragraph: Turning your brain dump into a clearer plan.
+    - button "Open Next.js Dev Tools" [ref=e25] [cursor=pointer]
+    - alert [ref=e29]
+    - dialog [ref=e92]:
+        - generic [ref=e94]:
+            - generic [ref=e95]:
+                - button "Close modal" [ref=e96] [cursor=pointer]
+                - generic [ref=e100]:
+                    - heading "Sign in to Aura" [level=1] [ref=e101]
+                    - paragraph [ref=e102]: Welcome back! Please sign in to continue
+                - generic [ref=e103]:
+                    - button "Sign in with Google Continue with Google" [ref=e106] [cursor=pointer]:
+                        - generic [ref=e107]:
+                            - img "Sign in with Google" [ref=e109]
+                            - generic [ref=e110]: Continue with Google
+                    - paragraph [ref=e113]: or
+                    - generic [ref=e115]:
+                        - generic [ref=e116]:
+                            - generic [ref=e118]:
+                                - generic [ref=e119]:
+                                    - generic [ref=e120]: Email address
+                                    - textbox "Email address" [invalid] [ref=e122]:
+                                        - /placeholder: Enter your email address
+                                        - text: notarealuser@example.com
+                                - generic [ref=e123]: Couldn't find your account.
+                                - paragraph [ref=e147]: Couldn't find your account.
+                            - generic:
+                                - generic:
+                                    - generic:
+                                        - generic: Password
+                                        - generic:
+                                            - textbox "Password":
+                                                - /placeholder: Enter your password
+                                            - button "Show password"
+                        - button "Continue" [ref=e125] [cursor=pointer]
+            - generic [ref=e129]:
+                - generic [ref=e130]:
+                    - generic [ref=e131]: Don’t have an account?
+                    - link "Sign up" [ref=e132] [cursor=pointer]:
+                        - /url: http://localhost:3000/CLERK-ROUTER/VIRTUAL/sign-up
+                - generic [ref=e134]:
+                    - generic [ref=e136]:
+                        - paragraph [ref=e137]: Secured by
+                        - link "Clerk logo" [ref=e138] [cursor=pointer]:
+                            - /url: https://go.clerk.com/components
+                    - paragraph [ref=e144]: Development mode

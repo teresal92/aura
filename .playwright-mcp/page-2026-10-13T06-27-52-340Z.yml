@@ -1,0 +1,24 @@
+- generic [active] [ref=f6e1]:
+    - main [ref=f6e2]:
+        - generic [ref=f6e3]:
+            - generic [ref=f6e5]:
+                - paragraph [ref=f6e6]: aura
+                - generic [ref=f6e34]:
+                    - button "Sign in" [ref=f6e35] [cursor=pointer]
+                    - button "Sign up" [ref=f6e36] [cursor=pointer]
+            - generic [ref=f6e7]:
+                - heading "Just start typing." [level=1] [ref=f6e9]:
+                    - text: Just start
+                    - generic [ref=f6e10]: typing.
+                - generic [ref=f6e17]:
+                    - textbox "Type your thoughts, tasks, or brain dump here" [ref=f6e19]:
+                        - /placeholder: Brain dump any fragments, errands, worries, names, half-formed plans...
+                    - button "Organize tasks" [disabled] [ref=f6e21]: organize
+        - generic [aria-hidden]:
+            - generic:
+                - status:
+                    - paragraph: Organizing your thoughts
+                    - paragraph: Turning your brain dump into a clearer plan.
+        - 'switch "Preview tasks: off" [ref=f6e22] [cursor=pointer]'
+    - button "Open Next.js Dev Tools" [ref=f6e28] [cursor=pointer]
+    - alert [ref=f6e32]

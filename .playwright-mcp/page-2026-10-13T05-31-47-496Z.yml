@@ -1,0 +1,77 @@
+- generic [active] [ref=f3e1]:
+    - main [ref=f3e2]:
+        - generic [ref=f3e3]:
+            - heading "aura" [level=1] [ref=f3e6]
+            - generic [ref=f3e7]:
+                - generic [ref=f3e8]:
+                    - heading "Keep going." [level=1] [ref=f3e9]
+                    - paragraph [ref=f3e10]: Add anything still circling.
+                - generic [ref=f3e14]:
+                    - textbox "Type your thoughts, tasks, or brain dump here" [ref=f3e16]:
+                        - /placeholder: Brain dump any fragments, errands, worries, names, half-formed plans...
+                    - button "Organize tasks" [disabled] [ref=f3e18]: organize
+                - generic [ref=f3e20]:
+                    - paragraph [ref=f3e21]: Monday, October 12, 2026
+                    - generic [ref=f3e22]:
+                        - heading "To do ·4" [level=2] [ref=f3e24]
+                        - generic [ref=f3e26]:
+                            - article [ref=f3e27]:
+                                - generic [ref=f3e28]:
+                                    - checkbox "Mark as complete" [ref=f3e29] [cursor=pointer]
+                                    - generic [ref=f3e30]:
+                                        - heading "Pay the electricity bill" [level=3] [ref=f3e31]
+                                        - generic [ref=f3e32]:
+                                            - generic [ref=f3e33]: Urgent
+                                            - generic [ref=f3e35]: 10m
+                                            - generic [ref=f3e36]: Finance
+                                            - generic [ref=f3e37]: Today · Oct 12
+                            - article [ref=f3e38]:
+                                - generic [ref=f3e39]:
+                                    - checkbox "Mark as complete" [ref=f3e40] [cursor=pointer]
+                                    - generic [ref=f3e41]:
+                                        - heading "Call mom about the weekend" [level=3] [ref=f3e42]
+                                        - generic [ref=f3e43]:
+                                            - generic [ref=f3e44]: High
+                                            - generic [ref=f3e46]: 20m
+                                            - generic [ref=f3e47]: Communication
+                                - list [ref=f3e49]:
+                                    - listitem [ref=f3e50]: 1. Check train times
+                                    - listitem [ref=f3e51]: 2. Ask what to bring
+                            - article [ref=f3e52]:
+                                - generic [ref=f3e53]:
+                                    - checkbox "Mark as complete" [ref=f3e54] [cursor=pointer]
+                                    - generic [ref=f3e55]:
+                                        - heading "Do laundry" [level=3] [ref=f3e56]
+                                        - generic [ref=f3e57]:
+                                            - generic [ref=f3e58]: Medium
+                                            - generic [ref=f3e60]: 45m
+                                            - generic [ref=f3e61]: Home
+                                - paragraph [ref=f3e63]: Darks and towels
+                            - article [ref=f3e64]:
+                                - generic [ref=f3e65]:
+                                    - checkbox "Mark as complete" [ref=f3e66] [cursor=pointer]
+                                    - generic [ref=f3e67]:
+                                        - heading "Book a dentist appointment" [level=3] [ref=f3e68]
+                                        - generic [ref=f3e69]:
+                                            - generic [ref=f3e70]: Low
+                                            - generic [ref=f3e72]: 5m
+                                            - generic [ref=f3e73]: Health
+                    - generic [ref=f3e74]:
+                        - heading "Done ·1" [level=2] [ref=f3e76]
+                        - article [ref=f3e79]:
+                            - generic [ref=f3e80]:
+                                - checkbox "Mark as incomplete" [checked] [ref=f3e81] [cursor=pointer]:
+                                    - generic [ref=f3e82]: ✓
+                                - generic [ref=f3e83]:
+                                    - heading "Water the plants" [level=3] [ref=f3e84]
+                                    - generic [ref=f3e85]:
+                                        - generic [ref=f3e86]: Low
+                                        - generic [ref=f3e88]: 5m
+                                        - generic [ref=f3e89]: Home
+        - generic [aria-hidden]:
+            - generic:
+                - status:
+                    - paragraph: Organizing your thoughts
+                    - paragraph: Turning your brain dump into a clearer plan.
+    - button "Open Next.js Dev Tools" [ref=f3e95] [cursor=pointer]
+    - alert [ref=f3e99]
