@@ -8,34 +8,36 @@
 /* Aura Design System — Token Layer                                            */
 /* ========================================================================== */
 :root {
-  /* Core palette */
-  --background: #c8c57a;
-  --foreground: #3e190f;
-  --card: var(--background);
-  --card-foreground: var(--foreground);
-  --popover: var(--background);
-  --popover-foreground: var(--foreground);
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  /* Subtle fills (hover, muted surfaces): a light brown tint over the background. */
-  --secondary: color-mix(in oklab, var(--foreground) 8%, var(--background));
-  --secondary-foreground: var(--foreground);
-  --muted: color-mix(in oklab, var(--foreground) 8%, var(--background));
-  --muted-foreground: #634a2c;
-  --accent: color-mix(in oklab, var(--foreground) 8%, var(--background));
-  --accent-foreground: var(--foreground);
+  /* Core palette: neutral greys (shadcn/ui "neutral"), tuned for WCAG AA. */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  /* Darker than shadcn's 0.556 so it still clears 4.5:1 on --muted. */
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: #9f915a;
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* Decorative dividers only; control outlines use --input. */
+  --border: oklch(0.922 0 0);
+  /* Form control outlines: 3:1 against the page (WCAG 1.4.11). */
+  --input: oklch(0.65 0 0);
+  --ring: oklch(0.556 0 0);
   --radius: 1.25rem;
 
   /* Elevation */
-  --aura-shadow-xs: 0 1px 2px rgba(49, 41, 35, 0.05);
-  --aura-shadow-sm: 0 10px 24px rgba(49, 41, 35, 0.06), 0 2px 6px rgba(49, 41, 35, 0.04);
-  --aura-shadow-md: 0 16px 38px rgba(49, 41, 35, 0.08), 0 4px 12px rgba(49, 41, 35, 0.05);
-  --aura-shadow-lg: 0 24px 52px rgba(49, 41, 35, 0.11), 0 8px 18px rgba(49, 41, 35, 0.07);
+  --aura-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --aura-shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --aura-shadow-md: 0 16px 38px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --aura-shadow-lg: 0 24px 52px rgba(0, 0, 0, 0.11), 0 8px 18px rgba(0, 0, 0, 0.07);
 
   /* Motion */
   --aura-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -44,25 +46,26 @@
 }
 
 .dark {
-  --background: oklch(0.2225 0.0098 52.96);
-  --foreground: oklch(0.9488 0.0153 77.07);
-  --card: oklch(0.2544 0.0131 51.58);
-  --card-foreground: oklch(0.9488 0.0153 77.07);
-  --popover: oklch(0.2544 0.0131 51.58);
-  --popover-foreground: oklch(0.9488 0.0153 77.07);
-  --primary: oklch(0.9488 0.0153 77.07);
-  --primary-foreground: oklch(0.2225 0.0098 52.96);
-  --secondary: oklch(0.2844 0.014 48.21);
-  --secondary-foreground: oklch(0.9488 0.0153 77.07);
-  --muted: oklch(0.2844 0.014 48.21);
-  --muted-foreground: oklch(0.7798 0.0256 71.39);
-  --accent: oklch(0.3054 0.0159 50.84);
-  --accent-foreground: oklch(0.9603 0.0136 78.26);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
+  /* Dark text: white on this lighter red is only 2.8:1. */
+  --destructive-foreground: oklch(0.145 0 0);
   --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --input: oklch(0.52 0 0);
+  --ring: oklch(0.708 0 0);
 
   --aura-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.16);
   --aura-shadow-sm: 0 12px 24px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.12);
