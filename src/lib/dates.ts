@@ -33,15 +33,15 @@ function parseIsoDate(dateStr: IsoDate): Date {
   return new Date(year, month - 1, day)
 }
 
+// Shows the date itself ("Tue, Oct 20"), never a relative label. The year appears only when it
+// differs from the user's current year.
 export function formatDueDate(dateStr: IsoDate, now: Date = new Date()): string {
   const date = parseIsoDate(dateStr)
-  const dayMs = 1000 * 60 * 60 * 24
-  const nowStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-  const days = Math.round((date.getTime() - nowStart.getTime()) / dayMs)
-  const abs = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-
-  if (days <= 0) return `Today · ${abs}`
-  if (days === 1) return `Tomorrow · ${abs}`
-  if (days <= 7) return `In ${days} days · ${abs}`
-  return abs
+  const sameYear = date.getFullYear() === now.getFullYear()
+  return date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: sameYear ? undefined : 'numeric',
+  })
 }

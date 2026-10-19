@@ -47,7 +47,7 @@ function extractJson(text: string): unknown {
   }
 }
 
-// The weekday helps the model resolve "Friday" or "next week"; it is unreliable at deriving it.
+// The weekday helps the model resolve "Friday"; it is unreliable at deriving it.
 function buildUserContent(input: string, timeZone: string): string {
   const now = new Date()
   const today = todayIn(timeZone, now)

@@ -2,22 +2,14 @@ import { describe, expect, it, vi } from 'vitest'
 import { formatDueDate, isValidTimeZone, toIsoDate, todayIn } from '@/lib/dates'
 
 describe('formatDueDate', () => {
-  it('labels today and tomorrow using local day boundaries', () => {
+  it('shows the date without relative labels', () => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date('2026-03-02T10:00:00-08:00'))
 
-    expect(formatDueDate('2026-03-02')).toBe('Today · Mar 2')
-    expect(formatDueDate('2026-03-03')).toBe('Tomorrow · Mar 3')
-
-    vi.useRealTimers()
-  })
-
-  it('labels dates within a week', () => {
-    vi.useFakeTimers()
-    vi.setSystemTime(new Date('2026-03-02T10:00:00-08:00'))
-
-    expect(formatDueDate('2026-03-04')).toBe('In 2 days · Mar 4')
-    expect(formatDueDate('2026-03-09')).toBe('In 7 days · Mar 9')
+    expect(formatDueDate('2026-03-01')).toBe('Sun, Mar 1')
+    expect(formatDueDate('2026-03-02')).toBe('Mon, Mar 2')
+    expect(formatDueDate('2026-03-03')).toBe('Tue, Mar 3')
+    expect(formatDueDate('2026-03-09')).toBe('Mon, Mar 9')
 
     vi.useRealTimers()
   })
@@ -26,15 +18,16 @@ describe('formatDueDate', () => {
     // 6pm Pacific on Oct 19 is already Oct 20 in UTC.
     const now = new Date('2026-10-19T18:00:00-07:00')
 
-    expect(formatDueDate('2026-10-19', now)).toBe('Today · Oct 19')
-    expect(formatDueDate('2026-10-20', now)).toBe('Tomorrow · Oct 20')
+    expect(formatDueDate('2026-10-19', now)).toBe('Mon, Oct 19')
+    expect(formatDueDate('2026-10-20', now)).toBe('Tue, Oct 20')
   })
 
-  it('counts calendar days across a DST change', () => {
-    // US DST starts Mar 8, 2026.
-    const now = new Date('2026-03-07T22:00:00-08:00')
+  it('shows the year only when it differs from the current year', () => {
+    // 6pm Pacific on Dec 31 is already Jan 1 in UTC.
+    const now = new Date('2026-12-31T18:00:00-08:00')
 
-    expect(formatDueDate('2026-03-09', now)).toBe('In 2 days · Mar 9')
+    expect(formatDueDate('2026-12-31', now)).toBe('Thu, Dec 31')
+    expect(formatDueDate('2027-01-01', now)).toBe('Fri, Jan 1, 2027')
   })
 })
 
