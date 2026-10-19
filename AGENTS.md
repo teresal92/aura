@@ -7,7 +7,16 @@
 - `NEXT_PUBLIC_*` vars ship to the browser; never put secrets there.
 - `pnpm dev` and `pnpm storybook` are long-running; don't run them as a blocking step.
 - Commits: `type(scope): imperative summary` (feat, fix, refactor, docs, build, test, ci, chore).
-- For complex work (3+ files, or a data model/API change), write an ExecPlan per `.agent/PLANS.md` first.
+
+## Dates and times
+
+- Things the user plans (`dueDate`) are calendar dates: `IsoDate`, `"YYYY-MM-DD"`, Postgres `date`.
+  Never parse them with `new Date(str)`; it reads them as UTC and shifts the day.
+- Things that happened (`createdAt`, `completedAt`) are instants: `IsoTimestamp`, ISO 8601 UTC
+  (`...Z`), Postgres `timestamptz`.
+- The server never assumes its own timezone. "Today" comes from the user's IANA timezone, sent by
+  the client.
+- Convert to local time only in the UI, through `src/lib/dates.ts`.
 
 ## Before you finish
 

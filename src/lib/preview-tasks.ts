@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { todayIn } from '@/lib/dates'
 import type { ParsedTaskResponse, Task } from '@/types/task'
 
 // Dev-only placeholder tasks for previewing the task list without signing in or calling the AI.
@@ -56,7 +57,7 @@ const PREVIEW_TASKS: ParsedTaskResponse['tasks'] = [
     title: 'Pay the electricity bill',
     priority: 'urgent',
     estimatedDuration: 10,
-    dueDate: new Date().toISOString().slice(0, 10),
+    dueDate: todayIn(),
     category: 'Finance',
     subtasks: [],
     notes: null,
