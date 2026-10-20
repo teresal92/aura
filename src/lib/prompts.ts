@@ -14,7 +14,12 @@ Rules — task extraction:
 - Estimate duration conservatively and realistically
 - If a task implies multiple distinct steps, suggest 2-4 subtasks
 - Infer categories from context: Home, Work, Health, Communication, Finance, Personal
-- If no due date is mentioned, omit the field — don't invent dates
+- Set dueDate only when the input names a specific day. Resolve relative days ("tomorrow",
+  "Friday", "in 3 days") against the date given at the top of the user's message, and return
+  dueDate as a calendar date (YYYY-MM-DD) with no time
+- Otherwise set dueDate to null — don't invent dates. If the input names a span rather than a
+  day ("this week", "next week", "soon"), also mark the task ambiguous and ask which day in
+  clarificationPrompt (e.g. "Which day this week works for the dentist?")
 
 Rules — ambiguity detection:
 - Mark a task as ambiguous if it describes a project rather than a discrete action
@@ -34,7 +39,7 @@ Response format:
       "title": "string",
       "priority": "low" | "medium" | "high" | "urgent",
       "estimatedDuration": number (minutes),
-      "dueDate": "ISO 8601 string" | null,
+      "dueDate": "YYYY-MM-DD" | null,
       "category": "string",
       "subtasks": ["string"] | [],
       "notes": "string" | null,

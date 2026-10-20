@@ -4,6 +4,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { z } from 'zod'
 import { zodTextFormat } from 'openai/helpers/zod'
+import { toIsoDate, todayIn } from '@/lib/dates'
 import { TASK_PARSER_SYSTEM_PROMPT } from '@/lib/prompts'
 import type { ParsedTaskResponse } from '@/types/task'
 
@@ -18,10 +19,11 @@ const parsedTaskSchema = z.object({
       title: z.string(),
       priority: z.enum(['low', 'medium', 'high', 'urgent']),
       estimatedDuration: z.number(),
+      // Lenient: an unreadable date becomes null rather than failing the whole parse.
       dueDate: z
         .string()
         .nullish()
-        .transform((v) => v ?? null),
+        .transform((v) => toIsoDate(v)),
       category: z.string(),
       subtasks: z.array(z.string()).default([]),
       notes: z
@@ -45,29 +47,36 @@ function extractJson(text: string): unknown {
   }
 }
 
+// The weekday helps the model resolve "Friday"; it is unreliable at deriving it.
+function buildUserContent(input: string, timeZone: string): string {
+  const now = new Date()
+  const today = todayIn(timeZone, now)
+  const weekday = new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone }).format(now)
+  return `Today is ${weekday}, ${today} (${timeZone}).\n\n${input}`
+}
+
 function getProvider(): Provider {
   const raw = process.env.AI_PROVIDER?.toLowerCase()
   if (raw === 'anthropic') return 'anthropic'
   return 'openai'
 }
 
-export async function parseTasks(input: string): Promise<ParsedTaskResponse> {
+export async function parseTasks(input: string, timeZone: string): Promise<ParsedTaskResponse> {
   const provider = getProvider()
   if (provider === 'anthropic') {
-    return parseWithAnthropic(input)
+    return parseWithAnthropic(input, timeZone)
   }
-  return parseWithOpenAI(input)
+  return parseWithOpenAI(input, timeZone)
 }
 
-async function parseWithOpenAI(input: string): Promise<ParsedTaskResponse> {
+async function parseWithOpenAI(input: string, timeZone: string): Promise<ParsedTaskResponse> {
   const apiKey = process.env.OPENAI_API_KEY
   if (!apiKey) throw new Error('OPENAI_API_KEY is not set')
 
   const model = process.env.OPENAI_MODEL || DEFAULT_OPENAI_MODEL
   const client = new OpenAI({ apiKey })
 
-  const today = new Date().toISOString().split('T')[0]
-  const userContent = `Today's date: ${today}\n\n${input}`
+  const userContent = buildUserContent(input, timeZone)
 
   const response = await client.responses.parse({
     model,
@@ -85,15 +94,14 @@ async function parseWithOpenAI(input: string): Promise<ParsedTaskResponse> {
   return response.output_parsed as ParsedTaskResponse
 }
 
-async function parseWithAnthropic(input: string): Promise<ParsedTaskResponse> {
+async function parseWithAnthropic(input: string, timeZone: string): Promise<ParsedTaskResponse> {
   const apiKey = process.env.ANTHROPIC_API_KEY
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not set')
 
   const model = process.env.ANTHROPIC_MODEL || DEFAULT_ANTHROPIC_MODEL
   const client = new Anthropic({ apiKey })
 
-  const today = new Date().toISOString().split('T')[0]
-  const userContent = `Today's date: ${today}\n\n${input}`
+  const userContent = buildUserContent(input, timeZone)
 
   const response = await client.messages.create({
     model,

@@ -1,10 +1,12 @@
 import { parseTasks } from '@/lib/ai'
 import { auth } from '@clerk/nextjs/server'
+import { isValidTimeZone } from '@/lib/dates'
 import type { ParsedTaskResponse } from '@/types/task'
 import { z } from 'zod'
 
 const parseTasksBodySchema = z.object({
   input: z.string().trim().min(1),
+  timeZone: z.string().refine(isValidTimeZone),
 })
 
 export async function POST(request: Request) {
@@ -15,11 +17,11 @@ export async function POST(request: Request) {
 
   const parsed = parseTasksBodySchema.safeParse(await request.json())
   if (!parsed.success) {
-    return Response.json({ error: 'Input is required' }, { status: 400 })
+    return Response.json({ error: 'Input and a valid timeZone are required' }, { status: 400 })
   }
 
   try {
-    const result: ParsedTaskResponse = await parseTasks(parsed.data.input)
+    const result: ParsedTaskResponse = await parseTasks(parsed.data.input, parsed.data.timeZone)
 
     if (!Array.isArray(result.tasks)) {
       return Response.json({ error: 'Invalid AI response' }, { status: 500 })

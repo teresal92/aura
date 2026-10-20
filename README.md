@@ -7,14 +7,14 @@ Aura is a calm AI task app for moments when everything is in your head at once, 
 Instead of asking you to organize first, Aura lets you type the messy version:
 
 ```text
-laundry today, dentist sometime this week, reply to Sarah because that's urgent
+laundry today, dentist on Friday, reply to Sarah because that's urgent
 ```
 
 Aura turns that into structured tasks:
 
 ```text
-✅ Do laundry          · Today · ~45 min · Home
-📅 Dentist appointment · This week · Health
+✅ Do laundry          · Mon, Oct 19 · ~45 min · Home
+📅 Dentist appointment · Fri, Oct 23 · Health
 ⚡ Reply to Sarah      · Urgent · ~5 min · Communication
 ```
 

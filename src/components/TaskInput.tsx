@@ -77,7 +77,10 @@ export function TaskInput({ onFocusChange }: { onFocusChange?: (isFocused: boole
       const response = await fetch('/api/parse-tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: trimmed }),
+        body: JSON.stringify({
+          input: trimmed,
+          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        }),
       })
 
       if (!response.ok) {
