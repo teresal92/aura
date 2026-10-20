@@ -2,13 +2,14 @@
 
 import { create } from 'zustand'
 import type { Task, Priority } from '@/types/task'
+import { isCompleted } from '@/lib/tasks'
 
 interface TaskState {
   tasks: Task[]
   focusTaskId: string | null
   isInputLoading: boolean
 
-  addTasks: (tasks: Omit<Task, 'id' | 'completed' | 'completedAt' | 'createdAt'>[]) => void
+  addTasks: (tasks: Omit<Task, 'id' | 'completedAt' | 'createdAt'>[]) => void
   completeTask: (id: string) => void
   uncompleteTask: (id: string) => void
   deleteTask: (id: string) => void
@@ -32,7 +33,7 @@ const priorityOrder: Record<Priority, number> = {
 
 export function sortTasks(tasks: Task[]): Task[] {
   return [...tasks].sort((a, b) => {
-    if (a.completed !== b.completed) return a.completed ? 1 : -1
+    if (isCompleted(a) !== isCompleted(b)) return isCompleted(a) ? 1 : -1
     return priorityOrder[a.priority] - priorityOrder[b.priority]
   })
 }
@@ -48,7 +49,6 @@ export const useTaskStore = create<TaskState>((set) => ({
       const tasksWithMeta: Task[] = newTasks.map((task) => ({
         ...task,
         id: generateId(),
-        completed: false,
         completedAt: null,
         createdAt,
       }))
@@ -59,9 +59,7 @@ export const useTaskStore = create<TaskState>((set) => ({
     set((state) => ({
       tasks: sortTasks(
         state.tasks.map((task) =>
-          task.id === id
-            ? { ...task, completed: true, completedAt: new Date().toISOString() }
-            : task
+          task.id === id ? { ...task, completedAt: new Date().toISOString() } : task
         )
       ),
     })),
@@ -69,9 +67,7 @@ export const useTaskStore = create<TaskState>((set) => ({
   uncompleteTask: (id) =>
     set((state) => ({
       tasks: sortTasks(
-        state.tasks.map((task) =>
-          task.id === id ? { ...task, completed: false, completedAt: null } : task
-        )
+        state.tasks.map((task) => (task.id === id ? { ...task, completedAt: null } : task))
       ),
     })),
 

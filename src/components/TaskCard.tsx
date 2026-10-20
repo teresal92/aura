@@ -10,6 +10,7 @@ import {
 } from '@/components/aura-primitives'
 import { cn } from '@/lib/utils'
 import { formatDueDate } from '@/lib/dates'
+import { isCompleted } from '@/lib/tasks'
 
 function formatDuration(minutes: number): string {
   if (minutes < 60) return `${minutes}m`
@@ -20,9 +21,10 @@ function formatDuration(minutes: number): string {
 
 export function TaskCard({ task }: { task: Task }) {
   const { completeTask, uncompleteTask } = useTaskStore()
+  const completed = isCompleted(task)
 
   function handleComplete() {
-    if (task.completed) {
+    if (completed) {
       uncompleteTask(task.id)
     } else {
       completeTask(task.id)
@@ -35,17 +37,15 @@ export function TaskCard({ task }: { task: Task }) {
     <div
       className={cn(
         'border border-border p-6 transition-opacity duration-250',
-        task.completed && 'opacity-50'
+        completed && 'opacity-50'
       )}
       role="article"
     >
       <div className="flex items-start gap-4">
-        <CompletionCheckbox checked={task.completed} onChange={handleComplete} className="mt-0.5" />
+        <CompletionCheckbox checked={completed} onChange={handleComplete} className="mt-0.5" />
 
         <div className="min-w-0 flex-1">
-          <h3 className={cn(task.completed && 'line-through text-muted-foreground')}>
-            {task.title}
-          </h3>
+          <h3 className={cn(completed && 'line-through text-muted-foreground')}>{task.title}</h3>
 
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
             <PriorityBadge priority={task.priority} />

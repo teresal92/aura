@@ -1,5 +1,6 @@
 'use client'
 
+import { isCompleted } from '@/lib/tasks'
 import { useTaskStore } from '@/store/tasks'
 import { TaskCard } from '@/components/TaskCard'
 import { SectionHeader } from '@/components/aura-primitives'
@@ -7,8 +8,8 @@ import { SectionHeader } from '@/components/aura-primitives'
 export function TaskList() {
   const { tasks } = useTaskStore()
 
-  const activeTasks = tasks.filter((task) => !task.completed)
-  const completedTasks = tasks.filter((task) => task.completed)
+  const activeTasks = tasks.filter((task) => !isCompleted(task))
+  const completedTasks = tasks.filter(isCompleted)
 
   if (tasks.length === 0) return null
 
