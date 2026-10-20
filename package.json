@@ -15,7 +15,11 @@
     "format:check": "prettier --check .",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "db:link": "supabase link",
+    "db:new": "supabase migration new",
+    "db:push": "supabase db push --linked",
+    "db:types": "supabase gen types typescript --linked --schema public > src/types/database.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",
@@ -60,6 +64,7 @@
     "playwright": "^1.58.2",
     "prettier": "^3.8.1",
     "storybook": "^10.2.13",
+    "supabase": "2.120.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vite": "^7.3.1",
