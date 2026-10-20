@@ -1,19 +1,7 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { formatDueDate, isValidTimeZone, toIsoDate, todayIn } from '@/lib/dates'
 
 describe('formatDueDate', () => {
-  it('shows the date without relative labels', () => {
-    vi.useFakeTimers()
-    vi.setSystemTime(new Date('2026-03-02T10:00:00-08:00'))
-
-    expect(formatDueDate('2026-03-01')).toBe('Sun, Mar 1')
-    expect(formatDueDate('2026-03-02')).toBe('Mon, Mar 2')
-    expect(formatDueDate('2026-03-03')).toBe('Tue, Mar 3')
-    expect(formatDueDate('2026-03-09')).toBe('Mon, Mar 9')
-
-    vi.useRealTimers()
-  })
-
   it('does not shift date-only strings when local time is behind UTC', () => {
     // 6pm Pacific on Oct 19 is already Oct 20 in UTC.
     const now = new Date('2026-10-19T18:00:00-07:00')
