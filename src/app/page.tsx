@@ -9,6 +9,7 @@ import { TaskList } from '@/components/TaskList'
 import { TypewriterText } from '@/components/TypewriterText'
 import { usePreviewTasksEnabled } from '@/lib/preview-tasks'
 import { cn } from '@/lib/utils'
+import { isCompleted } from '@/lib/tasks'
 import { useTaskStore } from '@/store/tasks'
 
 export default function Home() {
@@ -26,8 +27,8 @@ export default function Home() {
       <TaskList />
     </div>
   )
-  const activeTasks = tasks.filter((task) => !task.completed)
-  const completedTasks = tasks.filter((task) => task.completed)
+  const activeTasks = tasks.filter((task) => !isCompleted(task))
+  const completedTasks = tasks.filter(isCompleted)
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background px-4 sm:px-6 lg:px-8">

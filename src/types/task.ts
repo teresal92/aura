@@ -17,11 +17,10 @@ export interface Task {
   category: Category | string
   subtasks: string[]
   notes: string | null
-  completed: boolean
   completedAt: IsoTimestamp | null
   createdAt: IsoTimestamp
 }
 
 export interface ParsedTaskResponse {
-  tasks: Omit<Task, 'id' | 'completed' | 'completedAt' | 'createdAt'>[]
+  tasks: Omit<Task, 'id' | 'completedAt' | 'createdAt'>[]
 }

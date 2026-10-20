@@ -41,12 +41,11 @@ export function isPreviewTask(task: Task) {
 export function createPreviewTasks(): Task[] {
   const createdAt = new Date().toISOString()
   return PREVIEW_TASKS.map((task, index) => {
-    const completed = index === PREVIEW_TASKS.length - 1
+    const isLast = index === PREVIEW_TASKS.length - 1
     return {
       ...task,
       id: `${PREVIEW_ID_PREFIX}${index}`,
-      completed,
-      completedAt: completed ? createdAt : null,
+      completedAt: isLast ? createdAt : null,
       createdAt,
     }
   })
