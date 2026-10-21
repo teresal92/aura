@@ -48,4 +48,6 @@ next-env.d.ts
 /.playwright-mcp/
 /test-results/
 
-.claude
+# Claude Code: local settings stay ignored; skills are symlinks into .agents/skills
+.claude/*
+!.claude/skills/
