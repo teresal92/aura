@@ -50,8 +50,6 @@ Open `http://localhost:3000`.
 
 ## Database
 
-The schema lives in `supabase/migrations/` as SQL and is applied to the Supabase project with the Supabase CLI, which `pnpm install` provides. There's no database URL in the repo or in `.env*`. The CLI uses your Supabase login and asks for the database password when it needs it.
-
 One-time setup:
 
 ```bash
@@ -68,7 +66,7 @@ pnpm db:push               # applies new migrations to the linked project
 pnpm db:types              # regenerates src/types/database.ts
 ```
 
-Commit the migration and `src/types/database.ts` together. `db:push` prompts for the database password, or reads `SUPABASE_DB_PASSWORD` from your shell. Don't save it in `.env*`.
+Commit the migration and `src/types/database.ts` together. `db:push` prompts for the database password. Don't save it in `.env*`.
 
 ## License
 
