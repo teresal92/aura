@@ -48,6 +48,36 @@ ANTHROPIC_MODEL=
 
 Open `http://localhost:3000`.
 
+## Database
+
+One-time setup:
+
+```bash
+pnpm exec supabase login
+pnpm db:link   # pick aura-dev
+```
+
+To change the schema:
+
+```bash
+pnpm db:new create_tasks   # creates supabase/migrations/<timestamp>_create_tasks.sql
+# write the SQL
+pnpm db:push               # applies new migrations to the linked project
+pnpm db:types              # regenerates src/types/database.ts
+```
+
+Commit the migration and `src/types/database.ts` together.
+
+`db:push` signs in with your Supabase login. On some projects it fails with `permission denied to alter role "cli_login_postgres"` ([supabase/cli#5091](https://github.com/supabase/cli/issues/5091)). If it does, pass the database password from Project Settings → Database for that one command:
+
+```bash
+read -rs PW   # type the password; nothing is shown
+SUPABASE_DB_PASSWORD=$PW pnpm db:push
+unset PW
+```
+
+Don't save the password in `.env*`.
+
 ## License
 
 MIT
