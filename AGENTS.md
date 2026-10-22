@@ -30,6 +30,13 @@ Where a vendored skill conflicts with this file, this file wins:
 - Data fetching: TanStack Query (`src/lib/query`), not SWR.
 - Dates: format only through `src/lib/dates.ts`.
 
+## Pull requests
+
+- The description states the PR's purpose and its final diff against `main`. Session history goes
+  in commits, never in the description.
+- To update it, re-read the description and `git diff main...HEAD`, then rewrite it. Don't append.
+- If a change doesn't clearly fit the PR's purpose, ask first.
+
 ## Before you finish
 
 `pnpm format && pnpm typecheck && pnpm lint && pnpm test`, then fix anything that fails.
