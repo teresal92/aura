@@ -48,6 +48,6 @@ next-env.d.ts
 /.playwright-mcp/
 /test-results/
 
-# Claude Code: local settings stay ignored; skills are symlinks into .agents/skills
-.claude/*
-!.claude/skills/
+# Claude Code: .claude/ is shared config; keep personal files out
+**/.claude/settings.local.json
+CLAUDE.local.md
