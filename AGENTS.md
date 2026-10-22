@@ -18,6 +18,18 @@
   the client.
 - Convert to local time only in the UI, through `src/lib/dates.ts`.
 
+## Skills
+
+Skills live in `.agents/skills/<name>/SKILL.md`; `.claude/skills/` holds symlinks to them, and
+agents pick them up from each skill's `description`. Vendored skills (sources in
+`skills-lock.json`) are like `src/components/ui`: don't edit them; update with
+`npx skills update -p -y`. Put Aura-specific guidance in Aura's own skills.
+
+Where a vendored skill conflicts with this file, this file wins:
+
+- Data fetching: TanStack Query (`src/lib/query`), not SWR.
+- Dates: format only through `src/lib/dates.ts`.
+
 ## Before you finish
 
 `pnpm format && pnpm typecheck && pnpm lint && pnpm test`, then fix anything that fails.

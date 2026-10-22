@@ -48,4 +48,6 @@ next-env.d.ts
 /.playwright-mcp/
 /test-results/
 
-.claude
+# Claude Code: .claude/ is shared config; keep personal files out
+**/.claude/settings.local.json
+CLAUDE.local.md
