@@ -20,17 +20,15 @@
 
 ## Skills
 
-Skills live in `.agents/skills/<name>/SKILL.md`; `.claude/skills/` holds symlinks to them. Load the
-skill whose trigger matches before you start:
+Skills live in `.agents/skills/<name>/SKILL.md`; `.claude/skills/` holds symlinks to them, and
+agents pick them up from each skill's `description`. Vendored skills (sources in
+`skills-lock.json`) are like `src/components/ui`: don't edit them; update with
+`npx skills update -p -y`. Put Aura-specific guidance in Aura's own skills.
 
-- `vercel-react-best-practices`: writing or refactoring React/Next.js components, hooks, or data
-  fetching (`.tsx` under `src/`).
-- `vercel-composition-patterns`: designing a component's API (props, variants, compound
-  components) or adding a wrapper in `src/components`.
+Where a vendored skill conflicts with this file, this file wins:
 
-These are vendored from `vercel-labs/agent-skills` (sources in `skills-lock.json`). Like
-`src/components/ui`, don't edit them; update with `npx skills update -p -y`. Put Aura-specific
-guidance in Aura's own skills.
+- Data fetching: TanStack Query (`src/lib/query`), not SWR.
+- Dates: format only through `src/lib/dates.ts`.
 
 ## Before you finish
 
