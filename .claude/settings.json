@@ -1,20 +1,6 @@
 {
   "permissions": {
     "ask": ["Edit(/src/components/ui/**)", "Edit(/.agents/skills/**)", "Edit(/.claude/skills/**)"],
-    "deny": [
-      "Read(**/.env)",
-      "Read(**/.env.local)",
-      "Read(**/.env.*.local)",
-      "Read(**/.env.development)",
-      "Read(**/.env.production)",
-      "Read(**/.env.test)",
-      "Edit(**/.env)",
-      "Edit(**/.env.local)",
-      "Edit(**/.env.*.local)",
-      "Edit(**/.env.development)",
-      "Edit(**/.env.production)",
-      "Edit(**/.env.test)",
-      "Edit(/pnpm-lock.yaml)"
-    ]
+    "deny": ["Read(**/.env*)", "Edit(**/.env*)", "Edit(/pnpm-lock.yaml)"]
   }
 }
