@@ -50,8 +50,8 @@ Issues live in Linear (team `AUR`, project "Aura"), used through the Linear MCP 
 
 ### Triage labels
 
-Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`,
-`wontfix`) as Linear labels on `AUR`. See `docs/agents/triage-labels.md`.
+Linear labels on `AUR` use the canonical role names unchanged: `needs-triage`, `needs-info`,
+`ready-for-agent`, `ready-for-human`, `wontfix`.
 
 ### Domain docs
 
