@@ -1,11 +1,6 @@
 {
   "permissions": {
-    "ask": [
-      "Edit(/src/components/ui/**)",
-      "Edit(/.agents/skills/**)",
-      "Edit(/.claude/skills/**)",
-      "Edit(**/.env*)"
-    ],
-    "deny": ["Edit(/.env)", "Edit(/.env.local)", "Edit(/.env.*.local)", "Edit(/pnpm-lock.yaml)"]
+    "ask": ["Edit(/src/components/ui/**)", "Edit(/.agents/skills/**)", "Edit(/.claude/skills/**)"],
+    "deny": ["Read(**/.env*)", "Edit(**/.env*)", "Edit(/pnpm-lock.yaml)"]
   }
 }
