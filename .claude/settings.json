@@ -1,13 +1,11 @@
 {
   "permissions": {
-    "ask": ["Edit(/src/components/ui/**)"],
-    "deny": [
-      "Edit(/.env)",
-      "Edit(/.env.local)",
-      "Edit(/.env.*.local)",
-      "Edit(/pnpm-lock.yaml)",
-      "Edit(/.agents/skills/vercel-composition-patterns/**)",
-      "Edit(/.agents/skills/vercel-react-best-practices/**)"
-    ]
+    "ask": [
+      "Edit(/src/components/ui/**)",
+      "Edit(/.agents/skills/**)",
+      "Edit(/.claude/skills/**)",
+      "Edit(**/.env*)"
+    ],
+    "deny": ["Edit(/.env)", "Edit(/.env.local)", "Edit(/.env.*.local)", "Edit(/pnpm-lock.yaml)"]
   }
 }
