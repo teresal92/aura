@@ -40,3 +40,20 @@ Where a vendored skill conflicts with this file, this file wins:
 ## Before you finish
 
 `pnpm format && pnpm typecheck && pnpm lint && pnpm test`, then fix anything that fails.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in Linear (team `AUR`, project "Aura"), used through the Linear MCP tools. See
+`docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Linear labels on `AUR` use the canonical role names unchanged: `needs-triage`, `needs-info`,
+`ready-for-agent`, `ready-for-human`, `wontfix`.
+
+### Domain docs
+
+Single-context: `GLOSSARY.md` and `docs/adr/` at the repo root, created lazily. See
+`docs/agents/domain.md`.
