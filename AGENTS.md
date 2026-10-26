@@ -18,6 +18,42 @@
   the client.
 - Convert to local time only in the UI, through `src/lib/dates.ts`.
 
+## Skills
+
+Skills live in `.agents/skills/<name>/SKILL.md`; `.claude/skills/` holds symlinks to them, and
+agents pick them up from each skill's `description`. Vendored skills (sources in
+`skills-lock.json`) are like `src/components/ui`: don't edit them; update with
+`npx skills update -p -y`. Put Aura-specific guidance in Aura's own skills.
+
+Where a vendored skill conflicts with this file, this file wins:
+
+- Data fetching: TanStack Query (`src/lib/query`), not SWR.
+- Dates: format only through `src/lib/dates.ts`.
+
+## Pull requests
+
+- The description states the PR's purpose and its final diff against `main`. Session history goes
+  in commits, never in the description.
+- To update it, re-read the description and `git diff main...HEAD`, then rewrite it. Don't append.
+- If a change doesn't clearly fit the PR's purpose, ask first.
+
 ## Before you finish
 
 `pnpm format && pnpm typecheck && pnpm lint && pnpm test`, then fix anything that fails.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in Linear (team `AUR`, project "Aura"), used through the Linear MCP tools. See
+`docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Linear labels on `AUR` use the canonical role names unchanged: `needs-triage`, `needs-info`,
+`ready-for-agent`, `ready-for-human`, `wontfix`.
+
+### Domain docs
+
+Single-context: `GLOSSARY.md` and `docs/adr/` at the repo root, created lazily. See
+`docs/agents/domain.md`.

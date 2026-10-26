@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "ask": ["Edit(/src/components/ui/**)", "Edit(/.agents/skills/**)", "Edit(/.claude/skills/**)"],
+    "deny": [
+      "Read(**/.env*)",
+      "Edit(**/.env*)",
+      "Read(**/secrets/**)",
+      "Read(**/credentials*)",
+      "Read(/.mcp.json)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Edit(/pnpm-lock.yaml)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)"
+    ]
+  }
+}

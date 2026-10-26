@@ -3,3 +3,5 @@ node_modules
 public
 pnpm-lock.yaml
 src/types/database.ts
+.agents/skills
+skills-lock.json
