@@ -3,7 +3,7 @@ import 'server-only'
 import Anthropic from '@anthropic-ai/sdk'
 import { todayIn } from '@/lib/dates'
 import { TASK_PARSER_SYSTEM_PROMPT } from '@/lib/prompts'
-import { parsedTaskSchema } from '@/lib/task-schema'
+import { parsedTaskSchema } from '@/lib/tasks/schema'
 import type { ParsedTaskResponse } from '@/types/task'
 
 const DEFAULT_ANTHROPIC_MODEL = 'claude-sonnet-4-6'

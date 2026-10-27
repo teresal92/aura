@@ -1,6 +1,6 @@
 'use client'
 
-import { isCompleted } from '@/lib/tasks'
+import { isCompleted } from '@/lib/tasks/mappers'
 import { useTaskStore } from '@/store/tasks'
 import { TaskCard } from '@/components/TaskCard'
 import { SectionHeader } from '@/components/aura-primitives'

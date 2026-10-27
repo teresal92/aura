@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parsedTaskSchema } from '@/lib/task-schema'
+import { parsedTaskSchema } from '@/lib/tasks/schema'
 import { Constants } from '@/types/database'
 import { PRIORITIES } from '@/types/task'
 

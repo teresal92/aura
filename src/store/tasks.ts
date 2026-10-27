@@ -2,7 +2,7 @@
 
 import { create } from 'zustand'
 import type { Task, Priority } from '@/types/task'
-import { isCompleted } from '@/lib/tasks'
+import { isCompleted } from '@/lib/tasks/mappers'
 
 interface TaskState {
   tasks: Task[]

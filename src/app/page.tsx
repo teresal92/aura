@@ -7,9 +7,9 @@ import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
 import { TypewriterText } from '@/components/TypewriterText'
-import { usePreviewTasksEnabled } from '@/lib/preview-tasks'
+import { usePreviewTasksEnabled } from '@/lib/tasks/preview'
 import { cn } from '@/lib/utils'
-import { isCompleted } from '@/lib/tasks'
+import { isCompleted } from '@/lib/tasks/mappers'
 import { useTaskStore } from '@/store/tasks'
 
 export default function Home() {

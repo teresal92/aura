@@ -10,7 +10,7 @@ import {
 } from '@/components/aura-primitives'
 import { cn } from '@/lib/utils'
 import { formatDueDate } from '@/lib/dates'
-import { isCompleted } from '@/lib/tasks'
+import { isCompleted } from '@/lib/tasks/mappers'
 
 function formatDuration(minutes: number): string {
   if (minutes < 60) return `${minutes}m`
