@@ -14,7 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      tasks: {
+        Row: {
+          category: string
+          completed_at: string | null
+          created_at: string
+          due_date: string | null
+          estimated_duration: number
+          id: string
+          notes: string | null
+          priority: Database["public"]["Enums"]["task_priority"]
+          seq: number
+          subtasks: string[]
+          title: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          completed_at?: string | null
+          created_at?: string
+          due_date?: string | null
+          estimated_duration: number
+          id?: string
+          notes?: string | null
+          priority: Database["public"]["Enums"]["task_priority"]
+          seq?: never
+          subtasks?: string[]
+          title: string
+          user_id?: string
+        }
+        Update: {
+          category?: string
+          completed_at?: string | null
+          created_at?: string
+          due_date?: string | null
+          estimated_duration?: number
+          id?: string
+          notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          seq?: never
+          subtasks?: string[]
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +67,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      task_priority: "low" | "medium" | "high" | "urgent"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +194,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      task_priority: ["low", "medium", "high", "urgent"],
+    },
   },
 } as const

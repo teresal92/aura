@@ -1,4 +1,7 @@
-export type Priority = 'low' | 'medium' | 'high' | 'urgent'
+// The database enum `task_priority` is written separately in SQL; a test keeps the two in sync.
+export const PRIORITIES = ['low', 'medium', 'high', 'urgent'] as const
+
+export type Priority = (typeof PRIORITIES)[number]
 
 export type Category = 'Home' | 'Work' | 'Health' | 'Communication' | 'Finance' | 'Personal'
 
