@@ -24,6 +24,17 @@ export interface Task {
   createdAt: IsoTimestamp
 }
 
+/** A task before it is saved, as parsed from the user's input. */
+export type NewTask = Omit<Task, 'id' | 'completedAt' | 'createdAt'>
+
+/** Fields the user can change. Completion is a flag; the server stamps completedAt. */
+export type TaskPatch = Partial<
+  Pick<
+    Task,
+    'title' | 'priority' | 'estimatedDuration' | 'dueDate' | 'category' | 'subtasks' | 'notes'
+  >
+> & { completed?: boolean }
+
 export interface ParsedTaskResponse {
-  tasks: Omit<Task, 'id' | 'completedAt' | 'createdAt'>[]
+  tasks: NewTask[]
 }
