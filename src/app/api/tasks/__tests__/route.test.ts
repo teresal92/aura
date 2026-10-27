@@ -59,6 +59,10 @@ describe('POST /api/tasks', () => {
     ['a task without a title', { tasks: [{ ...draft, title: '' }] }],
     ['an unknown priority', { tasks: [{ ...draft, priority: 'someday' }] }],
     ['a fractional estimatedDuration', { tasks: [{ ...draft, estimatedDuration: 7.5 }] }],
+    [
+      'an estimatedDuration too large for the database',
+      { tasks: [{ ...draft, estimatedDuration: 2_147_483_648 }] },
+    ],
     ['a dueDate that is not a calendar date', { tasks: [{ ...draft, dueDate: '2026-02-30' }] }],
     ['a dueDate with a time', { tasks: [{ ...draft, dueDate: '2026-11-01T17:00:00Z' }] }],
   ])('returns 400 for %s', async (_, body) => {
