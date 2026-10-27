@@ -57,7 +57,9 @@ describe('POST /api/tasks', () => {
     ['a body that is not JSON', 'not json'],
     ['a missing tasks array', {}],
     ['a task without a title', { tasks: [{ ...draft, title: '' }] }],
+    ['a whitespace-only title', { tasks: [{ ...draft, title: '   ' }] }],
     ['an unknown priority', { tasks: [{ ...draft, priority: 'someday' }] }],
+    ['a negative estimatedDuration', { tasks: [{ ...draft, estimatedDuration: -5 }] }],
     ['a fractional estimatedDuration', { tasks: [{ ...draft, estimatedDuration: 7.5 }] }],
     [
       'an estimatedDuration too large for the database',
@@ -69,7 +71,21 @@ describe('POST /api/tasks', () => {
     const response = await post(body)
 
     expect(response.status).toBe(400)
-    expect(await response.json()).toEqual({ error: expect.any(String) })
+    expect(await response.json()).toEqual({
+      error: expect.any(String),
+      issues: [expect.objectContaining({ message: expect.any(String) })],
+    })
+    expect(createTasks).not.toHaveBeenCalled()
+  })
+
+  it('rejects the whole batch and names the bad task when one task is invalid', async () => {
+    const response = await post({ tasks: [draft, { ...draft, title: '' }] })
+
+    expect(response.status).toBe(400)
+    expect(await response.json()).toEqual({
+      error: expect.any(String),
+      issues: [{ path: ['tasks', 1, 'title'], message: expect.any(String) }],
+    })
     expect(createTasks).not.toHaveBeenCalled()
   })
 
@@ -80,6 +96,24 @@ describe('POST /api/tasks', () => {
 
     expect(response.status).toBe(201)
     expect(await response.json()).toEqual({ tasks: [saved] })
+    expect(createTasks).toHaveBeenCalledWith([draft])
+  })
+
+  it('saves a task without a due date', async () => {
+    const undated = { ...draft, dueDate: null }
+    vi.mocked(createTasks).mockResolvedValue([{ ...saved, dueDate: null }])
+
+    const response = await post({ tasks: [undated] })
+
+    expect(response.status).toBe(201)
+    expect(createTasks).toHaveBeenCalledWith([undated])
+  })
+
+  it('saves the title and category trimmed', async () => {
+    vi.mocked(createTasks).mockResolvedValue([saved])
+
+    await post({ tasks: [{ ...draft, title: '  Call the dentist ', category: ' Health ' }] })
+
     expect(createTasks).toHaveBeenCalledWith([draft])
   })
 

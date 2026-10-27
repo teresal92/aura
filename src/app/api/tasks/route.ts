@@ -17,7 +17,9 @@ export async function POST(request: Request) {
   const body: unknown = await request.json().catch(() => null)
   const parsed = createTasksBodySchema.safeParse(body)
   if (!parsed.success) {
-    return Response.json({ error: 'A valid tasks array is required' }, { status: 400 })
+    // Each issue's path (e.g. ["tasks", 1, "title"]) tells the client which task and field failed.
+    const issues = parsed.error.issues.map(({ path, message }) => ({ path, message }))
+    return Response.json({ error: 'A valid tasks array is required', issues }, { status: 400 })
   }
 
   try {
