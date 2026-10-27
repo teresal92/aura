@@ -2,13 +2,11 @@
 
 import { useState } from 'react'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
-import { DevPreviewToggle } from '@/components/DevPreviewToggle'
 import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
 import { TypewriterText } from '@/components/TypewriterText'
 import { useTasks } from '@/lib/query/tasks'
-import { usePreviewTasksEnabled } from '@/lib/tasks/preview'
 import { useDisplayedTasks } from '@/lib/tasks/use-displayed-tasks'
 import { cn } from '@/lib/utils'
 import { isCompleted } from '@/lib/tasks/mappers'
@@ -20,18 +18,7 @@ export default function Home() {
   // isLoading is only the first load while signed in, so signed-out visitors never see it.
   const { isError: loadFailed, isLoading: isLoadingTasks } = useTasks()
   const isInputLoading = useTaskStore((state) => state.isInputLoading)
-  const previewTasksEnabled = usePreviewTasksEnabled()
 
-  const taskList = (
-    <div
-      className={cn(
-        'mt-16 border-t border-border pt-12 transition-opacity duration-250',
-        isWritingFocused ? 'opacity-50' : 'opacity-100'
-      )}
-    >
-      <TaskList />
-    </div>
-  )
   const activeTasks = tasks.filter((task) => !isCompleted(task))
   const completedTasks = tasks.filter(isCompleted)
 
@@ -105,7 +92,18 @@ export default function Home() {
           ) : null}
 
           {/* TaskList renders nothing when empty, so skip its ruled wrapper too. */}
-          {tasks.length > 0 && (previewTasksEnabled ? taskList : <SignedIn>{taskList}</SignedIn>)}
+          {tasks.length > 0 ? (
+            <SignedIn>
+              <div
+                className={cn(
+                  'mt-16 border-t border-border pt-12 transition-opacity duration-250',
+                  isWritingFocused ? 'opacity-50' : 'opacity-100'
+                )}
+              >
+                <TaskList />
+              </div>
+            </SignedIn>
+          ) : null}
         </div>
       </div>
 
@@ -128,8 +126,6 @@ export default function Home() {
           Loading your tasks
         </span>
       </Overlay>
-
-      <DevPreviewToggle />
     </main>
   )
 }
