@@ -1,16 +1,11 @@
 import 'server-only'
 
 import Anthropic from '@anthropic-ai/sdk'
-import OpenAI from 'openai'
-import { zodTextFormat } from 'openai/helpers/zod'
 import { todayIn } from '@/lib/dates'
 import { TASK_PARSER_SYSTEM_PROMPT } from '@/lib/prompts'
-import { modelResponseSchema, parsedTaskSchema } from '@/lib/task-schema'
+import { parsedTaskSchema } from '@/lib/task-schema'
 import type { ParsedTaskResponse } from '@/types/task'
 
-type Provider = 'openai' | 'anthropic'
-
-const DEFAULT_OPENAI_MODEL = 'gpt-5-mini'
 const DEFAULT_ANTHROPIC_MODEL = 'claude-sonnet-4-6'
 
 function extractJson(text: string): unknown {
@@ -34,46 +29,7 @@ function buildUserContent(input: string, timeZone: string): string {
   return `Today is ${weekday}, ${today} (${timeZone}).\n\n${input}`
 }
 
-function getProvider(): Provider {
-  const raw = process.env.AI_PROVIDER?.toLowerCase()
-  if (raw === 'anthropic') return 'anthropic'
-  return 'openai'
-}
-
 export async function parseTasks(input: string, timeZone: string): Promise<ParsedTaskResponse> {
-  const provider = getProvider()
-  if (provider === 'anthropic') {
-    return parseWithAnthropic(input, timeZone)
-  }
-  return parseWithOpenAI(input, timeZone)
-}
-
-async function parseWithOpenAI(input: string, timeZone: string): Promise<ParsedTaskResponse> {
-  const apiKey = process.env.OPENAI_API_KEY
-  if (!apiKey) throw new Error('OPENAI_API_KEY is not set')
-
-  const model = process.env.OPENAI_MODEL || DEFAULT_OPENAI_MODEL
-  const client = new OpenAI({ apiKey })
-
-  const userContent = buildUserContent(input, timeZone)
-
-  const response = await client.responses.parse({
-    model,
-    input: [
-      { role: 'system', content: TASK_PARSER_SYSTEM_PROMPT },
-      { role: 'user', content: userContent },
-    ],
-    text: {
-      format: zodTextFormat(modelResponseSchema, 'task_parse'),
-    },
-  })
-
-  if (!response.output_parsed) throw new Error('OpenAI returned no content')
-
-  return parsedTaskSchema.parse(response.output_parsed)
-}
-
-async function parseWithAnthropic(input: string, timeZone: string): Promise<ParsedTaskResponse> {
   const apiKey = process.env.ANTHROPIC_API_KEY
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not set')
 

@@ -34,14 +34,9 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-Set the provider you want in `.env.local`:
+Set your Anthropic key in `.env.local` (`ANTHROPIC_MODEL` is optional):
 
 ```env
-AI_PROVIDER=openai
-
-OPENAI_API_KEY=
-OPENAI_MODEL=
-
 ANTHROPIC_API_KEY=
 ANTHROPIC_MODEL=
 ```
