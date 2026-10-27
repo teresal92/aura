@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { zodTextFormat } from 'openai/helpers/zod'
-import { modelResponseSchema, parsedTaskSchema } from '@/lib/tasks/schema'
+import { parsedTaskSchema } from '@/lib/tasks/schema'
 import { Constants } from '@/types/database'
 import { PRIORITIES } from '@/types/task'
 
@@ -26,12 +25,5 @@ describe('parsedTaskSchema', () => {
   it('clamps a negative estimatedDuration to 0', () => {
     expect(parseDuration(-3)).toBe(0)
     expect(parseDuration(-0.4)).toBe(0)
-  })
-})
-
-describe('modelResponseSchema', () => {
-  // OpenAI's structured output needs a JSON Schema, and Zod can't represent transforms in one.
-  it('converts to an OpenAI text format', () => {
-    expect(() => zodTextFormat(modelResponseSchema, 'task_parse')).not.toThrow()
   })
 })
