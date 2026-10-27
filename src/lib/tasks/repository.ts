@@ -33,16 +33,36 @@ export async function createTasks(tasks: NewTask[]): Promise<Task[]> {
   return data.map(toTask)
 }
 
-/** Returns null when the task doesn't exist or belongs to another user. */
+/**
+ * Returns null when the task doesn't exist or belongs to another user. `completed: true` on a task
+ * that is already complete keeps its completedAt: only completing an incomplete task stamps a new
+ * time (uncompleting clears it, so a re-completion still gets the latest).
+ */
 export async function updateTask(id: string, patch: TaskPatch): Promise<Task | null> {
   const columns = toTaskUpdate(patch, new Date())
-  const tasks = createClient().from('tasks')
+  const supabase = createClient()
+
+  if (patch.completed === true) {
+    // Stamp only while completed_at is null, in the same statement, so a retry or a second tab
+    // can't move the completion time.
+    const { data, error } = await supabase
+      .from('tasks')
+      .update(columns)
+      .eq('id', id)
+      .is('completed_at', null)
+      .select()
+      .maybeSingle()
+    if (error) throw databaseError('update task', error)
+    if (data) return toTask(data)
+    // Already complete (or not found): apply the rest of the patch without touching completed_at.
+    delete columns.completed_at
+  }
 
   // An empty update is rejected by PostgREST; return the task as it is.
   const query =
     Object.keys(columns).length === 0
-      ? tasks.select().eq('id', id)
-      : tasks.update(columns).eq('id', id).select()
+      ? supabase.from('tasks').select().eq('id', id)
+      : supabase.from('tasks').update(columns).eq('id', id).select()
 
   const { data, error } = await query.maybeSingle()
   if (error) throw databaseError('update task', error)
