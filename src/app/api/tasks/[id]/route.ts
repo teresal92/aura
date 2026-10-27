@@ -1,4 +1,5 @@
 import { auth } from '@clerk/nextjs/server'
+import { invalidRequest, unauthorized } from '@/lib/api/responses'
 import { deleteTask, updateTask } from '@/lib/tasks/repository'
 import { taskPatchSchema } from '@/lib/tasks/schema'
 import { z } from 'zod'
@@ -10,7 +11,6 @@ interface RouteContext {
 // Postgres throws on an id that isn't a UUID, which would surface as a 500; reject it as bad input.
 const idSchema = z.uuid()
 
-const unauthorized = () => Response.json({ error: 'Unauthorized' }, { status: 401 })
 const invalidId = () => Response.json({ error: 'Task id must be a UUID' }, { status: 400 })
 // Same answer for a missing task and another user's task, so the response doesn't reveal which.
 const notFound = () => Response.json({ error: 'Task not found' }, { status: 404 })
@@ -25,10 +25,7 @@ export async function PATCH(request: Request, { params }: RouteContext) {
   // A body that isn't JSON is a bad request, not a server error.
   const body: unknown = await request.json().catch(() => null)
   const parsed = taskPatchSchema.safeParse(body)
-  if (!parsed.success) {
-    const issues = parsed.error.issues.map(({ path, message }) => ({ path, message }))
-    return Response.json({ error: 'A valid task update is required', issues }, { status: 400 })
-  }
+  if (!parsed.success) return invalidRequest('A valid task update is required', parsed.error)
 
   try {
     const task = await updateTask(id, parsed.data)
