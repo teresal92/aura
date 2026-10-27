@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { toIsoDate } from '@/lib/dates'
-import { PRIORITIES, type NewTask, type ParsedTaskResponse } from '@/types/task'
+import { PRIORITIES, type NewTask, type ParsedTaskResponse, type TaskPatch } from '@/types/task'
 
 // The largest Postgres `integer`, the type of estimated_duration.
 const MAX_MINUTES = 2_147_483_647
@@ -51,3 +51,10 @@ export const newTaskSchema = z.object({
   subtasks: z.array(z.string()),
   notes: z.string().nullable(),
 }) satisfies z.ZodType<NewTask>
+
+// Every field optional. Strict so a misspelled field, or a completedAt the client tries to set,
+// is a 400 rather than a silent no-op: completion is only ever the `completed` flag.
+export const taskPatchSchema = newTaskSchema
+  .partial()
+  .extend({ completed: z.boolean().optional() })
+  .strict() satisfies z.ZodType<TaskPatch>
