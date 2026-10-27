@@ -3,12 +3,17 @@ import { todayIn } from '@/lib/dates'
 import type { ParsedTaskResponse, Task } from '@/types/task'
 
 // Dev-only placeholder tasks for previewing the task list without signing in or calling the AI.
-// Toggled from <DevPreviewToggle />; the on/off state persists in localStorage.
+// Toggled from <DevPreviewToggle />; the on/off state persists in localStorage. The tasks
+// themselves live only in memory here: checking or deleting one never calls the API.
 
 const STORAGE_KEY = 'aura:preview-tasks'
 const PREVIEW_ID_PREFIX = 'preview-'
 const isDev = process.env.NODE_ENV === 'development'
 const listeners = new Set<() => void>()
+const NO_TASKS: Task[] = []
+
+// Created on first read, so the dates are the browser's, and reset each time the toggle turns on.
+let previewTasks: Task[] | null = null
 
 function subscribe(listener: () => void) {
   listeners.add(listener)
@@ -23,14 +28,45 @@ function getSnapshot() {
   return isDev && window.localStorage.getItem(STORAGE_KEY) === '1'
 }
 
+function getPreviewTasks() {
+  previewTasks ??= createPreviewTasks()
+  return previewTasks
+}
+
+function notify() {
+  listeners.forEach((listener) => listener())
+}
+
 export function usePreviewTasksEnabled() {
   return useSyncExternalStore(subscribe, getSnapshot, () => false)
 }
 
+/** The preview tasks while the toggle is on, otherwise none. */
+export function usePreviewTasks(): Task[] {
+  const enabled = usePreviewTasksEnabled()
+  const tasks = useSyncExternalStore(subscribe, getPreviewTasks, () => NO_TASKS)
+  return enabled ? tasks : NO_TASKS
+}
+
 export function setPreviewTasksEnabled(enabled: boolean) {
-  if (enabled) window.localStorage.setItem(STORAGE_KEY, '1')
-  else window.localStorage.removeItem(STORAGE_KEY)
-  listeners.forEach((listener) => listener())
+  if (enabled) {
+    window.localStorage.setItem(STORAGE_KEY, '1')
+    previewTasks = createPreviewTasks()
+  } else {
+    window.localStorage.removeItem(STORAGE_KEY)
+  }
+  notify()
+}
+
+export function setPreviewTaskCompleted(id: string, completed: boolean) {
+  const completedAt = completed ? new Date().toISOString() : null
+  previewTasks = getPreviewTasks().map((task) => (task.id === id ? { ...task, completedAt } : task))
+  notify()
+}
+
+export function deletePreviewTask(id: string) {
+  previewTasks = getPreviewTasks().filter((task) => task.id !== id)
+  notify()
 }
 
 export function isPreviewTask(task: Task) {
@@ -38,7 +74,7 @@ export function isPreviewTask(task: Task) {
 }
 
 // The last task is marked done so both list sections show.
-export function createPreviewTasks(): Task[] {
+function createPreviewTasks(): Task[] {
   const createdAt = new Date().toISOString()
   return PREVIEW_TASKS.map((task, index) => {
     const isLast = index === PREVIEW_TASKS.length - 1

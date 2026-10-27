@@ -1,24 +1,10 @@
 'use client'
 
-import { useEffect } from 'react'
-import {
-  createPreviewTasks,
-  isPreviewTask,
-  setPreviewTasksEnabled,
-  usePreviewTasksEnabled,
-} from '@/lib/tasks/preview'
-import { sortTasks, useTaskStore } from '@/store/tasks'
+import { setPreviewTasksEnabled, usePreviewTasksEnabled } from '@/lib/tasks/preview'
 
-// Development-only switch that adds or removes placeholder tasks. Renders nothing in production.
+// Development-only switch that shows or hides placeholder tasks. Renders nothing in production.
 export function DevPreviewToggle() {
   const enabled = usePreviewTasksEnabled()
-
-  useEffect(() => {
-    useTaskStore.setState((state) => {
-      const realTasks = state.tasks.filter((task) => !isPreviewTask(task))
-      return { tasks: enabled ? sortTasks([...realTasks, ...createPreviewTasks()]) : realTasks }
-    })
-  }, [enabled])
 
   if (process.env.NODE_ENV !== 'development') return null
 

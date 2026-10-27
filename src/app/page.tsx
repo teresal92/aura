@@ -7,14 +7,19 @@ import { Overlay } from '@/components/Overlay'
 import { TaskInput } from '@/components/TaskInput'
 import { TaskList } from '@/components/TaskList'
 import { TypewriterText } from '@/components/TypewriterText'
+import { useTasks } from '@/lib/query/tasks'
 import { usePreviewTasksEnabled } from '@/lib/tasks/preview'
+import { useDisplayedTasks } from '@/lib/tasks/use-displayed-tasks'
 import { cn } from '@/lib/utils'
 import { isCompleted } from '@/lib/tasks/mappers'
 import { useTaskStore } from '@/store/tasks'
 
 export default function Home() {
   const [isWritingFocused, setIsWritingFocused] = useState(false)
-  const { tasks, isInputLoading } = useTaskStore()
+  const tasks = useDisplayedTasks()
+  // isLoading is only the first load while signed in, so signed-out visitors never see it.
+  const { isError: loadFailed, isLoading: isLoadingTasks } = useTasks()
+  const isInputLoading = useTaskStore((state) => state.isInputLoading)
   const previewTasksEnabled = usePreviewTasksEnabled()
 
   const taskList = (
@@ -76,7 +81,9 @@ export default function Home() {
           <div
             className={cn(
               'mb-16 transition-all duration-250',
-              isWritingFocused ? 'translate-y-1 opacity-50' : 'opacity-100'
+              isWritingFocused ? 'translate-y-1 opacity-50' : 'opacity-100',
+              // Hidden, not removed, so the layout doesn't shift once tasks arrive.
+              isLoadingTasks && 'invisible'
             )}
           >
             {tasks.length === 0 ? (
@@ -90,6 +97,12 @@ export default function Home() {
           </div>
 
           <TaskInput onFocusChange={setIsWritingFocused} />
+
+          {loadFailed ? (
+            <p role="alert" className="mt-6 text-base text-destructive">
+              Couldn&apos;t load your tasks. Refresh to try again.
+            </p>
+          ) : null}
 
           {/* TaskList renders nothing when empty, so skip its ruled wrapper too. */}
           {tasks.length > 0 && (previewTasksEnabled ? taskList : <SignedIn>{taskList}</SignedIn>)}
@@ -107,6 +120,13 @@ export default function Home() {
             Turning your brain dump into a clearer plan.
           </p>
         </div>
+      </Overlay>
+
+      <Overlay isActive={isLoadingTasks}>
+        <div className="size-5 animate-spin rounded-full border-2 border-border border-t-primary" />
+        <span role="status" className="sr-only">
+          Loading your tasks
+        </span>
       </Overlay>
 
       <DevPreviewToggle />
