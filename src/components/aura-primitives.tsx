@@ -18,7 +18,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     const variantMap = {
       ghost: 'aura-icon-btn',
       subtle: 'aura-icon-btn hover:bg-secondary/70 hover:text-foreground',
-      danger: 'aura-icon-btn hover:bg-destructive/10 hover:text-destructive',
+      danger: 'aura-icon-btn hover:text-destructive',
       success: 'aura-icon-btn hover:bg-foreground/10 hover:text-foreground',
     }
 

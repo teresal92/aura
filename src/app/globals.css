@@ -166,6 +166,16 @@
     }
   }
 
+  /* Undoes the base button's border, padding and inverted hover; variants add their own hover. */
+  .aura-icon-btn {
+    @apply flex items-center justify-center border-0 bg-transparent p-0 text-muted-foreground;
+  }
+  @media (hover: hover) {
+    .aura-icon-btn:hover:not(:disabled) {
+      @apply bg-transparent text-foreground;
+    }
+  }
+
   .aura-shadow-xs {
     box-shadow: var(--aura-shadow-xs);
   }

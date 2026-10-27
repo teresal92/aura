@@ -84,7 +84,9 @@ export function TaskCard({ task }: { task: Task }) {
           aria-label={`Delete ${task.title}`}
           className="-mt-1 shrink-0"
         >
-          <span aria-hidden="true">×</span>
+          <span aria-hidden="true" className="text-3xl leading-none">
+            ×
+          </span>
         </IconButton>
       </div>
 
