@@ -1,11 +1,26 @@
 import { auth } from '@clerk/nextjs/server'
-import { createTasks } from '@/lib/tasks/repository'
+import { createTasks, listTasks } from '@/lib/tasks/repository'
 import { newTaskSchema } from '@/lib/tasks/schema'
 import { z } from 'zod'
 
 const createTasksBodySchema = z.object({
   tasks: z.array(newTaskSchema),
 })
+
+export async function GET() {
+  const { userId } = await auth()
+  if (!userId) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  try {
+    const tasks = await listTasks()
+    return Response.json({ tasks })
+  } catch (error) {
+    console.error(error)
+    return Response.json({ error: 'Failed to load tasks' }, { status: 500 })
+  }
+}
 
 export async function POST(request: Request) {
   const { userId } = await auth()
