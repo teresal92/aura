@@ -2,37 +2,16 @@ import 'server-only'
 
 import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
-import { z } from 'zod'
 import { zodTextFormat } from 'openai/helpers/zod'
-import { toIsoDate, todayIn } from '@/lib/dates'
+import { todayIn } from '@/lib/dates'
 import { TASK_PARSER_SYSTEM_PROMPT } from '@/lib/prompts'
+import { modelResponseSchema, parsedTaskSchema } from '@/lib/task-schema'
 import type { ParsedTaskResponse } from '@/types/task'
 
 type Provider = 'openai' | 'anthropic'
 
 const DEFAULT_OPENAI_MODEL = 'gpt-5-mini'
 const DEFAULT_ANTHROPIC_MODEL = 'claude-sonnet-4-6'
-
-const parsedTaskSchema = z.object({
-  tasks: z.array(
-    z.object({
-      title: z.string(),
-      priority: z.enum(['low', 'medium', 'high', 'urgent']),
-      estimatedDuration: z.number(),
-      // Lenient: an unreadable date becomes null rather than failing the whole parse.
-      dueDate: z
-        .string()
-        .nullish()
-        .transform((v) => toIsoDate(v)),
-      category: z.string(),
-      subtasks: z.array(z.string()).default([]),
-      notes: z
-        .string()
-        .nullish()
-        .transform((v) => v ?? null),
-    })
-  ),
-})
 
 function extractJson(text: string): unknown {
   try {
@@ -85,13 +64,13 @@ async function parseWithOpenAI(input: string, timeZone: string): Promise<ParsedT
       { role: 'user', content: userContent },
     ],
     text: {
-      format: zodTextFormat(parsedTaskSchema, 'task_parse'),
+      format: zodTextFormat(modelResponseSchema, 'task_parse'),
     },
   })
 
   if (!response.output_parsed) throw new Error('OpenAI returned no content')
 
-  return response.output_parsed as ParsedTaskResponse
+  return parsedTaskSchema.parse(response.output_parsed)
 }
 
 async function parseWithAnthropic(input: string, timeZone: string): Promise<ParsedTaskResponse> {
