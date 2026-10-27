@@ -113,6 +113,16 @@ describe('PATCH /api/tasks/[id]', () => {
     expect(updateTask).toHaveBeenCalledWith(id, { completed: true })
   })
 
+  it('accepts an empty update and returns the task unchanged', async () => {
+    vi.mocked(updateTask).mockResolvedValue(task)
+
+    const response = await patch({})
+
+    expect(response.status).toBe(200)
+    expect(await response.json()).toEqual({ task })
+    expect(updateTask).toHaveBeenCalledWith(id, {})
+  })
+
   it('returns 404 when no task matches', async () => {
     vi.mocked(updateTask).mockResolvedValue(null)
 
