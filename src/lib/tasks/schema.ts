@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { toIsoDate } from '@/lib/dates'
-import { PRIORITIES } from '@/types/task'
+import { PRIORITIES, type NewTask } from '@/types/task'
 
 export const parsedTaskSchema = z.object({
   tasks: z.array(
@@ -23,3 +23,18 @@ export const parsedTaskSchema = z.object({
     })
   ),
 })
+
+// Strict, unlike parsedTaskSchema: this validates what the client sends to be saved, so a bad
+// value is rejected rather than repaired.
+export const newTaskSchema = z.object({
+  title: z.string().trim().min(1),
+  priority: z.enum(PRIORITIES),
+  estimatedDuration: z.number().int().nonnegative(),
+  dueDate: z
+    .string()
+    .refine((v) => toIsoDate(v) === v, 'Expected a calendar date, "YYYY-MM-DD"')
+    .nullable(),
+  category: z.string().trim().min(1),
+  subtasks: z.array(z.string()),
+  notes: z.string().nullable(),
+}) satisfies z.ZodType<NewTask>
