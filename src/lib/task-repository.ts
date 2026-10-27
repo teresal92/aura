@@ -7,6 +7,8 @@ import type { NewTask, Task, TaskPatch } from '@/types/task'
 
 // The only module that talks to the database for tasks. Every query runs as the signed-in user,
 // so RLS limits it to their own rows. Callers get Tasks, never Supabase's { data, error } shape.
+// Each function creates its own client: the Clerk token is per-request, so never share one
+// across requests. Creating a client is cheap (no connection, just a fetch wrapper).
 
 function databaseError(action: string, error: PostgrestError): Error {
   return new Error(`Failed to ${action}: ${error.message}`, { cause: error })
