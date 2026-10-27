@@ -2,7 +2,7 @@ import 'server-only'
 
 import type { PostgrestError } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
-import { toTask, toTaskInsert, toTaskUpdate } from '@/lib/tasks'
+import { toTask, toTaskInsert, toTaskUpdate } from '@/lib/tasks/mappers'
 import type { NewTask, Task, TaskPatch } from '@/types/task'
 
 // The only module that talks to the database for tasks. Every query runs as the signed-in user,

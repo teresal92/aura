@@ -5,7 +5,7 @@ import OpenAI from 'openai'
 import { zodTextFormat } from 'openai/helpers/zod'
 import { todayIn } from '@/lib/dates'
 import { TASK_PARSER_SYSTEM_PROMPT } from '@/lib/prompts'
-import { modelResponseSchema, parsedTaskSchema } from '@/lib/task-schema'
+import { modelResponseSchema, parsedTaskSchema } from '@/lib/tasks/schema'
 import type { ParsedTaskResponse } from '@/types/task'
 
 type Provider = 'openai' | 'anthropic'

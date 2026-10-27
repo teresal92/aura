@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { zodTextFormat } from 'openai/helpers/zod'
-import { modelResponseSchema, parsedTaskSchema } from '@/lib/task-schema'
+import { modelResponseSchema, parsedTaskSchema } from '@/lib/tasks/schema'
 import { Constants } from '@/types/database'
 import { PRIORITIES } from '@/types/task'
 

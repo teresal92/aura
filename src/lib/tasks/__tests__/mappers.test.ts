@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isCompleted, toTask, toTaskInsert, toTaskUpdate } from '@/lib/tasks'
+import { isCompleted, toTask, toTaskInsert, toTaskUpdate } from '@/lib/tasks/mappers'
 import type { Tables } from '@/types/database'
 import type { NewTask, Task } from '@/types/task'
 

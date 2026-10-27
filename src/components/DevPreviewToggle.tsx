@@ -6,7 +6,7 @@ import {
   isPreviewTask,
   setPreviewTasksEnabled,
   usePreviewTasksEnabled,
-} from '@/lib/preview-tasks'
+} from '@/lib/tasks/preview'
 import { sortTasks, useTaskStore } from '@/store/tasks'
 
 // Development-only switch that adds or removes placeholder tasks. Renders nothing in production.
