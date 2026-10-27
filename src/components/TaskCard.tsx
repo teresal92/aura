@@ -4,13 +4,16 @@ import type { Task } from '@/types/task'
 import { useTaskStore } from '@/store/tasks'
 import {
   CategoryBadge,
+  CompletionCheckbox,
+  IconButton,
   MetaText,
   PriorityBadge,
-  CompletionCheckbox,
 } from '@/components/aura-primitives'
 import { cn } from '@/lib/utils'
 import { formatDueDate } from '@/lib/dates'
+import { useDeleteTask, useSetCompleted, useTaskChangeFailed } from '@/lib/query/tasks'
 import { isCompleted } from '@/lib/tasks/mappers'
+import { deletePreviewTask, isPreviewTask, setPreviewTaskCompleted } from '@/lib/tasks/preview'
 
 function formatDuration(minutes: number): string {
   if (minutes < 60) return `${minutes}m`
@@ -20,15 +23,24 @@ function formatDuration(minutes: number): string {
 }
 
 export function TaskCard({ task }: { task: Task }) {
-  const { completeTask, uncompleteTask } = useTaskStore()
+  const setCompleted = useSetCompleted()
+  const deleteTask = useDeleteTask()
+  const changeFailed = useTaskChangeFailed(task.id)
   const completed = isCompleted(task)
+  // Dev preview tasks aren't saved, so they change locally and never call the API.
+  const isPreview = isPreviewTask(task)
 
   function handleComplete() {
-    if (completed) {
-      uncompleteTask(task.id)
-    } else {
-      completeTask(task.id)
-    }
+    if (isPreview) setPreviewTaskCompleted(task.id, !completed)
+    else setCompleted.mutate({ id: task.id, completed: !completed })
+  }
+
+  function handleDelete() {
+    const { focusTaskId, setFocusTask } = useTaskStore.getState()
+    if (focusTaskId === task.id) setFocusTask(null)
+
+    if (isPreview) deletePreviewTask(task.id)
+    else deleteTask.mutate(task.id)
   }
 
   const hasDetails = task.subtasks.length > 0 || task.notes
@@ -57,7 +69,25 @@ export function TaskCard({ task }: { task: Task }) {
               </span>
             ) : null}
           </div>
+
+          {changeFailed ? (
+            <p role="alert" className="mt-2 text-base text-destructive">
+              Couldn&apos;t save that change. Try again.
+            </p>
+          ) : null}
         </div>
+
+        <IconButton
+          size="sm"
+          variant="danger"
+          onClick={handleDelete}
+          aria-label={`Delete ${task.title}`}
+          className="-mt-1 shrink-0"
+        >
+          <span aria-hidden="true" className="text-3xl leading-none">
+            ×
+          </span>
+        </IconButton>
       </div>
 
       {hasDetails ? (

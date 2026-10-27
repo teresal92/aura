@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { sortTasks } from '@/store/tasks'
+import { sortTasks } from '@/lib/tasks/sort'
 import type { Task } from '@/types/task'
 
 function makeTask(overrides: Partial<Task>): Task {
