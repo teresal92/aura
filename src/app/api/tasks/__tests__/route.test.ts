@@ -1,11 +1,11 @@
 import { auth } from '@clerk/nextjs/server'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { POST } from '@/app/api/tasks/route'
-import { createTasks } from '@/lib/tasks/repository'
+import { GET, POST } from '@/app/api/tasks/route'
+import { createTasks, listTasks } from '@/lib/tasks/repository'
 import type { NewTask, Task } from '@/types/task'
 
 vi.mock('@clerk/nextjs/server', () => ({ auth: vi.fn() }))
-vi.mock('@/lib/tasks/repository', () => ({ createTasks: vi.fn() }))
+vi.mock('@/lib/tasks/repository', () => ({ createTasks: vi.fn(), listTasks: vi.fn() }))
 
 const draft: NewTask = {
   title: 'Call the dentist',
@@ -36,6 +36,44 @@ function post(body: unknown): Promise<Response> {
 function signIn(userId: string | null) {
   vi.mocked(auth).mockResolvedValue({ userId } as Awaited<ReturnType<typeof auth>>)
 }
+
+describe('GET /api/tasks', () => {
+  beforeEach(() => {
+    vi.resetAllMocks()
+    signIn('user_2abc')
+  })
+
+  it('returns 401 when signed out', async () => {
+    signIn(null)
+
+    const response = await GET()
+
+    expect(response.status).toBe(401)
+    expect(await response.json()).toEqual({ error: 'Unauthorized' })
+    expect(listTasks).not.toHaveBeenCalled()
+  })
+
+  it("returns the user's tasks", async () => {
+    vi.mocked(listTasks).mockResolvedValue([saved])
+
+    const response = await GET()
+
+    expect(response.status).toBe(200)
+    expect(await response.json()).toEqual({ tasks: [saved] })
+  })
+
+  it('returns 500 without database details when loading fails', async () => {
+    const error = new Error('Failed to list tasks: permission denied for table tasks')
+    vi.mocked(listTasks).mockRejectedValue(error)
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    const response = await GET()
+
+    expect(response.status).toBe(500)
+    expect(await response.json()).toEqual({ error: 'Failed to load tasks' })
+    expect(consoleError).toHaveBeenCalledWith(error)
+  })
+})
 
 describe('POST /api/tasks', () => {
   beforeEach(() => {
