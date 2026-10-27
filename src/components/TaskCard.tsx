@@ -13,7 +13,6 @@ import { cn } from '@/lib/utils'
 import { formatDueDate } from '@/lib/dates'
 import { useDeleteTask, useSetCompleted, useTaskChangeFailed } from '@/lib/query/tasks'
 import { isCompleted } from '@/lib/tasks/mappers'
-import { deletePreviewTask, isPreviewTask, setPreviewTaskCompleted } from '@/lib/tasks/preview'
 
 function formatDuration(minutes: number): string {
   if (minutes < 60) return `${minutes}m`
@@ -27,20 +26,15 @@ export function TaskCard({ task }: { task: Task }) {
   const deleteTask = useDeleteTask()
   const changeFailed = useTaskChangeFailed(task.id)
   const completed = isCompleted(task)
-  // Dev preview tasks aren't saved, so they change locally and never call the API.
-  const isPreview = isPreviewTask(task)
 
   function handleComplete() {
-    if (isPreview) setPreviewTaskCompleted(task.id, !completed)
-    else setCompleted.mutate({ id: task.id, completed: !completed })
+    setCompleted.mutate({ id: task.id, completed: !completed })
   }
 
   function handleDelete() {
     const { focusTaskId, setFocusTask } = useTaskStore.getState()
     if (focusTaskId === task.id) setFocusTask(null)
-
-    if (isPreview) deletePreviewTask(task.id)
-    else deleteTask.mutate(task.id)
+    deleteTask.mutate(task.id)
   }
 
   const hasDetails = task.subtasks.length > 0 || task.notes
