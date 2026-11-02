@@ -2,7 +2,9 @@
 
 > Turn a brain dump into a clear next step.
 
-Aura is a minimal AI task app for when everything you need to do is in your head at once.
+Aura is a minimal AI task app for when everything you need to do is in your head all at once.
+
+The hard part usually isn’t discipline. It’s the small decisions hidden inside every task: what it actually is, what comes first, where to start.
 
 Instead of asking you to organize first, Aura lets you type the messy version:
 
