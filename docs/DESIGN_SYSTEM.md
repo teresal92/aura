@@ -2,6 +2,8 @@
 
 **Source of truth:** `src/app/globals.css` defines Aura tokens, shadows, and motion.
 
+**Design principles:** see `docs/DESIGN_PRINCIPLES.md` for the art direction behind these tokens.
+
 **How to use tokens**
 
 - Use Tailwind colors like `bg-background`, `text-foreground`, `border-border`.
