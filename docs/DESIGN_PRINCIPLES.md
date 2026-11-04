@@ -36,3 +36,10 @@ hand-drawn detail. Occasional moments of romance.
 ### 5. Restraint
 
 Every decorative element should feel intentional. Nothing should compete for attention.
+
+### 6. The field guide's eye
+
+Borrow from vintage field guides: specimen-style illustrations, labeled plates, numbered entries,
+small-caps captions, marginal notes, and fine ruled lines. Treat content as something observed,
+catalogued, and annotated with care. As with books, take the field guide's way of looking, not its
+yellowed pages.
