@@ -2,6 +2,9 @@
 
 > **Draft.** These are early principles and will change.
 
+Aura should have the restraint, minimalism, and legibility of great books, with enough visual
+interest and personality that it never feels boring or too tech-y.
+
 **Working art direction:** Architectural restraint, literary soul, and a little romantic whimsy.
 
 ## The distinction
