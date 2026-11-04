@@ -39,7 +39,7 @@ Every decorative element should feel intentional. Nothing should compete for att
 
 ### 6. The field guide's eye
 
-Borrow from vintage field guides: specimen-style illustrations, labeled plates, numbered entries,
-small-caps captions, marginal notes, and fine ruled lines. Treat content as something observed,
-catalogued, and annotated with care. As with books, take the field guide's way of looking, not its
-yellowed pages.
+Borrow from vintage field notebooks: the feeling of something jotted down by hand, on the fly, the
+moment it was noticed. Think dated entries, quick marginal notes, small-caps captions, and fine
+ruled lines. Capturing a thought should feel as immediate as writing it in pencil. As with books,
+take the field guide's way of looking, not its yellowed pages.
