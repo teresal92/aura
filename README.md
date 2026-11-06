@@ -45,6 +45,19 @@ ANTHROPIC_MODEL=
 
 Open `http://localhost:3000`.
 
+## Sign In Locally
+
+Use Clerk's [test emails](https://clerk.com/docs/guides/development/testing/test-emails-and-phones) instead of a real address:
+
+- Sign up with any email containing `+clerk_test`, like `you+clerk_test@example.com`.
+- Enter `424242` whenever Clerk asks for a code. That covers sign-up, sign-in, and the new-device check.
+
+Clerk sends nothing to test addresses, and they don't count toward the dev instance's email limits. Real addresses and `+1`/`+2` aliases do count. Once the daily limit is hit, sign-ups fail with `dev_daily_email_recipient_limit_exceeded`.
+
+If `424242` is rejected, check that Test mode is on in the Clerk Dashboard (dev instance → Settings). It's on by default in dev. The instance must also verify email by code, because verification links never reach test addresses.
+
+Never turn Test mode on in production.
+
 ## Database
 
 One-time setup:
