@@ -58,9 +58,8 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      # No Storybook story files exist yet, so the Storybook/Vitest project
-      # runs 0 tests today. Once stories are added, this step will need
-      # `pnpm exec playwright install --with-deps chromium` first.
+      # The Storybook project runs every story in headless Chromium.
+      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test
 
   build:
