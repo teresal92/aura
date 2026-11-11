@@ -5,8 +5,10 @@ import { createClient } from '@/lib/supabase/server'
 import { toTask, toTaskInsert, toTaskUpdate } from '@/lib/tasks/mappers'
 import type { NewTask, Task, TaskPatch } from '@/types/task'
 
-// The only module that talks to the database for tasks. Every query runs as the signed-in user,
-// so RLS limits it to their own rows. Callers get Tasks, never Supabase's { data, error } shape.
+// The only module that talks to the database for tasks on a user's behalf. Every query runs as the
+// signed-in user, so RLS limits it to their own rows. Callers get Tasks, never Supabase's
+// { data, error } shape. (The one privileged exception, cleanup after a Clerk account is deleted,
+// lives in delete-user-tasks.ts so this module never holds the secret key.)
 // Each function creates its own client: the Clerk token is per-request, so never share one
 // across requests. Creating a client is cheap (no connection, just a fetch wrapper).
 

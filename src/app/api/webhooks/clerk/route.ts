@@ -5,10 +5,16 @@ import { deleteUserTasks } from '@/lib/tasks/delete-user-tasks'
 // Clerk webhooks, delivered by Svix at least once and retried on any non-2xx. Public in
 // src/proxy.ts: there's no session, so the signature is the only authentication.
 export async function POST(request: NextRequest) {
+  // A missing secret is our misconfiguration, not a bad request; say so, and let Clerk retry.
+  const signingSecret = process.env.CLERK_WEBHOOK_SIGNING_SECRET
+  if (!signingSecret) {
+    console.error('CLERK_WEBHOOK_SIGNING_SECRET is not set; cannot verify Clerk webhooks')
+    return Response.json({ error: 'Webhook not configured' }, { status: 500 })
+  }
+
   let event
   try {
-    // Reads CLERK_WEBHOOK_SIGNING_SECRET.
-    event = await verifyWebhook(request)
+    event = await verifyWebhook(request, { signingSecret })
   } catch (error) {
     console.error('Clerk webhook verification failed', error)
     return Response.json({ error: 'Invalid webhook signature' }, { status: 400 })

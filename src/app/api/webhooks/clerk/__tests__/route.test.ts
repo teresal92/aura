@@ -9,11 +9,16 @@ vi.mock('@/lib/tasks/delete-user-tasks', () => ({ deleteUserTasks: vi.fn() }))
 
 type WebhookEvent = Awaited<ReturnType<typeof verifyWebhook>>
 
-function deliver(event: unknown) {
-  vi.mocked(verifyWebhook).mockResolvedValue(event as WebhookEvent)
+function post() {
   return POST(
     new NextRequest('http://localhost/api/webhooks/clerk', { method: 'POST', body: '{}' })
   )
+}
+
+/** A delivery whose signature verifies, carrying this event. */
+function deliver(event: unknown) {
+  vi.mocked(verifyWebhook).mockResolvedValue(event as WebhookEvent)
+  return post()
 }
 
 const userDeleted = (id?: string) => ({
@@ -27,18 +32,39 @@ describe('POST /api/webhooks/clerk', () => {
 
   beforeEach(() => {
     vi.resetAllMocks()
+    vi.unstubAllEnvs()
+    vi.stubEnv('CLERK_WEBHOOK_SIGNING_SECRET', 'whsec_test')
     consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   it('returns 400 and deletes nothing when the signature is invalid', async () => {
     vi.mocked(verifyWebhook).mockRejectedValue(new Error('No matching signature found'))
 
-    const response = await POST(
-      new NextRequest('http://localhost/api/webhooks/clerk', { method: 'POST', body: '{}' })
-    )
+    const response = await post()
 
     expect(response.status).toBe(400)
     expect(deleteUserTasks).not.toHaveBeenCalled()
+  })
+
+  it('verifies with the signing secret from the environment', async () => {
+    await deliver(userDeleted('user_2abc'))
+
+    expect(verifyWebhook).toHaveBeenCalledWith(expect.any(NextRequest), {
+      signingSecret: 'whsec_test',
+    })
+  })
+
+  it('returns 500 and says why when the signing secret is not set, so Clerk retries', async () => {
+    vi.stubEnv('CLERK_WEBHOOK_SIGNING_SECRET', '')
+
+    const response = await post()
+
+    expect(response.status).toBe(500)
+    expect(verifyWebhook).not.toHaveBeenCalled()
+    expect(deleteUserTasks).not.toHaveBeenCalled()
+    expect(consoleError).toHaveBeenCalledWith(
+      expect.stringContaining('CLERK_WEBHOOK_SIGNING_SECRET is not set')
+    )
   })
 
   it("deletes the user's tasks on user.deleted and returns 200", async () => {
