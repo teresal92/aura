@@ -27,6 +27,23 @@ export default defineConfig({
       // is deterministic regardless of the host/CI runner's system TZ.
       TZ: 'America/Los_Angeles',
     },
+    // Enabled by `pnpm test:coverage`. A bare `--coverage` flag crashes the Chromatic preset.
+    coverage: {
+      // Count files no test imports as 0% instead of leaving them out.
+      include: ['src/**/*.{ts,tsx}'],
+      // Give each exclusion a reason, so this can't become a way to hide untested logic.
+      exclude: [
+        'src/components/ui/**', // vendored shadcn
+        'src/types/**', // type declarations
+        'src/**/*.stories.{ts,tsx}',
+        'src/app/layout.tsx', // fonts and markup
+        'src/app/providers.tsx', // provider wiring
+        'src/proxy.ts', // Clerk middleware wiring
+        'src/lib/supabase/**', // SDK constructors
+        'src/lib/prompts.ts', // prompt string
+        'src/lib/clerk-appearance.ts', // theme object
+      ],
+    },
     projects: [
       {
         extends: true,

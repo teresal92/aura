@@ -19,7 +19,8 @@
     "db:link": "supabase link",
     "db:new": "supabase migration new",
     "db:push": "supabase db push --linked",
-    "db:types": "supabase gen types typescript --linked --schema public > src/types/database.ts"
+    "db:types": "supabase gen types typescript --linked --schema public > src/types/database.ts",
+    "test:coverage": "vitest run --project unit --coverage.enabled=true"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",
