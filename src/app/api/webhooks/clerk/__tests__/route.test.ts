@@ -15,7 +15,6 @@ function post() {
   )
 }
 
-/** A delivery whose signature verifies, carrying this event. */
 function deliver(event: unknown) {
   vi.mocked(verifyWebhook).mockResolvedValue(event as WebhookEvent)
   return post()

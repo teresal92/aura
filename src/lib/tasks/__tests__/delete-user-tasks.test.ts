@@ -6,8 +6,7 @@ import { deleteUserTasks } from '@/lib/tasks/delete-user-tasks'
 vi.mock('server-only', () => ({}))
 vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: vi.fn() }))
 
-// A real supabase-js client whose fetch records the request, so the test checks the PostgREST
-// request actually sent. An unscoped delete here would wipe every user's tasks.
+// Real client, recorded fetch: checks the exact request, since an unscoped delete wipes every user.
 function fakeDatabase(response: Response) {
   const sent: { method: string; url: URL }[] = []
   const fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
