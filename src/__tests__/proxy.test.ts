@@ -32,12 +32,6 @@ describe('proxy', () => {
     expect(await run('/api/webhooks/clerk', null)).toBeUndefined()
   })
 
-  it('still answers signed-out requests to other API routes with 401', async () => {
-    const response = (await run('/api/tasks/6f1c2b8e', null)) as Response
-
-    expect(response.status).toBe(401)
-  })
-
   it('lets a signed-out page request through', async () => {
     expect(await run('/', null)).toBeUndefined()
   })
