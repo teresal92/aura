@@ -20,6 +20,10 @@
   the client.
 - Convert to local time only in the UI, through `src/lib/dates.ts`.
 
+## Comments
+
+Write a comment only for the _why_ the code can't show: a hazard, a constraint, or a non-obvious choice. Keep it to one line.
+
 ## Skills
 
 Skills live in `.agents/skills/<name>/SKILL.md`; `.claude/skills/` holds symlinks to them, and
