@@ -28,6 +28,10 @@ describe('proxy', () => {
     expect(await run('/api/tasks', 'user_2abc')).toBeUndefined()
   })
 
+  it('lets a signed-out webhook request through to verify its own signature', async () => {
+    expect(await run('/api/webhooks/clerk', null)).toBeUndefined()
+  })
+
   it('lets a signed-out page request through', async () => {
     expect(await run('/', null)).toBeUndefined()
   })
