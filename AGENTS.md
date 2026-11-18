@@ -47,6 +47,31 @@ Where a vendored skill conflicts with this file, this file wins:
 
 `pnpm format && pnpm typecheck && pnpm lint && pnpm test`, then fix anything that fails.
 
+A PR is done when CI is green, it isn't a draft, and it follows the commit convention. UI changes
+also include screenshots at mobile and desktop widths from the running app (a short video if the
+change is interactive). Start the dev server in the background to capture them.
+
+## Planning and tracking
+
+- Linear holds tickets, PRDs, and briefs. Don't add planning docs to the repo; link to the ticket.
+- Keep the `AUR` ticket's status current yourself. Surface only decisions that need a human; for
+  everything else, make the call and note it in the ticket or PR.
+- Before splitting work across agents, decide and record any shared contract in the ticket first:
+  DB schema, `src/types/database.ts`, or props shared between components.
+
+## Review routing
+
+Label the PR `needs-review` and don't merge it if it touches:
+
+- `supabase/migrations`, schema, or row-level security
+- Clerk or auth config
+- new dependencies
+- deletion of user data
+- CI, deploy, or agent config (`.github`, `.claude`, `AGENTS.md`)
+
+Low-risk changes (UI behind a flag, styling, copy, tests, docs) can merge once CI is green. If
+you're unsure which applies, treat it as `needs-review`.
+
 ## Agent skills
 
 ### Issue tracker
